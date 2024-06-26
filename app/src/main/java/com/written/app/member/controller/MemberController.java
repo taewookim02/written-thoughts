@@ -14,11 +14,11 @@ public class MemberController {
 
     private final MemberService service;
 
-    @GetMapping("login")
-    public MemberVo login(MemberVo vo) {
-        System.out.println("vo = " + vo);
-        // print member
-        MemberVo loginMemberVo = service.login(vo);
-        return loginMemberVo;
-    }
+//    @GetMapping("login")
+//    public MemberVo login(MemberVo vo) {
+//        System.out.println("vo = " + vo);
+//        // print member
+//        MemberVo loginMemberVo = service.login(vo);
+//        return loginMemberVo;
+//    }
 }
