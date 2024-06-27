@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,11 +23,21 @@ public class User implements UserDetails {
     @Id // pk
     @GeneratedValue // auto-increment, strategy = ...
     private Integer userNo;
+
+    @Column(name = "email", length = 100, nullable = false, unique = true)
     private String email;
+
+    @Column(name = "password", length = 255, nullable = false)
     private String password;
-    private String nick;
-    private char delYn;
-    private String createdDate;
+
+    @Column(name = "nick", length = 30)
+    private String nick = "";
+
+    @Column(name = "del_yn", length = 1)
+    private char delYn = 'N';
+
+    @Column(name = "created_date")
+    private LocalDateTime createdDate = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     private Role role;
