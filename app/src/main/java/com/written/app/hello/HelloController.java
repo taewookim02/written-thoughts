@@ -11,7 +11,6 @@ import java.util.Map;
 public class HelloController {
 
     @GetMapping("/api/test")
-    @CrossOrigin(origins = "http://localhost:3000")
     public Map<String, String> hello() {
         Map<String, String> response = new HashMap<>();
         response.put("message", "hello world!!!!");

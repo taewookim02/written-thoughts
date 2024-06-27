@@ -1,24 +1,41 @@
 package com.written.app.member.controller;
 
+import com.written.app.member.dto.MemberFormDto;
 import com.written.app.member.service.MemberService;
 import com.written.app.member.vo.MemberVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Member;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-@RequestMapping("member")
+@RequestMapping("/api/v1/member")
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService service;
 
-//    @GetMapping("login")
-//    public MemberVo login(MemberVo vo) {
-//        System.out.println("vo = " + vo);
-//        // print member
-//        MemberVo loginMemberVo = service.login(vo);
-//        return loginMemberVo;
-//    }
+    @PostMapping("login")
+    public Map<String, String> login(@RequestBody MemberVo vo) {
+        HashMap<String, String> map = new HashMap<>();
+        // TODO: implement login
+        map.put("message", "ok");
+        map.put("zzz", "zzsdfsdf");
+
+        return map;
+    }
+
+    @PostMapping("signup")
+    public Map<String, String> signUp(@RequestBody MemberFormDto dto) {
+        System.out.println("dto = " + dto);
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("message", "ok");
+        map.put("hello", "wrod");
+
+        return map;
+    }
+
 }

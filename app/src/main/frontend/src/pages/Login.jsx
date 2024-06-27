@@ -1,5 +1,15 @@
+import Navbar from "../components/Navbar";
+import LoginForm from "../components/login/LoginForm";
+import MainContainer from "../components/MainContainer";
 const Login = () => {
-  return <h1>Login</h1>;
+  return (
+    <>
+      <Navbar isSimple={true}></Navbar>
+      <MainContainer>
+        <LoginForm />
+      </MainContainer>
+    </>
+  );
 };
 
 export default Login;
