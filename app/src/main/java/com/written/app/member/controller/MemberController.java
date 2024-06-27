@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/member")
 @RequiredArgsConstructor
@@ -16,8 +19,12 @@ public class MemberController {
     private final MemberService service;
 
     @PostMapping("login")
-    public String login() {
-        return "login from controller";
+    public Map<String, String> login() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("message", "ok");
+        map.put("zzz", "zzsdfsdf");
+
+        return map;
     }
 
 //    @GetMapping("login")
