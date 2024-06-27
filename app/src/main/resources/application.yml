@@ -23,7 +23,7 @@ server:
   servlet:
     context-path: /app
 
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
-    jdbc-type-for-null: NULL
+#mybatis:
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    jdbc-type-for-null: NULL
