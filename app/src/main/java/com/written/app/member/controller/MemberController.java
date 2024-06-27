@@ -17,25 +17,28 @@ public class MemberController {
 
     private final MemberService service;
 
-    @PostMapping("login")
-    public Map<String, String> login(@RequestBody MemberVo vo) {
-        HashMap<String, String> map = new HashMap<>();
-        // TODO: implement login
-        map.put("message", "ok");
-        map.put("zzz", "zzsdfsdf");
-
-        return map;
-    }
-
-    @PostMapping("signup")
-    public Map<String, String> signUp(@RequestBody MemberFormDto dto) {
-        System.out.println("dto = " + dto);
-
-        HashMap<String, String> map = new HashMap<>();
-        map.put("message", "ok");
-        map.put("hello", "wrod");
-
-        return map;
-    }
+//    @PostMapping("login")
+//    public Map<String, String> login(@RequestBody MemberVo vo) {
+//        HashMap<String, String> map = new HashMap<>();
+//        // TODO: implement login
+//        map.put("message", "ok");
+//        map.put("zzz", "zzsdfsdf");
+//
+//        return map;
+//    }
+//
+//    @PostMapping("signup")
+//    public Map<String, String> signUp(@RequestBody MemberFormDto dto) {
+//        System.out.println("dto = " + dto);
+//
+//
+//
+//
+//        HashMap<String, String> map = new HashMap<>();
+//        map.put("message", "ok");
+//        map.put("hello", "wrod");
+//
+//        return map;
+//    }
 
 }
