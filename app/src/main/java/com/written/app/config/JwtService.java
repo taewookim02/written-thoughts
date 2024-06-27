@@ -19,8 +19,10 @@ import java.util.function.Function;
 @Service
 @RequiredArgsConstructor
 public class JwtService {
-    
+
     private final JwtProperties jwtProperties;
+//    @Value("${jwt.SECRET_KEY}")
+//    private String SECRET_KEY;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

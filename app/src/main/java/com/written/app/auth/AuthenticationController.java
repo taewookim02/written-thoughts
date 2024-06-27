@@ -1,11 +1,9 @@
 package com.written.app.auth;
 
+import com.written.app.config.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationService service;
+    private final JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
@@ -24,9 +23,12 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
+            @RequestBody AuthenticationRequest request,
+            @RequestHeader("Authorization") String token
     ) {
-        return ResponseEntity.ok(service.authenticate(request));
+
+
+        return ResponseEntity.ok(service.authenticate(request, token));
     }
 
 
