@@ -6,7 +6,7 @@ const App = () => {
     const data = await res.json();
     console.log(data);
   };
-  fetchData();
+  // fetchData();
   // introductory page
   return (
     <>

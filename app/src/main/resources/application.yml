@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: app
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring_db
+    username: spring_user
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+jwt:
+  SECRET_KEY: 66790f1b278f5f70d67b7ca193ae5f597642c504b0351c145e7215f4ae13718f
+
+server:
+  port: 8080
+  servlet:
+    context-path: /app
+
+
+#mybatis:
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    jdbc-type-for-null: NULL
