@@ -10,14 +10,14 @@ const SignupForm = () => {
     e.preventDefault();
     try {
       const res = await fetch(
-        "http://127.0.0.1:8080/app/api/v1/member/signup",
+        "http://127.0.0.1:8080/app/api/v1/auth/register",
         {
           mode: "cors",
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ id: id, pwd: password, confirmPwd }),
+          body: JSON.stringify({ email: id, password: password, confirmPwd }),
         }
       );
 
