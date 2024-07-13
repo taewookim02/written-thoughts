@@ -29,8 +29,8 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .nick("") // default
-                .delYn('N') // default
-                .createdDate(LocalDateTime.now()) // default
+                .isDeleted(false) // default
+                .createdAt(LocalDateTime.now()) // default
                 .role(Role.USER)
                 .build();
 

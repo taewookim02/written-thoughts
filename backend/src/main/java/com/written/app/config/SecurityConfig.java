@@ -33,10 +33,13 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                    req.requestMatchers("/auth/**")
+                        // TODO: implement proper requestMatchers
+                    /*req.requestMatchers("/auth/**")
                                 .permitAll()
                                 .anyRequest()
-                                .authenticated()
+                                .authenticated()*/
+                        // FIXME: currently permiting all requests w/o jwt token
+                        req.anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)

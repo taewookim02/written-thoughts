@@ -1,10 +1,8 @@
 package com.written.app.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+
 
 @Data
 @Builder
@@ -22,7 +21,7 @@ import java.util.List;
 public class User implements UserDetails {
     @Id // pk
     @GeneratedValue // auto-increment, strategy = ...
-    private Integer userNo;
+    private Integer id;
 
     @Column(name = "email", length = 100, nullable = false, unique = true)
     private String email;
@@ -33,14 +32,25 @@ public class User implements UserDetails {
     @Column(name = "nick", length = 30)
     private String nick = "";
 
-    @Column(name = "del_yn", length = 1)
-    private char delYn = 'N';
+    private boolean isDeleted = false;
 
-    @Column(name = "created_date")
-    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Entry> entries;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<com.written.app.model.List> lists;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Label> labels;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
