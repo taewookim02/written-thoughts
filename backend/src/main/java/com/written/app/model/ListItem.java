@@ -1,7 +1,6 @@
 package com.written.app.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,23 +12,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class List {
+public class ListItem {
+
     @Id
     @GeneratedValue
     private Integer id;
 
-
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "list_id", nullable = false)
     @JsonBackReference
-    private User user;
+    private List list;
 
-    @Column(length = 50)
-    private String title;
-
-
-    @OneToMany(mappedBy = "list")
-    @JsonManagedReference
-    private java.util.List<ListItem> listItem;
+    private String content;
 
 }

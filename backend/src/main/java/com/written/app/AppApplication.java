@@ -2,11 +2,9 @@ package com.written.app;
 
 //import org.mybatis.spring.annotation.MapperScan;
 
-import com.written.app.model.Entry;
-import com.written.app.model.List;
-import com.written.app.model.Role;
-import com.written.app.model.User;
+import com.written.app.model.*;
 import com.written.app.repository.EntryRepository;
+import com.written.app.repository.ListItemRepository;
 import com.written.app.repository.ListRepository;
 import com.written.app.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -29,7 +27,8 @@ public class AppApplication {
     public CommandLineRunner commandLineRunner(
             EntryRepository entryRepository,
             UserRepository userRepository,
-            ListRepository listRepository
+            ListRepository listRepository,
+            ListItemRepository listItemRepository
     ) {
         return args -> {
             // dummy user
@@ -84,6 +83,23 @@ public class AppApplication {
                     .user(user2)
                     .build();
             listRepository.save(list);
+
+
+            // dummy list item
+            var listItem = ListItem.builder()
+                    .list(list)
+                    .content("hello world from list item")
+                    .build();
+            listItemRepository.save(listItem);
+
+
+            var listItem2 = ListItem.builder()
+                    .list(list)
+                    .content("second list item from list \n" +
+                            "after line break")
+                    .build();
+            listItemRepository.save(listItem2);
+
         };
     }
 
