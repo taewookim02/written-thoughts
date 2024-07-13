@@ -1,13 +1,8 @@
 package com.written.app.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +14,7 @@ import java.time.LocalDateTime;
 public class Entry {
     @Id
     @GeneratedValue
-    private Integer entryNo;
+    private Integer id;
 
 
     private String title;
@@ -35,4 +30,10 @@ public class Entry {
             updatable = false
     )
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    @ToString.Exclude
+    @JsonBackReference
+    private User user;
 }
