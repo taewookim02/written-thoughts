@@ -34,16 +34,19 @@ public class User implements UserDetails {
 
     private boolean isDeleted = false;
 
-    @Column(name = "created_date")
-    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
     @JsonManagedReference
     private List<Entry> entries;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<com.written.app.model.List> lists;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -3,9 +3,11 @@ package com.written.app;
 //import org.mybatis.spring.annotation.MapperScan;
 
 import com.written.app.model.Entry;
+import com.written.app.model.List;
 import com.written.app.model.Role;
 import com.written.app.model.User;
 import com.written.app.repository.EntryRepository;
+import com.written.app.repository.ListRepository;
 import com.written.app.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,7 +27,9 @@ public class AppApplication {
 
     @Bean
     public CommandLineRunner commandLineRunner(
-            EntryRepository entryRepository, UserRepository userRepository
+            EntryRepository entryRepository,
+            UserRepository userRepository,
+            ListRepository listRepository
     ) {
         return args -> {
             // dummy user
@@ -35,7 +39,7 @@ public class AppApplication {
                     .role(Role.USER)
                     .nick("")
                     .isDeleted(false)
-                    .createdDate(LocalDateTime.now())
+                    .createdAt(LocalDateTime.now())
                     .build();
             userRepository.save(user);
 
@@ -45,7 +49,7 @@ public class AppApplication {
                     .role(Role.USER)
                     .nick("")
                     .isDeleted(false)
-                    .createdDate(LocalDateTime.now())
+                    .createdAt(LocalDateTime.now())
                     .build();
             userRepository.save(user2);
 
@@ -73,6 +77,13 @@ public class AppApplication {
                     .build();
             entryRepository.save(entry2);
 
+
+            // dummy list
+            var list = List.builder()
+                    .title("To be more articulate")
+                    .user(user2)
+                    .build();
+            listRepository.save(list);
         };
     }
 

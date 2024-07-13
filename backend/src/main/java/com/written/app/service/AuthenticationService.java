@@ -30,7 +30,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .nick("") // default
                 .isDeleted(false) // default
-                .createdDate(LocalDateTime.now()) // default
+                .createdAt(LocalDateTime.now()) // default
                 .role(Role.USER)
                 .build();
 
