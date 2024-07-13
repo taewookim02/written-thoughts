@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 public class JwtProperties {
+    // TODO: this class is not used as using @Value for getting secretKey is simpler
     private String secretKey;
-
 }

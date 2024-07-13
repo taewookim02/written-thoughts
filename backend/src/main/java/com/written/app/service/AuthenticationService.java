@@ -1,10 +1,12 @@
-package com.written.app.auth;
+package com.written.app.service;
 
 
-import com.written.app.config.JwtService;
-import com.written.app.user.Role;
-import com.written.app.user.User;
-import com.written.app.user.UserRepository;
+import com.written.app.dto.AuthenticationRequest;
+import com.written.app.dto.AuthenticationResponse;
+import com.written.app.dto.RegisterRequest;
+import com.written.app.model.Role;
+import com.written.app.model.User;
+import com.written.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,6 +38,7 @@ public class AuthenticationService {
         System.out.println("user = " + user);
 
         repository.save(user);
+
         var jwtToken = jwtService.generateToken(user);
 
         return AuthenticationResponse.builder()

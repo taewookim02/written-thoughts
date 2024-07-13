@@ -1,4 +1,4 @@
-package com.written.app.auth;
+package com.written.app.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
