@@ -47,6 +47,10 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<com.written.app.model.List> lists;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Label> labels;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

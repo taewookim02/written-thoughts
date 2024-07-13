@@ -3,10 +3,7 @@ package com.written.app;
 //import org.mybatis.spring.annotation.MapperScan;
 
 import com.written.app.model.*;
-import com.written.app.repository.EntryRepository;
-import com.written.app.repository.ListItemRepository;
-import com.written.app.repository.ListRepository;
-import com.written.app.repository.UserRepository;
+import com.written.app.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +25,8 @@ public class AppApplication {
             EntryRepository entryRepository,
             UserRepository userRepository,
             ListRepository listRepository,
-            ListItemRepository listItemRepository
+            ListItemRepository listItemRepository,
+            LabelRepository labelRepository
     ) {
         return args -> {
             // dummy user
@@ -52,6 +50,13 @@ public class AppApplication {
                     .build();
             userRepository.save(user2);
 
+            // dummy label
+            var label = Label.builder()
+                    .user(user2)
+                    .name("Daily journal")
+                    .build();
+            labelRepository.save(label);
+
 
             // dummy entry
             var entry = Entry.builder()
@@ -72,7 +77,8 @@ public class AppApplication {
                             "world" +
                             "\n\n\n\nzz")
                     .title("Title 02")
-                    .user(user)
+                    .user(user2)
+                    .label(label)
                     .build();
             entryRepository.save(entry2);
 
@@ -99,6 +105,9 @@ public class AppApplication {
                             "after line break")
                     .build();
             listItemRepository.save(listItem2);
+
+
+
 
         };
     }

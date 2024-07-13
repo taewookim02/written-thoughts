@@ -35,4 +35,12 @@ public class Entry {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private User user;
+
+
+    @ManyToOne
+    @JoinColumn(name = "label_id")
+    @JsonBackReference
+    private Label label;
+
+
 }
