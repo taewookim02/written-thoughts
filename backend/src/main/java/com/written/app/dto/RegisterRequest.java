@@ -1,4 +1,4 @@
-package com.written.app.auth;
+package com.written.app.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+@AllArgsConstructor
+public class RegisterRequest {
     private String email;
-    String password;
+    private String password;
 }

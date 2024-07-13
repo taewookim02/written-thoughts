@@ -1,4 +1,4 @@
-package com.written.app.user;
+package com.written.app.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

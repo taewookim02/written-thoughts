@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 //@MapperScan
-@EnableConfigurationProperties(JwtProperties.class)
+//@EnableConfigurationProperties(JwtProperties.class)
 public class AppApplication {
 
 	public static void main(String[] args) {
