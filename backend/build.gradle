@@ -24,13 +24,17 @@ repositories {
 }
 
 dependencies {
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 //	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // jpa
 	implementation 'org.springframework.boot:spring-boot-starter-security' // security
+
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5' // jwt
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5' // jwt-impl
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5' // jwt-jackson
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.6.0' // swagger-ui
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // validation
 
 	testImplementation 'org.springframework.security:spring-security-test'
 	compileOnly 'org.projectlombok:lombok'
