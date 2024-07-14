@@ -1,4 +1,4 @@
-package com.written.app.config;
+package com.written.app.dto;
 
 import lombok.Getter;
 import lombok.Setter;
