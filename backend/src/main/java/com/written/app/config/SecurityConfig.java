@@ -34,7 +34,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         // TODO: implement proper requestMatchers
-                    /*req.requestMatchers("/auth/**")
+                    /*req
+                                .requestMatchers(
+                                    "/auth/**",
+                                    "TODO: add swagger-ui endpoints"
+                                )
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()*/
