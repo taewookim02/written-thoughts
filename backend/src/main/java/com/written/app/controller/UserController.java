@@ -3,6 +3,7 @@ package com.written.app.controller;
 import com.written.app.model.Entry;
 import com.written.app.model.User;
 import com.written.app.service.UserService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,6 +48,7 @@ public class UserController {
 
     // user by id
     @GetMapping("/{id}")
+    // @Hidden // hide from swagger
     public User findUserById(
             @PathVariable Integer id
     ) {
