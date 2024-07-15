@@ -34,4 +34,13 @@ public class LabelController {
         labelService.delete(id);
     }
 
+    @PutMapping("/labels/{label-id}")
+    public ResponseEntity<LabelDto> update(
+            @PathVariable("label-id") Integer labelId,
+            @RequestBody LabelDto dto
+    ) {
+        LabelDto updatedLabel = labelService.update(labelId, dto);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedLabel);
+    }
+
 }

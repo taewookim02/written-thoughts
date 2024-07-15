@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,5 +48,15 @@ public class LabelService {
 
     public void delete(Integer id) {
         labelRepository.deleteById(id);
+    }
+
+    public LabelDto update(Integer id, LabelDto dto) {
+        System.out.println("id = " + id);
+        Label label = labelRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Label not found"));
+        label.setName(dto.name());
+
+        Label save = labelRepository.save(label);
+        return LabelMapper.toLabelDto(save);
     }
 }
