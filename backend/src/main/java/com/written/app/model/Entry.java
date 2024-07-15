@@ -3,6 +3,8 @@ package com.written.app.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -24,11 +26,12 @@ public class Entry {
     )
     private String content;
 
-    private boolean isPrivate;
+    private boolean isPrivate = true;
 
     @Column(
             updatable = false
     )
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @ManyToOne
