@@ -4,5 +4,6 @@ public record ListDto(
         Integer id,
         Integer userId,
         String title
+
 ) {
 }

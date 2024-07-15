@@ -28,7 +28,16 @@ public class ListController {
 
     @PostMapping("/lists")
     public ListDto create(@RequestBody ListDto dto) {
-        System.out.println("dto = " + dto);
         return listService.create(dto);
+    }
+
+    @PatchMapping("/lists/{list-id}")
+    // TODO: is including userId appropriate? >> (ListDto)
+    public ListDto update(
+            @PathVariable("list-id") Integer listId,
+            @RequestBody ListDto dto
+    ) {
+        // TODO: check if userId matches
+        return listService.update(listId, dto);
     }
 }

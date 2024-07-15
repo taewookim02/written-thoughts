@@ -9,12 +9,11 @@ import com.written.app.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class ListService {
     private final ListRepository listRepository;
     private final UserRepository userRepository;
+
     public ListService(ListRepository listRepository, UserRepository userRepository) {
         this.listRepository = listRepository;
         this.userRepository = userRepository;
@@ -33,6 +32,16 @@ public class ListService {
                 .user(user)
                 .build();
 
+        List save = listRepository.save(list);
+
+        return ListMapper.toListDto(save);
+    }
+
+    public ListDto update(Integer listId, ListDto dto) {
+        List list = listRepository.findById(listId)
+                .orElseThrow(() -> new EntityNotFoundException("List not found with the id: " + dto.id()));
+
+        list.setTitle(dto.title());
         List save = listRepository.save(list);
 
         return ListMapper.toListDto(save);
