@@ -10,9 +10,7 @@ import com.written.app.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EntryService {
@@ -84,5 +82,10 @@ public class EntryService {
 
         return entryRepository.save(entry);
 
+    }
+
+    public Entry findById(Integer entryId) {
+        return entryRepository.findById(entryId)
+                .orElseThrow(() -> new EntityNotFoundException("Entry not found with the id: " + entryId));
     }
 }

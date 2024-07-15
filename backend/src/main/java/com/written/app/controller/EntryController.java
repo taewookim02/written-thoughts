@@ -17,7 +17,14 @@ public class EntryController {
         this.entryService = entryService;
     }
 
-    @GetMapping("/entry/{user-id}")
+    @GetMapping("/entry/{entry-id}")
+    public Entry findById(
+            @PathVariable("entry-id") Integer entryId
+    ) {
+        return entryService.findById(entryId);
+    }
+
+    @GetMapping("/entry/user/{user-id}")
     public List<Entry> findAllByUserId(
             @PathVariable("user-id") Integer userId
     ) {
