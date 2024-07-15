@@ -19,6 +19,7 @@ public class LabelController {
 
     @GetMapping("/labels/{user-id}")
     public List<LabelDto> findAllByUserId(@PathVariable("user-id") Integer userId) {
+        // TODO: check if userId matches
         return labelService.findAllByUserId(userId);
     }
 
@@ -31,14 +32,16 @@ public class LabelController {
     @DeleteMapping("/labels/{label-id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("label-id") Integer id) {
+        // TODO: check if userId matches
         labelService.delete(id);
     }
 
-    @PutMapping("/labels/{label-id}")
+    @PatchMapping("/labels/{label-id}")
     public ResponseEntity<LabelDto> update(
             @PathVariable("label-id") Integer labelId,
             @RequestBody LabelDto dto
     ) {
+        // TODO: check if userId matches
         LabelDto updatedLabel = labelService.update(labelId, dto);
         return ResponseEntity.status(HttpStatus.OK).body(updatedLabel);
     }
