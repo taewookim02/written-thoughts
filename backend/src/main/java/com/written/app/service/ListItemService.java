@@ -31,4 +31,14 @@ public class ListItemService {
 
         return ListItemMapper.toListItemDto(save);
     }
+
+    public ListItemDto update(Integer listItemId, ListItemDto dto) {
+        ListItem listItem = listItemRepository.findById(listItemId)
+                .orElseThrow(() -> new EntityNotFoundException("List Item not found with the id: " + listItemId));
+
+        listItem.setContent(dto.content());
+        ListItem save = listItemRepository.save(listItem);
+
+        return ListItemMapper.toListItemDto(save);
+    }
 }
