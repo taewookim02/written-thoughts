@@ -1,9 +1,8 @@
 package com.written.app.controller;
 
 import com.written.app.dto.ListItemDto;
-import com.written.app.model.List;
-import com.written.app.model.ListItem;
 import com.written.app.service.ListItemService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,6 +24,13 @@ public class ListItemController {
             @PathVariable("list-item-id") Integer listItemId,
             @RequestBody ListItemDto dto
     ) {
+        // TODO: check if userId matches
         return listItemService.update(listItemId, dto);
+    }
+
+    @DeleteMapping("/list-items/{list-item-id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable("list-item-id") Integer listItemId) {
+        listItemService.delete(listItemId);
     }
 }
