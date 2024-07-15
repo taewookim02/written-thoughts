@@ -1,10 +1,13 @@
 package com.written.app.service;
 
 
-import com.written.app.dto.LabelResponse;
+import com.written.app.dto.LabelDto;
 import com.written.app.mapper.LabelMapper;
 import com.written.app.model.Label;
+import com.written.app.model.User;
 import com.written.app.repository.LabelRepository;
+import com.written.app.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,16 +17,31 @@ import java.util.stream.Collectors;
 public class LabelService {
 
     private final LabelRepository labelRepository;
+    private final UserRepository userRepository;
 
-    public LabelService(LabelRepository labelRepository) {
+    public LabelService(LabelRepository labelRepository, UserRepository userRepository) {
         this.labelRepository = labelRepository;
+        this.userRepository = userRepository;
     }
 
-    public List<LabelResponse> findAllByUserId(Integer userId) {
+    public List<LabelDto> findAllByUserId(Integer userId) {
         return labelRepository.findAllByUserId(userId)
                 .stream()
-                .map(LabelMapper::toLabelResponseDto)
+                .map(LabelMapper::toLabelDto)
                 .collect(Collectors.toList());
 
+    }
+
+    public LabelDto create(LabelDto dto) {
+        User user = userRepository.findById(dto.userId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        Label label = Label.builder()
+                .name(dto.name())
+                .user(user)
+                .build();
+
+        Label save = labelRepository.save(label);
+        return LabelMapper.toLabelDto(save);
     }
 }

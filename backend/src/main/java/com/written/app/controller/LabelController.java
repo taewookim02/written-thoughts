@@ -1,12 +1,8 @@
 package com.written.app.controller;
 
-import com.written.app.dto.LabelResponse;
-import com.written.app.model.Label;
+import com.written.app.dto.LabelDto;
 import com.written.app.service.LabelService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,7 +17,12 @@ public class LabelController {
     }
 
     @GetMapping("/user-label/{user_id}")
-    public List<LabelResponse> findAllByUserId(@PathVariable("user_id") Integer userId) {
+    public List<LabelDto> findAllByUserId(@PathVariable("user_id") Integer userId) {
         return labelService.findAllByUserId(userId);
+    }
+
+    @PostMapping
+    public LabelDto create(@RequestBody LabelDto dto) {
+        return labelService.create(dto);
     }
 }

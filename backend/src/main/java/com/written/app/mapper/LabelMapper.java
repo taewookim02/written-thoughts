@@ -1,12 +1,16 @@
 package com.written.app.mapper;
 
-import com.written.app.dto.LabelResponse;
+import com.written.app.dto.LabelDto;
 import com.written.app.model.Label;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LabelMapper {
-    public static LabelResponse toLabelResponseDto(Label label) {
-        return new LabelResponse(label.getId(), label.getName());
+    public static LabelDto toLabelDto(Label label) {
+        return new LabelDto(
+                label.getId(),
+                label.getName(),
+                label.getUser().getId()
+        );
     }
 }
