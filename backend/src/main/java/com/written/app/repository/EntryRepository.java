@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface EntryRepository extends JpaRepository<Entry, Integer> {
     List<Entry> findAllByUserId(Integer userId);
+
+//    TODO: add ordered entry list fetching
+//    findAllByUserIdOrderByCreatedAtDesc
 }
+ 
