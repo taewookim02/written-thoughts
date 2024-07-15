@@ -2,14 +2,17 @@ package com.written.app;
 
 //import org.mybatis.spring.annotation.MapperScan;
 
+import com.github.javafaker.Faker;
 import com.written.app.model.*;
 import com.written.app.repository.*;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @SpringBootApplication
 //@MapperScan
@@ -20,7 +23,41 @@ public class AppApplication {
         SpringApplication.run(AppApplication.class, args);
     }
 
+
     @Bean
+    public CommandLineRunner fakerRunner(
+            EntryRepository entryRepository,
+            UserRepository userRepository
+    ) {
+        return args -> {
+            // get user with the id 2
+            User user = userRepository.findById(2)
+                    .orElseThrow(() -> new EntityNotFoundException("Entity not found"));
+            // 50 public entries
+            for (int i = 0; i < 50; i++) {
+                Faker faker = new Faker(); // fake data generator
+                Entry entry = Entry.builder()
+                        .title(faker.beer().name())
+                        .content(faker.rickAndMorty().quote())
+                        .user(user)
+                        .isPublic(true)
+                        .build();
+                entryRepository.save(entry);
+
+                try {
+                    // sleep 1 second
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    System.err.println("Thread was interrupted during sleep: " + e.getMessage());
+                    break;
+                }
+            }
+
+        };
+    }
+
+//    @Bean
     public CommandLineRunner commandLineRunner(
             EntryRepository entryRepository,
             UserRepository userRepository,
