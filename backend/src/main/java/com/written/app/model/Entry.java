@@ -26,7 +26,7 @@ public class Entry {
     )
     private String content;
 
-    private boolean isPrivate = true;
+    private boolean isPublic = false;
 
     @Column(
             updatable = false

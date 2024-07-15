@@ -20,7 +20,7 @@ public class AppApplication {
         SpringApplication.run(AppApplication.class, args);
     }
 
-//    @Bean
+    @Bean
     public CommandLineRunner commandLineRunner(
             EntryRepository entryRepository,
             UserRepository userRepository,
@@ -60,7 +60,7 @@ public class AppApplication {
 
             // dummy entry
             var entry = Entry.builder()
-                    .isPrivate(false)
+                    .isPublic(false)
                     .createdAt(LocalDateTime.now())
                     .content("today\n" +
                             "lorem\n" +
@@ -71,7 +71,7 @@ public class AppApplication {
             entryRepository.save(entry);
 
             var entry2 = Entry.builder()
-                    .isPrivate(true)
+                    .isPublic(true)
                     .createdAt(LocalDateTime.now())
                     .content("hello" +
                             "world" +

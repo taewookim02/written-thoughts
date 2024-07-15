@@ -5,6 +5,6 @@ public record EntryDto(
          String content,
          Integer labelId,
          Integer userId,
-         Boolean isPrivate
+         Boolean isPublic
 ) {
 }

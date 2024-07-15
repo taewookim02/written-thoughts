@@ -39,6 +39,7 @@ public class EntryController {
 
     @PostMapping("/entry")
     public Entry create(@RequestBody EntryDto dto) {
+        System.out.println("dto = " + dto);
         return entryService.create(dto);
     }
 
@@ -75,5 +76,8 @@ public class EntryController {
                 .body(resource);
     }
 
+
+//    @GetMapping("/entry/public")
+//    public List<Entry> findAllWhereIsPrivateIsFalse
 
 }
