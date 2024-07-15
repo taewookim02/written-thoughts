@@ -40,4 +40,12 @@ public class ListController {
         // TODO: check if userId matches
         return listService.update(listId, dto);
     }
+
+    @DeleteMapping("/lists/{list-id}")
+    public void delete(
+            @PathVariable("list-id") Integer listId
+    ) {
+        // TODO: check if userId matches
+        listService.delete(listId);
+    }
 }

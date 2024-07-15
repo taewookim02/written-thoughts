@@ -28,7 +28,7 @@ public class List {
     private String title;
 
 
-    @OneToMany(mappedBy = "list")
+    @OneToMany(mappedBy = "list", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private java.util.List<ListItem> listItem;
 

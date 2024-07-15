@@ -46,4 +46,11 @@ public class ListService {
 
         return ListMapper.toListDto(save);
     }
+
+    public void delete(Integer listId) {
+        if (!listRepository.existsById(listId)) {
+            throw new EntityNotFoundException("List not found with the id: " + listId);
+        }
+        listRepository.deleteById(listId);
+    }
 }
