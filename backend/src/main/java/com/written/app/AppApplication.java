@@ -24,7 +24,7 @@ public class AppApplication {
     }
 
 
-    @Bean
+//    @Bean
     public CommandLineRunner fakerRunner(
             EntryRepository entryRepository,
             UserRepository userRepository

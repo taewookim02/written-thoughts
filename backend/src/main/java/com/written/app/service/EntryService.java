@@ -109,4 +109,8 @@ public class EntryService {
 
         return content.toString();
     }
+
+    public List<Entry> findTop20ByIsPublicTrueOrderByCreatedAtDesc() {
+        return entryRepository.findTop20ByIsPublicTrueOrderByCreatedAtDesc();
+    }
 }

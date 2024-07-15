@@ -77,7 +77,10 @@ public class EntryController {
     }
 
 
-//    @GetMapping("/entry/public")
-//    public List<Entry> findAllWhereIsPrivateIsFalse
+    // get top 20 public entries order by date descending
+    @GetMapping("/entry/public")
+    public List<Entry> findTop20ByIsPublicTrueOrderByCreatedAtDesc() {
+        return entryService.findTop20ByIsPublicTrueOrderByCreatedAtDesc();
+    }
 
 }
