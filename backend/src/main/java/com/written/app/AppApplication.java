@@ -20,7 +20,7 @@ public class AppApplication {
         SpringApplication.run(AppApplication.class, args);
     }
 
-    @Bean
+//    @Bean
     public CommandLineRunner commandLineRunner(
             EntryRepository entryRepository,
             UserRepository userRepository,
