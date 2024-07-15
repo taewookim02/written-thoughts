@@ -40,6 +40,11 @@ public class EntryService {
             entry.setLabel(label);
         }
 
+        // set isPublic if exists
+        if (dto.isPublic() != null) {
+            entry.setPublic(dto.isPublic());
+        }
+
         // set user
         User user = userRepository.findById(dto.userId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + dto.userId()));
@@ -68,8 +73,8 @@ public class EntryService {
         }
 
         // update isPrivate if provided
-        if (dto.isPrivate() != null) {
-            entry.setPrivate(dto.isPrivate());
+        if (dto.isPublic() != null) {
+            entry.setPublic(dto.isPublic());
         }
 
         // update labelId if provided
@@ -90,6 +95,7 @@ public class EntryService {
     }
 
     public String downloadEntries(Integer userId) {
+        // TODO: user Auth validation
         List<Entry> entries = entryRepository.findAllByUserId(userId);
 
         StringBuilder content = new StringBuilder();
@@ -102,5 +108,9 @@ public class EntryService {
         }
 
         return content.toString();
+    }
+
+    public List<Entry> findTop20ByIsPublicTrueOrderByCreatedAtDesc() {
+        return entryRepository.findTop20ByIsPublicTrueOrderByCreatedAtDesc();
     }
 }

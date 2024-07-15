@@ -39,6 +39,7 @@ public class EntryController {
 
     @PostMapping("/entry")
     public Entry create(@RequestBody EntryDto dto) {
+        System.out.println("dto = " + dto);
         return entryService.create(dto);
     }
 
@@ -75,5 +76,11 @@ public class EntryController {
                 .body(resource);
     }
 
+
+    // get top 20 public entries order by date descending
+    @GetMapping("/entry/public")
+    public List<Entry> findTop20ByIsPublicTrueOrderByCreatedAtDesc() {
+        return entryService.findTop20ByIsPublicTrueOrderByCreatedAtDesc();
+    }
 
 }

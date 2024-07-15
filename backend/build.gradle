@@ -35,6 +35,11 @@ dependencies {
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5' // jwt-jackson
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.6.0' // swagger-ui
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // validation
+	implementation('com.github.javafaker:javafaker:1.0.2') { // fake data
+		exclude group: 'org.yaml', module: 'snakeyaml' // exclude snakeyaml from javafaker (dependency version clash)
+	}
+
+
 
 	testImplementation 'org.springframework.security:spring-security-test'
 	compileOnly 'org.projectlombok:lombok'
