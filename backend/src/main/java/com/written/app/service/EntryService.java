@@ -88,4 +88,19 @@ public class EntryService {
         return entryRepository.findById(entryId)
                 .orElseThrow(() -> new EntityNotFoundException("Entry not found with the id: " + entryId));
     }
+
+    public String downloadEntries(Integer userId) {
+        List<Entry> entries = entryRepository.findAllByUserId(userId);
+
+        StringBuilder content = new StringBuilder();
+        for (Entry entry : entries) {
+            content.append("----------------\n");
+            content.append("Title: ").append(entry.getTitle()).append("\n");
+            content.append("Date: ").append(entry.getCreatedAt()).append("\n");
+            content.append("Content: ").append(entry.getContent()).append("\n");
+            content.append("----------------\n\n");
+        }
+
+        return content.toString();
+    }
 }
