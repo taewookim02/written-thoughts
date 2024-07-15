@@ -2,12 +2,13 @@ package com.written.app.controller;
 
 import com.written.app.dto.LabelDto;
 import com.written.app.service.LabelService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/label")
 public class LabelController {
 
     private final LabelService labelService;
@@ -16,13 +17,21 @@ public class LabelController {
         this.labelService = labelService;
     }
 
-    @GetMapping("/user-label/{user_id}")
-    public List<LabelDto> findAllByUserId(@PathVariable("user_id") Integer userId) {
+    @GetMapping("/labels/{user-id}")
+    public List<LabelDto> findAllByUserId(@PathVariable("user-id") Integer userId) {
         return labelService.findAllByUserId(userId);
     }
 
-    @PostMapping
-    public LabelDto create(@RequestBody LabelDto dto) {
-        return labelService.create(dto);
+    @PostMapping("/labels")
+    public ResponseEntity<LabelDto> create(@RequestBody LabelDto dto) {
+        LabelDto createdLabel = labelService.create(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdLabel);
     }
+
+    @DeleteMapping("/labels/{label-id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable("label-id") Integer id) {
+        labelService.delete(id);
+    }
+
 }

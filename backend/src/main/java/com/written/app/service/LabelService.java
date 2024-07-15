@@ -44,4 +44,8 @@ public class LabelService {
         Label save = labelRepository.save(label);
         return LabelMapper.toLabelDto(save);
     }
+
+    public void delete(Integer id) {
+        labelRepository.deleteById(id);
+    }
 }
