@@ -1,10 +1,9 @@
 package com.written.app.controller;
 
+import com.written.app.dto.EntryDto;
 import com.written.app.model.Entry;
 import com.written.app.service.EntryService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +21,12 @@ public class EntryController {
             @PathVariable("user-id") Integer userId
     ) {
         return entryService.findAllByUserId(userId);
-
     }
 
+    @PostMapping("/entry")
+    public Entry create(@RequestBody EntryDto dto) {
+        System.out.println("dto = " + dto);
+        return entryService.create(dto);
+    }
 
 }
