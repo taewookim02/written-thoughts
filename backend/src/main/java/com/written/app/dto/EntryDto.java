@@ -4,7 +4,7 @@ public record EntryDto(
          String title,
          String content,
          Integer labelId,
-         Integer userId
-
+         Integer userId,
+         Boolean isPrivate
 ) {
 }

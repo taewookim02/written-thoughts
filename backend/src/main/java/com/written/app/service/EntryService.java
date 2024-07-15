@@ -51,6 +51,38 @@ public class EntryService {
     }
 
     public void delete(Integer entryId) {
+        // TODO: check if entry was deleted
         entryRepository.deleteById(entryId);
+    }
+
+    public Entry update(Integer entryId, EntryDto dto) {
+        Entry entry = entryRepository.findById(entryId)
+                .orElseThrow(() -> new EntityNotFoundException("Entry not found with the id: " + entryId));
+
+        // update title if provided
+        if (dto.title() != null) {
+            entry.setTitle(dto.title());
+        }
+
+        // update content if provided
+        if (dto.content() != null) {
+            entry.setContent(dto.content());
+        }
+
+        // update isPrivate if provided
+        if (dto.isPrivate() != null) {
+            entry.setPrivate(dto.isPrivate());
+        }
+
+        // update labelId if provided
+        if (dto.labelId() != null) {
+            Label label = labelRepository.findById(dto.labelId())
+                    .orElseThrow(() -> new EntityNotFoundException("Label not found with the id: " + dto.labelId()));
+            entry.setLabel(label);
+        }
+
+
+        return entryRepository.save(entry);
+
     }
 }

@@ -27,7 +27,6 @@ public class EntryController {
 
     @PostMapping("/entry")
     public Entry create(@RequestBody EntryDto dto) {
-        System.out.println("dto = " + dto);
         return entryService.create(dto);
     }
 
@@ -38,6 +37,15 @@ public class EntryController {
     ) {
         // TODO: check if userId matches
         entryService.delete(entryId);
+    }
+
+    @PatchMapping("/entry/{entry-id}")
+    public Entry update(
+            @PathVariable("entry-id") Integer entryId,
+            @RequestBody EntryDto dto
+    ) {
+        // TODO: check if userId matches
+        return entryService.update(entryId, dto);
     }
 
 }
