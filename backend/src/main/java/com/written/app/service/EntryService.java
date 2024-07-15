@@ -49,4 +49,8 @@ public class EntryService {
 
         return entryRepository.save(entry);
     }
+
+    public void delete(Integer entryId) {
+        entryRepository.deleteById(entryId);
+    }
 }
