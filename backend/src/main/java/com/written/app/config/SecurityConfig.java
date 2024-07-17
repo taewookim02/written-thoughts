@@ -34,16 +34,16 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         // TODO: implement proper requestMatchers
-                    /*req
+                    req
                                 .requestMatchers(
-                                    "/auth/**",
-                                    "TODO: add swagger-ui endpoints"
+                                    "/auth/**"
+//                                    "TODO: add swagger-ui endpoints"
                                 )
                                 .permitAll()
                                 .anyRequest()
-                                .authenticated()*/
+                                .authenticated()
                         // FIXME: currently permiting all requests w/o jwt token
-                        req.anyRequest().permitAll()
+//                        req.anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)

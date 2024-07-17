@@ -40,18 +40,22 @@ public class AuthenticationService {
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
 
+        saveUserToken(savedUser, jwtToken);
+
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
+    }
+
+    private void saveUserToken(User user, String jwtToken) {
         var token = Token.builder()
-                .user(savedUser)
+                .user(user)
                 .token(jwtToken)
                 .tokenType(TokenType.BEARER)
                 .expired(false)
                 .revoked(false)
                 .build();
         tokenRepository.save(token);
-
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request, String token) {
@@ -83,6 +87,7 @@ public class AuthenticationService {
                 .orElseThrow(); // TODO: throw precise exception and handle
 
         var jwtToken = jwtService.generateToken(user);
+        saveUserToken(user, jwtToken);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
