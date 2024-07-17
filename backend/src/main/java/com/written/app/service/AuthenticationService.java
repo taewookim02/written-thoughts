@@ -5,7 +5,10 @@ import com.written.app.dto.AuthenticationRequest;
 import com.written.app.dto.AuthenticationResponse;
 import com.written.app.dto.RegisterRequest;
 import com.written.app.model.Role;
+import com.written.app.model.Token;
+import com.written.app.model.TokenType;
 import com.written.app.model.User;
+import com.written.app.repository.TokenRepository;
 import com.written.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +23,7 @@ import java.time.LocalDateTime;
 public class AuthenticationService {
 
     private final UserRepository repository;
+    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -33,13 +37,17 @@ public class AuthenticationService {
                 .createdAt(LocalDateTime.now()) // default
                 .role(Role.USER)
                 .build();
-
-
-        System.out.println("user = " + user);
-
-        repository.save(user);
-
+        var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
+
+        var token = Token.builder()
+                .user(savedUser)
+                .token(jwtToken)
+                .tokenType(TokenType.BEARER)
+                .expired(false)
+                .revoked(false)
+                .build();
+        tokenRepository.save(token);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
