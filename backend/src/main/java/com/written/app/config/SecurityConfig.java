@@ -8,10 +8,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -22,6 +24,8 @@ public class SecurityConfig {
     //    private final AuthenticationProvider authenticationProvider;
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private final LogoutHandler logoutHandler;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,21 +37,34 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        // TODO: implement proper requestMatchers
-                    req
-                                .requestMatchers(
-                                    "/auth/**"
+                                // TODO: implement proper requestMatchers
+                                req
+                                        .requestMatchers(
+                                                "/auth/**"
 //                                    "TODO: add swagger-ui endpoints"
-                                )
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated()
+                                        )
+                                        .permitAll()
+                                        .anyRequest()
+                                        .authenticated()
                         // FIXME: currently permiting all requests w/o jwt token
 //                        req.anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout((logoutConfig) -> {
+                    logoutConfig.logoutUrl("/auth/logout");
+                    logoutConfig.addLogoutHandler(logoutHandler);
+                    logoutConfig.logoutSuccessHandler((request, response, authentication) -> {});
+                })
+                /*.logoutUrl("")
+                .addLogoutHandler(null)
+                .logoutSuccessHandler(
+                        (request, response, authentication) ->
+                        SecurityContextHolder.clearContext()
+                )*/
+
+        ;
 
         return http.build();
     }
