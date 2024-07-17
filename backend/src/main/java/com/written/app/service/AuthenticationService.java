@@ -58,8 +58,10 @@ public class AuthenticationService {
         tokenRepository.save(token);
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request, String token) {
-        // extract token
+    public AuthenticationResponse authenticate(AuthenticationRequest request
+//            , String token
+    ) {
+        /*// extract token
         String reqjwtToken = token.substring(7);
         System.out.println("jwtToken = " + reqjwtToken);
 
@@ -74,7 +76,7 @@ public class AuthenticationService {
         // Check if the email from the token matches the email in the request body
         if (!tokenEmail.equals(reqEmail)) {
             throw new IllegalArgumentException("Unauthorized: Email does not match the token");
-        }
+        }*/
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
