@@ -28,12 +28,15 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request,
-            @RequestHeader("Authorization") String token
+            @RequestBody AuthenticationRequest request
+//            ,
+//            @RequestHeader("Authorization") String token
     ) {
 
 
-        return ResponseEntity.ok(service.authenticate(request, token));
+        return ResponseEntity.ok(service.authenticate(request
+//                , token
+        ));
     }
 
 
