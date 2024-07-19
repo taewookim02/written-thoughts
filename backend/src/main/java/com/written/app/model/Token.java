@@ -1,5 +1,6 @@
 package com.written.app.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,13 +22,13 @@ public class Token {
 
     @Enumerated(EnumType.STRING)
     private TokenType tokenType;
-
     private boolean expired;
 
     private boolean revoked;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
 
