@@ -1,5 +1,6 @@
 package com.written.app.controller;
 
+import com.written.app.dto.ChangeNickRequestDto;
 import com.written.app.dto.ChangePasswordRequestDto;
 import com.written.app.model.User;
 import com.written.app.service.UserService;
@@ -58,6 +59,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable Integer id) {
         // TODO: check if userId matches
+        // TODO: i think it would work w/o @Pathvariable if using Principal
         userService.deleteById(id);
     }
 
@@ -67,6 +69,15 @@ public class UserController {
             Principal connectedUser
     ) {
         userService.changePassword(request, connectedUser);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/users/nick")
+    public ResponseEntity<?> changeNick(
+            @RequestBody ChangeNickRequestDto dto,
+            Principal connectedUser
+    ) {
+        userService.changeNick(dto, connectedUser);
         return ResponseEntity.ok().build();
     }
 

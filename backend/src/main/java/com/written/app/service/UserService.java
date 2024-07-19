@@ -1,5 +1,6 @@
 package com.written.app.service;
 
+import com.written.app.dto.ChangeNickRequestDto;
 import com.written.app.dto.ChangePasswordRequestDto;
 import com.written.app.model.User;
 import com.written.app.repository.UserRepository;
@@ -55,6 +56,17 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
 
         // save new password
+        userRepository.save(user);
+    }
+
+    public void changeNick(ChangeNickRequestDto dto, Principal connectedUser) {
+        // get current user
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        // update nick
+        user.setNick(dto.nick());
+
+        // save user
         userRepository.save(user);
     }
 }
