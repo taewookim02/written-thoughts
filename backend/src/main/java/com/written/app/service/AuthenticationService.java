@@ -41,12 +41,16 @@ public class AuthenticationService {
                 .role(Role.USER)
                 .build();
         var savedUser = repository.save(user);
+
+        // generate access, refresh tokens
         var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
 
         saveUserToken(savedUser, jwtToken);
 
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -82,7 +86,9 @@ public class AuthenticationService {
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow(); // TODO: throw precise exception and handle
 
+        // generate access, refresh tokens
         var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
 
         // revoke all the tokens of a user first
         revokeAllUserTokens(user);
@@ -92,6 +98,7 @@ public class AuthenticationService {
 
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
