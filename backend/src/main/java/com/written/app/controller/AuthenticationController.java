@@ -5,9 +5,13 @@ import com.written.app.dto.AuthenticationResponse;
 import com.written.app.dto.RegisterRequest;
 import com.written.app.service.AuthenticationService;
 import com.written.app.service.JwtService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/auth")
@@ -29,15 +33,18 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
-//            ,
-//            @RequestHeader("Authorization") String token
     ) {
-
-
-        return ResponseEntity.ok(service.authenticate(request
-//                , token
-        ));
+        return ResponseEntity.ok(service.authenticate(request));
     }
+
+    @PostMapping("/refresh-token")
+    public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException {
+        service.refreshToken(request, response);
+    }
+
 
 
 }
