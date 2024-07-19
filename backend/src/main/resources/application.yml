@@ -19,16 +19,18 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 #    open-in-view: false
 
-jwt:
-  SECRET_KEY: 66790f1b278f5f70d67b7ca193ae5f597642c504b0351c145e7215f4ae13718f
+application:
+  security:
+    jwt:
+      secret-key: 66790f1b278f5f70d67b7ca193ae5f597642c504b0351c145e7215f4ae13718f
+      expiration: 86400000 # 1 day
+#      expiration: 60000 # 1 minute
+      refresh-token:
+        expiration: 604800000 # 7 days
+
 
 server:
   port: 8080
   servlet:
     context-path: /api/v1
 
-
-#mybatis:
-#  configuration:
-#    map-underscore-to-camel-case: true
-#    jdbc-type-for-null: NULL
