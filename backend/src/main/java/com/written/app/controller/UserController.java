@@ -7,15 +7,12 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
 @Tag(name = "User")
 public class UserController {
 
@@ -41,13 +38,13 @@ public class UserController {
             }
 
     )
-    @GetMapping("/list")
+    @GetMapping("/user/list")
     public List<User> findAllUser() {
         return userService.findAllUser();
     }
 
     // user by id
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     // @Hidden // hide from swagger
     public User findUserById(
             @PathVariable Integer id
@@ -55,5 +52,12 @@ public class UserController {
         return userService.findUserById(id);
     }
 
+
+    @DeleteMapping("/user/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteById(@PathVariable Integer id) {
+        // TODO: check if userId matches
+        userService.deleteById(id);
+    }
 
 }

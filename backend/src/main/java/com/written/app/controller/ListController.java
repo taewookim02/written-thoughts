@@ -2,6 +2,7 @@ package com.written.app.controller;
 
 import com.written.app.dto.ListDto;
 import com.written.app.service.ListService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,6 +43,7 @@ public class ListController {
     }
 
     @DeleteMapping("/lists/{list-id}")
+    @ResponseStatus(HttpStatus.OK)
     public void delete(
             @PathVariable("list-id") Integer listId
     ) {
