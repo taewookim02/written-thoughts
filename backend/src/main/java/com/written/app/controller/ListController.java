@@ -5,6 +5,7 @@ import com.written.app.service.ListService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.List;
 
@@ -31,13 +32,13 @@ public class ListController {
     }
 
     @PatchMapping("/lists/{list-id}")
-    // TODO: is including userId appropriate? >> (ListDto)
     public ListDto update(
             @PathVariable("list-id") Integer listId,
-            @RequestBody ListDto dto
-    ) {
-        // TODO: check if userId matches
-        return listService.update(listId, dto);
+            @RequestBody ListDto dto,
+            Principal connectedUser
+    ) throws AccessDeniedException {
+        return listService.update(listId, dto, connectedUser
+        );
     }
 
     @DeleteMapping("/lists/{list-id}")
