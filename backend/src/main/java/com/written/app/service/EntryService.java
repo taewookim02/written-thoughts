@@ -8,9 +8,13 @@ import com.written.app.repository.EntryRepository;
 import com.written.app.repository.LabelRepository;
 import com.written.app.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
+import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class EntryService {
@@ -89,9 +93,20 @@ public class EntryService {
 
     }
 
-    public Entry findById(Integer entryId) {
-        return entryRepository.findById(entryId)
+    public Entry findById(Integer entryId, Principal connectedUser) throws AccessDeniedException {
+        // get user from principal
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        // get entry with id
+        Entry entry = entryRepository.findById(entryId)
                 .orElseThrow(() -> new EntityNotFoundException("Entry not found with the id: " + entryId));
+
+        // only allow user to access their own resource
+        if (!Objects.equals(entry.getUser().getId(), user.getId())) {
+            throw new AccessDeniedException("User is not authorized to access this entry");
+        }
+
+        return entry;
     }
 
     public String downloadEntries(Integer userId) {

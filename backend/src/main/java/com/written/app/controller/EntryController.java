@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -23,10 +25,12 @@ public class EntryController {
     }
 
     @GetMapping("/entry/{entry-id}")
-    public Entry findById(
-            @PathVariable("entry-id") Integer entryId
-    ) {
-        return entryService.findById(entryId);
+    public ResponseEntity<Entry> findById(
+            @PathVariable("entry-id") Integer entryId,
+            Principal connectedUser
+    ) throws AccessDeniedException {
+        Entry entry = entryService.findById(entryId, connectedUser);
+        return ResponseEntity.ok(entry);
     }
 
     @GetMapping("/entry/user/{user-id}")
