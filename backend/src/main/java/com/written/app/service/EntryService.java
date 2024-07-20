@@ -28,8 +28,12 @@ public class EntryService {
         this.userRepository = userRepository;
     }
 
-    public List<Entry> findAllByUserId(Integer userId) {
-        return entryRepository.findAllByUserId(userId);
+    public List<Entry> findAllByUser(Principal connectedUser) {
+        // get connected user
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        // get entries of connected user
+        return entryRepository.findAllByUserId(user.getId());
     }
 
     public Entry create(EntryDto dto) {

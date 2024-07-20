@@ -33,12 +33,11 @@ public class EntryController {
         return ResponseEntity.ok(entry);
     }
 
-    @GetMapping("/entry/user/{user-id}")
-    public List<Entry> findAllByUserId(
-            @PathVariable("user-id") Integer userId
+    @GetMapping("/entry/user")
+    public List<Entry> findAllByUser(
+            Principal connectedUser
     ) {
-        // TODO: check if userId matches
-        return entryService.findAllByUserId(userId);
+        return entryService.findAllByUser(connectedUser);
     }
 
     @PostMapping("/entry")
