@@ -5,6 +5,7 @@ import com.written.app.service.ListService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -16,15 +17,11 @@ public class ListController {
         this.listService = listService;
     }
 
-    // TODO: user-id from jwt or ?
-    @GetMapping("/lists/{user-id}")
-    // this currently returns list-items too
-    // because of jpa bidirectional association
-    public List<com.written.app.model.List> findAllByUserId(
-            @PathVariable("user-id") Integer userId
+    @GetMapping("/lists")
+    public List<com.written.app.model.List> findAllByUser(
+        Principal connectedUser
     ) {
-        // TODO: check if userId matches
-        return listService.findAllByUserId(userId);
+        return listService.findAllByUser(connectedUser);
     }
 
     @PostMapping("/lists")

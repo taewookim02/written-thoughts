@@ -7,7 +7,10 @@ import com.written.app.model.User;
 import com.written.app.repository.ListRepository;
 import com.written.app.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 @Service
 public class ListService {
@@ -19,8 +22,10 @@ public class ListService {
         this.userRepository = userRepository;
     }
 
-    public java.util.List<List> findAllByUserId(Integer userId) {
-        return listRepository.findAllByUserId(userId);
+    public java.util.List<List> findAllByUser(Principal connectedUser) {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        return listRepository.findAllByUserId(user.getId());
     }
 
     public ListDto create(ListDto dto) {
