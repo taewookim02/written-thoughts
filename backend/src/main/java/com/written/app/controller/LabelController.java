@@ -44,7 +44,6 @@ public class LabelController {
             @RequestBody LabelDto dto,
             Principal connectedUser
     ) throws AccessDeniedException {
-        // TODO: check if userId matches
         LabelDto updatedLabel = labelService.update(labelId, dto, connectedUser);
         return ResponseEntity.status(HttpStatus.OK).body(updatedLabel);
     }
