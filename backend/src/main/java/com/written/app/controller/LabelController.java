@@ -24,8 +24,9 @@ public class LabelController {
     }
 
     @PostMapping("/labels")
-    public ResponseEntity<LabelDto> create(@RequestBody LabelDto dto) {
-        LabelDto createdLabel = labelService.create(dto);
+    public ResponseEntity<LabelDto> create(@RequestBody LabelDto dto, Principal connectedUser) {
+
+        LabelDto createdLabel = labelService.create(dto, connectedUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdLabel);
     }
 

@@ -36,9 +36,8 @@ public class LabelService {
 
     }
 
-    public LabelDto create(LabelDto dto) {
-        User user = userRepository.findById(dto.userId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+    public LabelDto create(LabelDto dto, Principal connectedUser) {
+        var user = (User) (((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal());
 
         Label label = Label.builder()
                 .name(dto.name())
