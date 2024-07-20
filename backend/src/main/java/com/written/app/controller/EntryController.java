@@ -41,9 +41,9 @@ public class EntryController {
     }
 
     @PostMapping("/entry")
-    public Entry create(@RequestBody EntryDto dto) {
-        System.out.println("dto = " + dto);
-        return entryService.create(dto);
+    public Entry create(@RequestBody EntryDto dto,
+                        Principal connectedUser) {
+        return entryService.create(dto, connectedUser);
     }
 
     @DeleteMapping("/entry/{entry-id}")

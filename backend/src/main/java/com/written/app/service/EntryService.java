@@ -36,8 +36,10 @@ public class EntryService {
         return entryRepository.findAllByUserId(user.getId());
     }
 
-    public Entry create(EntryDto dto) {
+    public Entry create(EntryDto dto, Principal connectedUser) {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         Entry entry = new Entry();
+
         entry.setTitle(dto.title());
         entry.setContent(dto.content());
 
@@ -54,8 +56,6 @@ public class EntryService {
         }
 
         // set user
-        User user = userRepository.findById(dto.userId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + dto.userId()));
         entry.setUser(user);
 
         return entryRepository.save(entry);
