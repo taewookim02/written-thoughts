@@ -63,10 +63,16 @@ public class LabelService {
         labelRepository.delete(label);
     }
 
-    public LabelDto update(Integer id, LabelDto dto) {
-        System.out.println("id = " + id);
+    public LabelDto update(Integer id, LabelDto dto, Principal connectedUser) throws AccessDeniedException {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
         Label label = labelRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Label not found"));
+
+        if (!Objects.equals(user.getId(), label.getUser().getId())) {
+            throw new AccessDeniedException("User is not authorized to access this label");
+        }
+
         label.setName(dto.name());
 
         Label save = labelRepository.save(label);

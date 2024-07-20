@@ -41,10 +41,11 @@ public class LabelController {
     @PatchMapping("/labels/{label-id}")
     public ResponseEntity<LabelDto> update(
             @PathVariable("label-id") Integer labelId,
-            @RequestBody LabelDto dto
-    ) {
+            @RequestBody LabelDto dto,
+            Principal connectedUser
+    ) throws AccessDeniedException {
         // TODO: check if userId matches
-        LabelDto updatedLabel = labelService.update(labelId, dto);
+        LabelDto updatedLabel = labelService.update(labelId, dto, connectedUser);
         return ResponseEntity.status(HttpStatus.OK).body(updatedLabel);
     }
 
