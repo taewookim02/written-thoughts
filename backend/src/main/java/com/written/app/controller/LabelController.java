@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.List;
 
@@ -32,9 +33,9 @@ public class LabelController {
 
     @DeleteMapping("/labels/{label-id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("label-id") Integer id) {
-        // TODO: check if userId matches
-        labelService.delete(id);
+    public void delete(@PathVariable("label-id") Integer id,
+                       Principal connectedUser) throws AccessDeniedException {
+        labelService.delete(id, connectedUser);
     }
 
     @PatchMapping("/labels/{label-id}")

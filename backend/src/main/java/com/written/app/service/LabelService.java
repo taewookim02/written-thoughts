@@ -11,8 +11,10 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,8 +50,17 @@ public class LabelService {
         return LabelMapper.toLabelDto(save);
     }
 
-    public void delete(Integer id) {
-        labelRepository.deleteById(id);
+    public void delete(Integer id, Principal connectedUser) throws AccessDeniedException {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        Label label = labelRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Label not found with the id: " + id));
+
+        if (!Objects.equals(user.getId(), label.getUser().getId())) {
+            throw new AccessDeniedException("User is not authorized to access this label");
+        }
+
+        labelRepository.delete(label);
     }
 
     public LabelDto update(Integer id, LabelDto dto) {
