@@ -4,7 +4,6 @@ public record EntryDto(
          String title,
          String content,
          Integer labelId,
-         Integer userId,
          Boolean isPublic
 ) {
 }

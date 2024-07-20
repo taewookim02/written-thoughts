@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -23,49 +25,50 @@ public class EntryController {
     }
 
     @GetMapping("/entry/{entry-id}")
-    public Entry findById(
-            @PathVariable("entry-id") Integer entryId
-    ) {
-        return entryService.findById(entryId);
+    public ResponseEntity<Entry> findById(
+            @PathVariable("entry-id") Integer entryId,
+            Principal connectedUser
+    ) throws AccessDeniedException {
+        Entry entry = entryService.findById(entryId, connectedUser);
+        return ResponseEntity.ok(entry);
     }
 
-    @GetMapping("/entry/user/{user-id}")
-    public List<Entry> findAllByUserId(
-            @PathVariable("user-id") Integer userId
+    @GetMapping("/entry/user")
+    public List<Entry> findAllByUser(
+            Principal connectedUser
     ) {
-        // TODO: check if userId matches
-        return entryService.findAllByUserId(userId);
+        return entryService.findAllByUser(connectedUser);
     }
 
     @PostMapping("/entry")
-    public Entry create(@RequestBody EntryDto dto) {
-        System.out.println("dto = " + dto);
-        return entryService.create(dto);
+    public Entry create(@RequestBody EntryDto dto,
+                        Principal connectedUser) {
+        return entryService.create(dto, connectedUser);
     }
 
     @DeleteMapping("/entry/{entry-id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(
-            @PathVariable("entry-id") Integer entryId
-    ) {
-        // TODO: check if userId matches
-        entryService.delete(entryId);
+            @PathVariable("entry-id") Integer entryId,
+            Principal connectedUser
+    ) throws AccessDeniedException {
+        entryService.delete(entryId, connectedUser);
     }
 
     @PatchMapping("/entry/{entry-id}")
     public Entry update(
             @PathVariable("entry-id") Integer entryId,
-            @RequestBody EntryDto dto
-    ) {
-        // TODO: check if userId matches
-        return entryService.update(entryId, dto);
+            @RequestBody EntryDto dto,
+            Principal connectedUser
+    ) throws AccessDeniedException {
+        return entryService.update(entryId, dto, connectedUser);
     }
 
 
-    @GetMapping("/entry/download/{user-id}")
-    public ResponseEntity<Resource> downloadEntries(@PathVariable("user-id") Integer userId) {
-        // TODO: check if userId matches
-        String content = entryService.downloadEntries(userId);
+    @GetMapping("/entry/download")
+    public ResponseEntity<Resource> downloadEntries(Principal connectedUser) {
+
+        String content = entryService.downloadEntries(connectedUser);
 
         ByteArrayResource resource = new ByteArrayResource(content.getBytes());
 
