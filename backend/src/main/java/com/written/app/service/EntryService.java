@@ -61,10 +61,19 @@ public class EntryService {
         return entryRepository.save(entry);
     }
 
-    public void delete(Integer entryId) {
-        // TODO: check if entry was deleted
-        entryRepository.deleteById(entryId);
+    public void delete(Integer entryId, Principal connectedUser) throws AccessDeniedException {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+        Entry entry = entryRepository.findById(entryId)
+                .orElseThrow(() -> new EntityNotFoundException("Entry not found with id: " + entryId));
+
+        if (!Objects.equals(entry.getUser().getId(), user.getId())) {
+            throw new AccessDeniedException("User is not authorized to access this entry");
+        }
+
+//        entryRepository.deleteById(entryId);
+        entryRepository.delete(entry);
     }
+
 
     public Entry update(Integer entryId, EntryDto dto) {
         Entry entry = entryRepository.findById(entryId)

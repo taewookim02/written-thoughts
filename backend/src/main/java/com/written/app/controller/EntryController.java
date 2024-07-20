@@ -49,10 +49,10 @@ public class EntryController {
     @DeleteMapping("/entry/{entry-id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(
-            @PathVariable("entry-id") Integer entryId
-    ) {
-        // TODO: check if userId matches
-        entryService.delete(entryId);
+            @PathVariable("entry-id") Integer entryId,
+            Principal connectedUser
+    ) throws AccessDeniedException {
+        entryService.delete(entryId, connectedUser);
     }
 
     @PatchMapping("/entry/{entry-id}")
