@@ -7,7 +7,12 @@ import com.written.app.model.User;
 import com.written.app.repository.ListRepository;
 import com.written.app.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+
+import java.nio.file.AccessDeniedException;
+import java.security.Principal;
+import java.util.Objects;
 
 @Service
 public class ListService {
@@ -19,13 +24,14 @@ public class ListService {
         this.userRepository = userRepository;
     }
 
-    public java.util.List<List> findAllByUserId(Integer userId) {
-        return listRepository.findAllByUserId(userId);
+    public java.util.List<List> findAllByUser(Principal connectedUser) {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        return listRepository.findAllByUserId(user.getId());
     }
 
-    public ListDto create(ListDto dto) {
-        User user = userRepository.findById(dto.userId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with the id: " + dto.userId()));
+    public ListDto create(ListDto dto, Principal connectedUser) {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
 
         List list = List.builder()
                 .title(dto.title())
@@ -37,9 +43,15 @@ public class ListService {
         return ListMapper.toListDto(save);
     }
 
-    public ListDto update(Integer listId, ListDto dto) {
+    public ListDto update(Integer listId, ListDto dto, Principal connectedUser) throws AccessDeniedException {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
         List list = listRepository.findById(listId)
                 .orElseThrow(() -> new EntityNotFoundException("List not found with the id: " + dto.id()));
+
+        if (!Objects.equals(user.getId(), list.getUser().getId())) {
+            throw new AccessDeniedException("User is not authorized to access this list");
+        }
 
         list.setTitle(dto.title());
         List save = listRepository.save(list);
@@ -47,10 +59,16 @@ public class ListService {
         return ListMapper.toListDto(save);
     }
 
-    public void delete(Integer listId) {
-        if (!listRepository.existsById(listId)) {
-            throw new EntityNotFoundException("List not found with the id: " + listId);
+    public void delete(Integer listId, Principal connectedUser) throws AccessDeniedException {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        List list = listRepository.findById(listId)
+                .orElseThrow(() -> new EntityNotFoundException("List not found with the id: " + listId));
+
+        if (!Objects.equals(user.getId(), list.getUser().getId())) {
+            throw new AccessDeniedException("User is not authorized to access this list");
         }
+
         listRepository.deleteById(listId);
     }
 }

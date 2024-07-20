@@ -5,6 +5,8 @@ import com.written.app.service.ListService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -16,38 +18,35 @@ public class ListController {
         this.listService = listService;
     }
 
-    // TODO: user-id from jwt or ?
-    @GetMapping("/lists/{user-id}")
-    // this currently returns list-items too
-    // because of jpa bidirectional association
-    public List<com.written.app.model.List> findAllByUserId(
-            @PathVariable("user-id") Integer userId
+    @GetMapping("/lists")
+    public List<com.written.app.model.List> findAllByUser(
+        Principal connectedUser
     ) {
-        // TODO: check if userId matches
-        return listService.findAllByUserId(userId);
+        return listService.findAllByUser(connectedUser);
     }
 
     @PostMapping("/lists")
-    public ListDto create(@RequestBody ListDto dto) {
-        return listService.create(dto);
+    public ListDto create(@RequestBody ListDto dto,
+                          Principal connectedUser) {
+        return listService.create(dto, connectedUser);
     }
 
     @PatchMapping("/lists/{list-id}")
-    // TODO: is including userId appropriate? >> (ListDto)
     public ListDto update(
             @PathVariable("list-id") Integer listId,
-            @RequestBody ListDto dto
-    ) {
-        // TODO: check if userId matches
-        return listService.update(listId, dto);
+            @RequestBody ListDto dto,
+            Principal connectedUser
+    ) throws AccessDeniedException {
+        return listService.update(listId, dto, connectedUser
+        );
     }
 
     @DeleteMapping("/lists/{list-id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(
-            @PathVariable("list-id") Integer listId
-    ) {
-        // TODO: check if userId matches
-        listService.delete(listId);
+            @PathVariable("list-id") Integer listId,
+            Principal connectedUser
+    ) throws AccessDeniedException {
+        listService.delete(listId, connectedUser);
     }
 }
