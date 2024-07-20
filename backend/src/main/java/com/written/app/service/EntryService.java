@@ -33,7 +33,7 @@ public class EntryService {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
 
         // get entries of connected user
-        return entryRepository.findAllByUserId(user.getId());
+        return entryRepository.findAllByUserIdOrderByCreatedAtDesc(user.getId());
     }
 
     public Entry create(EntryDto dto, Principal connectedUser) {
@@ -128,19 +128,23 @@ public class EntryService {
         return entry;
     }
 
-    public String downloadEntries(Integer userId) {
-        // TODO: user Auth validation
-        List<Entry> entries = entryRepository.findAllByUserId(userId);
+    public String downloadEntries(Principal connectedUser) {
+        // get user from principal
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        // find all entries of connected user (order by created_at desc)
+        List<Entry> entries = entryRepository.findAllByUserIdOrderByCreatedAtDesc(user.getId());
 
         StringBuilder content = new StringBuilder();
+
+        // append entries and return
         for (Entry entry : entries) {
             content.append("----------------\n");
             content.append("Title: ").append(entry.getTitle()).append("\n");
             content.append("Date: ").append(entry.getCreatedAt()).append("\n");
             content.append("Content: ").append(entry.getContent()).append("\n");
-            content.append("----------------\n\n");
+            content.append("----------------\n\n\n");
         }
-
         return content.toString();
     }
 

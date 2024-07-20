@@ -65,10 +65,10 @@ public class EntryController {
     }
 
 
-    @GetMapping("/entry/download/{user-id}")
-    public ResponseEntity<Resource> downloadEntries(@PathVariable("user-id") Integer userId) {
-        // TODO: check if userId matches
-        String content = entryService.downloadEntries(userId);
+    @GetMapping("/entry/download")
+    public ResponseEntity<Resource> downloadEntries(Principal connectedUser) {
+
+        String content = entryService.downloadEntries(connectedUser);
 
         ByteArrayResource resource = new ByteArrayResource(content.getBytes());
 
