@@ -75,9 +75,15 @@ public class EntryService {
     }
 
 
-    public Entry update(Integer entryId, EntryDto dto) {
+    public Entry update(Integer entryId, EntryDto dto, Principal connectedUser) throws AccessDeniedException {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
         Entry entry = entryRepository.findById(entryId)
                 .orElseThrow(() -> new EntityNotFoundException("Entry not found with the id: " + entryId));
+
+        if (!Objects.equals(user.getId(), entry.getUser().getId())) {
+            throw new AccessDeniedException("User is not authorized to access this entry");
+        }
 
         // update title if provided
         if (dto.title() != null) {
@@ -89,7 +95,7 @@ public class EntryService {
             entry.setContent(dto.content());
         }
 
-        // update isPrivate if provided
+        // update isPublic if provided
         if (dto.isPublic() != null) {
             entry.setPublic(dto.isPublic());
         }

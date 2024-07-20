@@ -58,10 +58,10 @@ public class EntryController {
     @PatchMapping("/entry/{entry-id}")
     public Entry update(
             @PathVariable("entry-id") Integer entryId,
-            @RequestBody EntryDto dto
-    ) {
-        // TODO: check if userId matches
-        return entryService.update(entryId, dto);
+            @RequestBody EntryDto dto,
+            Principal connectedUser
+    ) throws AccessDeniedException {
+        return entryService.update(entryId, dto, connectedUser);
     }
 
 
