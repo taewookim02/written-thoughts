@@ -28,9 +28,8 @@ public class ListService {
         return listRepository.findAllByUserId(user.getId());
     }
 
-    public ListDto create(ListDto dto) {
-        User user = userRepository.findById(dto.userId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with the id: " + dto.userId()));
+    public ListDto create(ListDto dto, Principal connectedUser) {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
 
         List list = List.builder()
                 .title(dto.title())

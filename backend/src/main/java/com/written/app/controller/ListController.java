@@ -25,8 +25,9 @@ public class ListController {
     }
 
     @PostMapping("/lists")
-    public ListDto create(@RequestBody ListDto dto) {
-        return listService.create(dto);
+    public ListDto create(@RequestBody ListDto dto,
+                          Principal connectedUser) {
+        return listService.create(dto, connectedUser);
     }
 
     @PatchMapping("/lists/{list-id}")
