@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -17,10 +18,9 @@ public class LabelController {
         this.labelService = labelService;
     }
 
-    @GetMapping("/labels/{user-id}")
-    public List<LabelDto> findAllByUserId(@PathVariable("user-id") Integer userId) {
-        // TODO: check if userId matches
-        return labelService.findAllByUserId(userId);
+    @GetMapping("/labels")
+    public List<LabelDto> findAllByUser(Principal connectedUser)  {
+        return labelService.findAllByUser(connectedUser);
     }
 
     @PostMapping("/labels")

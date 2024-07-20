@@ -83,7 +83,9 @@ public class EntryController {
     // get top 20 public entries order by date descending
     @GetMapping("/entry/public")
     public List<Entry> findTop20ByIsPublicTrueOrderByCreatedAtDesc() {
+        // TODO: pagination for all public entries
         return entryService.findTop20ByIsPublicTrueOrderByCreatedAtDesc();
     }
 
 }
+

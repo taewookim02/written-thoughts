@@ -8,10 +8,11 @@ import com.written.app.model.User;
 import com.written.app.repository.LabelRepository;
 import com.written.app.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,8 +26,10 @@ public class LabelService {
         this.userRepository = userRepository;
     }
 
-    public List<LabelDto> findAllByUserId(Integer userId) {
-        return labelRepository.findAllByUserId(userId)
+    public List<LabelDto> findAllByUser(Principal connectedUser) {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        return labelRepository.findAllByUserId(user.getId())
                 .stream()
                 .map(LabelMapper::toLabelDto)
                 .collect(Collectors.toList());
