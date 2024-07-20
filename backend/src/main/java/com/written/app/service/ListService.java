@@ -59,10 +59,16 @@ public class ListService {
         return ListMapper.toListDto(save);
     }
 
-    public void delete(Integer listId) {
-        if (!listRepository.existsById(listId)) {
-            throw new EntityNotFoundException("List not found with the id: " + listId);
+    public void delete(Integer listId, Principal connectedUser) throws AccessDeniedException {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        List list = listRepository.findById(listId)
+                .orElseThrow(() -> new EntityNotFoundException("List not found with the id: " + listId));
+
+        if (!Objects.equals(user.getId(), list.getUser().getId())) {
+            throw new AccessDeniedException("User is not authorized to access this list");
         }
+
         listRepository.deleteById(listId);
     }
 }

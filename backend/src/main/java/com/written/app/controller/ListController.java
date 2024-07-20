@@ -44,9 +44,9 @@ public class ListController {
     @DeleteMapping("/lists/{list-id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(
-            @PathVariable("list-id") Integer listId
-    ) {
-        // TODO: check if userId matches
-        listService.delete(listId);
+            @PathVariable("list-id") Integer listId,
+            Principal connectedUser
+    ) throws AccessDeniedException {
+        listService.delete(listId, connectedUser);
     }
 }
