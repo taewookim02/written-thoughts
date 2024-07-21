@@ -9,6 +9,7 @@ import com.written.app.repository.ListItemRepository;
 import com.written.app.repository.ListRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
@@ -25,9 +26,16 @@ public class ListItemService {
         this.listRepository = listRepository;
     }
 
-    public ListItemDto create(ListItemDto dto) {
+    public ListItemDto create(ListItemDto dto, Principal connectedUser) throws AccessDeniedException {
         List list = listRepository.findById(dto.listId())
                 .orElseThrow(() -> new EntityNotFoundException("List not found with the id: " + dto.listId()));
+
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        // if user tries to add list item to another persons' list, throw error
+        if (!Objects.equals(user.getId(), list.getUser().getId())) {
+            throw new AccessDeniedException("User is not authorized to access this list");
+        }
 
         ListItem listItem = ListItem.builder()
                 .content(dto.content())

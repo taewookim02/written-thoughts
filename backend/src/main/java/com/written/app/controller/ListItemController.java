@@ -18,8 +18,9 @@ public class ListItemController {
     }
 
     @PostMapping("/list-items")
-    public ListItemDto create(@RequestBody ListItemDto dto) {
-        return listItemService.create(dto);
+    public ListItemDto create(@RequestBody ListItemDto dto,
+                              Principal connectedUser) throws AccessDeniedException {
+        return listItemService.create(dto, connectedUser);
     }
  
     @PatchMapping("/list-items/{list-item-id}")
