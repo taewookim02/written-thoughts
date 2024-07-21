@@ -27,14 +27,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findUserById(Integer id) {
-        return userRepository.findById(id)
-                .orElse(null);
+    public User findUserByPrincipal(Principal connectedUser) {
+        return  (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
     }
 
-    public void deleteById(Integer id) {
-        userRepository.deleteById(id);
+    public void delete(Principal connectedUser) {
+        // get current user
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        userRepository.delete(user);
     }
+
 
     @Transactional
     public void changePassword(ChangePasswordRequestDto request, Principal connectedUser) {
