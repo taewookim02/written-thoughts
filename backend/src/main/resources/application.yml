@@ -24,10 +24,17 @@ application:
     jwt:
       secret-key: 66790f1b278f5f70d67b7ca193ae5f597642c504b0351c145e7215f4ae13718f
       expiration: 86400000 # 1 day
-#      expiration: 60000 # 1 minute
       refresh-token:
         expiration: 604800000 # 7 days
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    config-url: /api/v1/v3/api-docs/swagger-config
+    url: /api/v1/v3/api-docs
+  api-docs:
+    path: /v3/api-docs
+  packages-to-scan: com.written.app.controller
 
 server:
   port: 8080
