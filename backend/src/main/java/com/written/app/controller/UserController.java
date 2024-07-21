@@ -2,17 +2,13 @@ package com.written.app.controller;
 
 import com.written.app.dto.ChangeNickRequestDto;
 import com.written.app.dto.ChangePasswordRequestDto;
-import com.written.app.model.User;
 import com.written.app.service.UserService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @Tag(name = "User")
@@ -24,7 +20,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    // user list
+
+    /* user shouldn't see user list
+    // @Hidden // hide from swagger
     @Operation(
             description = "Get endpoint for all user list",
             summary = "This is a summary for management get endpoint",
@@ -43,24 +41,21 @@ public class UserController {
     @GetMapping("/users/list")
     public List<User> findAllUser() {
         return userService.findAllUser();
-    }
+    }*/
 
-    // user by id
-    @GetMapping("/users/{id}")
-    // @Hidden // hide from swagger
-    public User findUserById(
-            @PathVariable Integer id
+    /* findUser is not needed
+    @GetMapping("/users")
+    public User findUserByPrincipal(
+            Principal connectedUser
     ) {
-        return userService.findUserById(id);
-    }
+        return userService.findUserByPrincipal(connectedUser);
+    }*/
 
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/users")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable Integer id) {
-        // TODO: check if userId matches
-        // TODO: i think it would work w/o @Pathvariable if using Principal
-        userService.deleteById(id);
+    public void delete(Principal connectedUser) {
+        userService.delete(connectedUser);
     }
 
     @PatchMapping("/users/password")
