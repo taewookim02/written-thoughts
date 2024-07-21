@@ -9,7 +9,6 @@ import com.written.app.repository.ListItemRepository;
 import com.written.app.repository.ListRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
@@ -66,10 +65,19 @@ public class ListItemService {
         return ListItemMapper.toListItemDto(save);
     }
 
-    public void delete(Integer listItemId) {
-        if (!listItemRepository.existsById(listItemId)) {
-            throw new EntityNotFoundException("List item not found with the id: " + listItemId);
+    public void delete(Integer listItemId, Principal connectedUser) throws AccessDeniedException {
+        // get list item
+        ListItem listItem = listItemRepository.findById(listItemId)
+                .orElseThrow(() -> new EntityNotFoundException("List item not found with the id: " + listItemId));
+
+        // check if list owner is authorized
+        List list = listItem.getList();
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+        if (!Objects.equals(user.getId(), list.getUser().getId())) {
+            throw new AccessDeniedException("User is not authorized to access this list item");
         }
-        listItemRepository.deleteById(listItemId);
+
+
+        listItemRepository.delete(listItem);
     }
 }
