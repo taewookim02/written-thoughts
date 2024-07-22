@@ -47,7 +47,6 @@ public class EntryRepositoryTest {
                 .user(user) // fk
                 .build();
 
-
         // when
         Entry savedEntry = entryRepository.save(entry);
 
@@ -56,5 +55,31 @@ public class EntryRepositoryTest {
         Assertions.assertThat(savedEntry.getId()).isGreaterThan(0);
         Assertions.assertThat(savedEntry.getUser()).isEqualTo(user);
         Assertions.assertThat(savedEntry.getLabel()).isEqualTo(label);
+    }
+
+    @Test
+    public void Given_EntryWithoutLabel_When_Save_Then_ReturnEntry() {
+        // given
+        User user = User.builder()
+                .email("test@example.com")
+                .password("password")
+                .role(Role.USER)
+                .build();
+        user = userRepository.save(user);
+
+        Entry entry = Entry.builder()
+                .title("Title01")
+                .content("Content01")
+                .user(user)
+                .build();
+
+        // when
+        Entry savedEntry = entryRepository.save(entry);
+
+        // then
+        Assertions.assertThat(savedEntry).isNotNull();
+        Assertions.assertThat(savedEntry.getId()).isGreaterThan(0);
+        Assertions.assertThat(savedEntry.getUser()).isEqualTo(user);
+        Assertions.assertThat(savedEntry.getLabel()).isNull();
     }
 }
