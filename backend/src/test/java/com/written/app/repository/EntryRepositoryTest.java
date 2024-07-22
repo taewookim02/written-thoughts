@@ -1,6 +1,9 @@
 package com.written.app.repository;
 
-import com.written.app.model.*;
+import com.written.app.model.Entry;
+import com.written.app.model.Label;
+import com.written.app.model.Role;
+import com.written.app.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -8,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -114,7 +118,7 @@ public class EntryRepositoryTest {
         System.out.println("entry2.getCreatedAt() = " + entry2.getCreatedAt());
 
         // when
-        java.util.List<Entry> entries = entryRepository.findAllByUserIdOrderByCreatedAtDesc(user.getId());
+        List<Entry> entries = entryRepository.findAllByUserIdOrderByCreatedAtDesc(user.getId());
 
         // then
         assertThat(entries).isNotNull();
@@ -127,10 +131,39 @@ public class EntryRepositoryTest {
     @Test
     public void EntryRepository_FindById_ReturnEntry() {
         // given
+        User user = User.builder()
+                .email("test@example.com")
+                .password("password")
+                .role(Role.USER)
+                .build();
+        user = userRepository.save(user);
+
+        Entry entry = Entry.builder()
+                .title("Title01")
+                .content("Content01")
+                .user(user)
+                .createdAt(LocalDateTime.now())
+                .build();
+        entry = entryRepository.save(entry);
+
+        Entry entry2 = Entry.builder()
+                .title("Title02")
+                .content("Content02")
+                .user(user)
+                .createdAt(LocalDateTime.now())
+                .build();
+        entry2 = entryRepository.save(entry2);
+
 
         // when
+        Entry resultEntry = entryRepository.findById(2).get();
 
         // then
+        assertThat(resultEntry).isNotNull();
+        assertThat(resultEntry.getUser()).isEqualTo(user);
+        assertThat(resultEntry).isEqualTo(entry2);
+        assertThat(resultEntry.getId()).isEqualTo(2);
+        assertThat(resultEntry.getTitle()).isEqualTo("Title02");
     }
 
 
