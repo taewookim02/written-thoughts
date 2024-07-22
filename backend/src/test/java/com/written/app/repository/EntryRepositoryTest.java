@@ -24,7 +24,7 @@ public class EntryRepositoryTest {
     private LabelRepository labelRepository;
 
     @Test
-    public void Given_Entry_When_Save_Then_ReturnEntry() {
+    public void testSave() {
         // given
         User user = User.builder()
                 .email("test@example.com")
@@ -58,7 +58,7 @@ public class EntryRepositoryTest {
     }
 
     @Test
-    public void Given_EntryWithoutLabel_When_Save_Then_ReturnEntry() {
+    public void testSaveWithoutLabel() {
         // given
         User user = User.builder()
                 .email("test@example.com")
