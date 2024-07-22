@@ -1,15 +1,13 @@
 package com.written.app.repository;
 
-import com.written.app.model.Entry;
-import com.written.app.model.Label;
-import com.written.app.model.Role;
-import com.written.app.model.User;
-import org.junit.jupiter.api.BeforeEach;
+import com.written.app.model.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,25 +22,19 @@ public class EntryRepositoryTest {
     @Autowired
     private LabelRepository labelRepository;
 
-    // declare testUser as class field for use
-    private User testUser;
-
-    @BeforeEach
-    void setUp() {
-        testUser = User.builder()
+    @Test
+    public void EntryRepository_Save_ReturnEntry() {
+        User user = User.builder()
                 .email("test@example.com")
                 .password("password")
                 .role(Role.USER)
                 .build();
-        testUser = userRepository.save(testUser);
-    }
+        user = userRepository.save(user);
 
-    @Test
-    public void EntryRepository_Save_ReturnEntry() {
         // given
         Label label = Label.builder()
                 .name("Test Label")
-                .user(testUser)
+                .user(user)
                 .build();
         label = labelRepository.save(label);
 
@@ -51,7 +43,7 @@ public class EntryRepositoryTest {
                 .title("Title01")
                 .content("Content\n01")
                 .label(label) // fk
-                .user(testUser) // fk
+                .user(user) // fk
                 .build();
 
         // when
@@ -60,7 +52,7 @@ public class EntryRepositoryTest {
         // then
         assertThat(savedEntry).isNotNull();
         assertThat(savedEntry.getId()).isGreaterThan(0);
-        assertThat(savedEntry.getUser()).isEqualTo(testUser);
+        assertThat(savedEntry.getUser()).isEqualTo(user);
         assertThat(savedEntry.getLabel()).isEqualTo(label);
     }
 
@@ -68,10 +60,17 @@ public class EntryRepositoryTest {
     @Test
     public void EntryRepository_SaveWithoutLabel_ReturnEntry() {
         // given
+        User user = User.builder()
+                .email("test@example.com")
+                .password("password")
+                .role(Role.USER)
+                .build();
+        user = userRepository.save(user);
+
         Entry entry = Entry.builder()
                 .title("Title01")
                 .content("Content01")
-                .user(testUser)
+                .user(user)
                 .build();
 
         // when
@@ -80,17 +79,49 @@ public class EntryRepositoryTest {
         // then
         assertThat(savedEntry).isNotNull();
         assertThat(savedEntry.getId()).isGreaterThan(0);
-        assertThat(savedEntry.getUser()).isEqualTo(testUser);
+        assertThat(savedEntry.getUser()).isEqualTo(user);
         assertThat(savedEntry.getLabel()).isNull();
     }
 
     @Test
     public void EntryRepository_FindAllByUserIdOrderByCreatedAtDesc_ReturnEntryList() {
         // given
+        User user = User.builder()
+                .email("test@example.com")
+                .password("password")
+                .role(Role.USER)
+                .build();
+        user = userRepository.save(user);
+
+        Entry entry = Entry.builder()
+                .title("Title01")
+                .content("Content01")
+                .user(user)
+                .createdAt(LocalDateTime.now())
+                .build();
+        entry = entryRepository.save(entry);
+
+        Entry entry2 = Entry.builder()
+                .title("Title02")
+                .content("Content02")
+                .user(user)
+                .createdAt(LocalDateTime.now())
+                .build();
+        entry2 = entryRepository.save(entry2);
+
+
+        System.out.println("entry.getCreatedAt() = " + entry.getCreatedAt());
+        System.out.println("entry2.getCreatedAt() = " + entry2.getCreatedAt());
 
         // when
+        java.util.List<Entry> entries = entryRepository.findAllByUserIdOrderByCreatedAtDesc(user.getId());
 
         // then
+        assertThat(entries).isNotNull();
+        assertThat(entries.size()).isEqualTo(2);
+        assertThat(entries.get(0)).isEqualTo(entry2); // most recent comes first
+        assertThat(entries.get(1)).isEqualTo(entry); // older comes next
+        assertThat(entries.get(0).getCreatedAt()).isAfter(entries.get(1).getCreatedAt());
     }
 
     @Test
