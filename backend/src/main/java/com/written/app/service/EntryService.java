@@ -40,6 +40,8 @@ public class EntryService {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         Entry entry = new Entry();
 
+        // set user from principal
+        entry.setUser(user);
         entry.setTitle(dto.title());
         entry.setContent(dto.content());
 
@@ -55,8 +57,7 @@ public class EntryService {
             entry.setPublic(dto.isPublic());
         }
 
-        // set user
-        entry.setUser(user);
+
 
         return entryRepository.save(entry);
     }

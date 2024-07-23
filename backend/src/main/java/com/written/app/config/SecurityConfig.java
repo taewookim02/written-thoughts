@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -33,21 +32,18 @@ public class SecurityConfig {
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
 
-
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                                // TODO: implement proper requestMatchers
-                                req
-                                        .requestMatchers(
-                                                "/auth/**"
-//                                    "TODO: add swagger-ui endpoints"
-                                        )
-                                        .permitAll()
-                                        .anyRequest()
-                                        .authenticated()
-                        // FIXME: currently permiting all requests w/o jwt token
-//                        req.anyRequest().permitAll()
+                        req
+                                .requestMatchers(
+                                        "/auth/**",
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**"
+                                )
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)
@@ -55,16 +51,10 @@ public class SecurityConfig {
                 .logout((logoutConfig) -> {
                     logoutConfig.logoutUrl("/auth/logout");
                     logoutConfig.addLogoutHandler(logoutHandler);
-                    logoutConfig.logoutSuccessHandler((request, response, authentication) -> {});
-                })
-                /*.logoutUrl("")
-                .addLogoutHandler(null)
-                .logoutSuccessHandler(
-                        (request, response, authentication) ->
-                        SecurityContextHolder.clearContext()
-                )*/
+                    logoutConfig.logoutSuccessHandler((request, response, authentication) -> {
+                    });
+                });
 
-        ;
 
         return http.build();
     }
