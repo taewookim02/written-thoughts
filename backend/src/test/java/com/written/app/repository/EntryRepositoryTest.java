@@ -154,15 +154,17 @@ public class EntryRepositoryTest {
                 .build();
         entry2 = entryRepository.save(entry2);
 
+        System.out.println("entry = " + entry);
+        System.out.println("entry2 = " + entry2);
 
         // when
-        Entry resultEntry = entryRepository.findById(2).get();
+        Entry resultEntry = entryRepository.findById(entry2.getId()).get();
 
         // then
         assertThat(resultEntry).isNotNull();
         assertThat(resultEntry.getUser()).isEqualTo(user);
         assertThat(resultEntry).isEqualTo(entry2);
-        assertThat(resultEntry.getId()).isEqualTo(2);
+        assertThat(resultEntry.getId()).isEqualTo(entry2.getId());
         assertThat(resultEntry.getTitle()).isEqualTo("Title02");
     }
 
