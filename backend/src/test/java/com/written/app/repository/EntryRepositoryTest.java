@@ -169,4 +169,29 @@ public class EntryRepositoryTest {
     }
 
 
+    @Test
+    public void EntryRepository_Delete_ReturnNull() {
+        // given
+        User user = User.builder()
+                .email("test@example.com")
+                .password("password")
+                .createdAt(LocalDateTime.now())
+                .role(Role.USER)
+                .build();
+        user = userRepository.save(user);
+
+        Entry entry = Entry.builder()
+                .title("Title01")
+                .content("Content01")
+                .user(user)
+                .build();
+        entry = entryRepository.save(entry);
+
+        // when
+        entryRepository.delete(entry);
+
+        // then
+        assertThat(entryRepository.count()).isZero();
+    }
+
 }
