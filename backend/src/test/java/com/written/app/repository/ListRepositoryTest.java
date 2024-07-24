@@ -3,7 +3,7 @@ package com.written.app.repository;
 import com.written.app.model.List;
 import com.written.app.model.Role;
 import com.written.app.model.User;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -23,17 +23,23 @@ public class ListRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Test
-    public void ListRepository_FindAllByUserId_ReturnLists() {
-        // given
-        User user = User.builder()
+    private User user;
+
+    @BeforeEach
+    public void setUp() {
+        user = User.builder()
                 .email("test@example.com")
                 .password("password")
                 .role(Role.USER)
                 .createdAt(LocalDateTime.now())
                 .build();
         user = userRepository.save(user);
+    }
 
+
+    @Test
+    public void ListRepository_FindAllByUserId_ReturnLists() {
+        // given
         List list = List.builder()
                 .title("List01")
                 .user(user)
@@ -58,14 +64,6 @@ public class ListRepositoryTest {
     @Test
     public void ListRepository_Save_ReturnList() {
         // given
-        User user = User.builder()
-                .email("test@example.com")
-                .password("password")
-                .role(Role.USER)
-                .createdAt(LocalDateTime.now())
-                .build();
-        userRepository.save(user);
-
         List list = List.builder()
                 .title("List01")
                 .user(user)
@@ -78,7 +76,36 @@ public class ListRepositoryTest {
         assertThat(savedList).isNotNull();
         assertThat(savedList.getUser()).isEqualTo(user);
         assertThat(savedList.getTitle()).isEqualTo("List01");
-        assertThat(savedList.getId()).isEqualTo(1);
+        assertThat(savedList.getId()).isEqualTo(list.getId());
+    }
+
+    @Test
+    public void ListRepository_DeleteById_ReturnNull() {
+        // given
+        List list = List.builder()
+                .title("List01")
+                .user(user)
+                .build();
+        listRepository.save(list);
+
+        List list2 = List.builder()
+                .title("List02")
+                .user(user)
+                .build();
+        listRepository.save(list2);
+
+        Integer list1Id = list.getId();
+        Integer list2Id = list2.getId();
+
+
+        // when
+        listRepository.deleteById(list.getId());
+
+        // then
+        assertThat(listRepository.count()).isOne();
+        assertThat(listRepository.findById(list1Id)).isEmpty();
+        assertThat(listRepository.findById(list2Id)).isPresent();
+        assertThat(listRepository.findById(list2Id).get().getTitle()).isEqualTo("List02");
     }
 
 
