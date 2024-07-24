@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -103,6 +104,43 @@ public class LabelRepositoryTest {
 
         // then
         assertThat(labelRepository.count()).isZero();
+    }
+
+    @Test
+    public void LabelRepository_FindAllByUserId_ReturnLabels() {
+        // given
+        User user = User.builder()
+                .email("test@example.com")
+                .password("password")
+                .createdAt(LocalDateTime.now())
+                .role(Role.USER)
+                .build();
+        user = userRepository.save(user);
+
+        Label label = Label.builder()
+                .name("test label")
+                .user(user)
+                .build();
+        label = labelRepository.save(label);
+
+        Label label2 = Label.builder()
+                .name("test label2")
+                .user(user)
+                .build();
+        label2 = labelRepository.save(label2);
+
+        Label label3 = Label.builder()
+                .name("test label3")
+                .user(user)
+                .build();
+        label3 = labelRepository.save(label3);
+
+        // when
+        List<Label> labels = labelRepository.findAllByUserId(user.getId());
+
+        // then
+        assertThat(labels).hasSize(3);
+        assertThat(labels).contains(label, label2, label3);
     }
 
 }
