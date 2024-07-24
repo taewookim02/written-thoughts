@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -53,7 +54,7 @@ public class ListItemRepositoryTest {
     public void ListItemRepository_Save_ReturnListItem() {
         // given
         ListItem listItem = ListItem.builder()
-                .content("List Item 01")
+                .content("ListItem01")
                 .list(list)
                 .build();
 
@@ -63,7 +64,34 @@ public class ListItemRepositoryTest {
         // then
         assertThat(savedListItem).isNotNull();
         assertThat(savedListItem.getList()).isEqualTo(list);
+        assertThat(savedListItem.getContent()).isEqualTo("ListItem01");
+        assertThat(savedListItem.getList().getUser()).isEqualTo(user);
     }
 
+
+    @Test
+    public void ListItemRepository_FindById_ReturnListItem() {
+        // given
+        ListItem listItem = ListItem.builder()
+                .list(list)
+                .content("ListItem01")
+                .build();
+        listItemRepository.save(listItem);
+
+        ListItem listItem2 = ListItem.builder()
+                .list(list)
+                .content("ListItem02")
+                .build();
+        listItemRepository.save(listItem2);
+
+        // when
+        ListItem resultListItem = listItemRepository.findById(listItem2.getId()).get();
+
+        // then
+        assertThat(resultListItem).isNotNull();
+        assertThat(resultListItem).isNotEqualTo(listItem);
+        assertThat(resultListItem.getId()).isEqualTo(listItem2.getId());
+        assertThat(resultListItem.getContent()).isEqualTo("ListItem02");
+    }
 
 }
