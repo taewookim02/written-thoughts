@@ -94,4 +94,27 @@ public class ListItemRepositoryTest {
         assertThat(resultListItem.getContent()).isEqualTo("ListItem02");
     }
 
+    @Test
+    public void ListItemRepository_Update_ReturnListItem() {
+        // given
+        ListItem listItem = ListItem.builder()
+                .list(list)
+                .content("ListItem01")
+                .build();
+        listItemRepository.save(listItem);
+
+        // when
+        ListItem savedListItem = listItemRepository.findById(listItem.getId()).orElseThrow();
+        savedListItem.setContent("Updated ListItem01");
+        listItemRepository.save(savedListItem);
+
+
+        // then
+        ListItem updatedListItem = listItemRepository.findById(listItem.getId()).orElseThrow();
+        assertThat(updatedListItem).isNotNull();
+        assertThat(updatedListItem.getId()).isEqualTo(listItem.getId());
+        assertThat(updatedListItem.getContent()).isEqualTo("Updated ListItem01");
+        assertThat(updatedListItem.getList()).isEqualTo(list);
+    }
+
 }
