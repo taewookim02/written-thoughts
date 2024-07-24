@@ -55,6 +55,31 @@ public class ListRepositoryTest {
         assertThat(resultLists).contains(list, list2);
     }
 
+    @Test
+    public void ListRepository_Save_ReturnList() {
+        // given
+        User user = User.builder()
+                .email("test@example.com")
+                .password("password")
+                .role(Role.USER)
+                .createdAt(LocalDateTime.now())
+                .build();
+        userRepository.save(user);
+
+        List list = List.builder()
+                .title("List01")
+                .user(user)
+                .build();
+
+        // when
+        List savedList = listRepository.save(list);
+
+        // then
+        assertThat(savedList).isNotNull();
+        assertThat(savedList.getUser()).isEqualTo(user);
+        assertThat(savedList.getTitle()).isEqualTo("List01");
+        assertThat(savedList.getId()).isEqualTo(1);
+    }
 
 
 }
