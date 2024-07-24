@@ -81,5 +81,28 @@ public class LabelRepositoryTest {
         assertThat(resultLabel.getUser()).isEqualTo(user);
     }
 
+    @Test
+    public void LabelRepository_Delete_ReturnNull() {
+        // given
+        User user = User.builder()
+                .email("test@example.com")
+                .password("password")
+                .createdAt(LocalDateTime.now())
+                .role(Role.USER)
+                .build();
+        user = userRepository.save(user);
+
+        Label label = Label.builder()
+                .name("test label")
+                .user(user)
+                .build();
+        label = labelRepository.save(label);
+
+        // when
+        labelRepository.delete(label);
+
+        // then
+        assertThat(labelRepository.count()).isZero();
+    }
 
 }
