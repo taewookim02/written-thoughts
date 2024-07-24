@@ -117,4 +117,21 @@ public class ListItemRepositoryTest {
         assertThat(updatedListItem.getList()).isEqualTo(list);
     }
 
+    @Test
+    public void ListItemRepository_Delete_RemoveListItem() {
+        // given
+        ListItem listItem = ListItem.builder()
+                .content("ListItem to delete")
+                .list(list)
+                .build();
+        listItemRepository.save(listItem);
+
+        // when
+        listItemRepository.deleteById(listItem.getId());
+
+        // then
+        Optional<ListItem> deletedListItem = listItemRepository.findById(listItem.getId());
+        assertThat(deletedListItem).isEmpty();
+    }
+
 }
