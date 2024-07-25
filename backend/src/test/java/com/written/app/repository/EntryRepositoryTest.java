@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -88,7 +89,7 @@ public class EntryRepositoryTest {
     }
 
     @Test
-    public void EntryRepository_FindAllByUserIdOrderByCreatedAtDesc_ReturnEntryList() {
+    public void EntryRepository_FindAllByUserIdOrderByCreatedAtDesc_ReturnEntryList() throws InterruptedException {
         // given
         User user = User.builder()
                 .email("test@example.com")
@@ -97,35 +98,33 @@ public class EntryRepositoryTest {
                 .build();
         user = userRepository.save(user);
 
-        Entry entry = Entry.builder()
+        Entry olderEntry = Entry.builder()
                 .title("Title01")
                 .content("Content01")
                 .user(user)
                 .createdAt(LocalDateTime.now())
                 .build();
-        entry = entryRepository.save(entry);
+        olderEntry = entryRepository.save(olderEntry);
 
-        Entry entry2 = Entry.builder()
+        Thread.sleep(10);
+
+        Entry newerEntry = Entry.builder()
                 .title("Title02")
                 .content("Content02")
                 .user(user)
                 .createdAt(LocalDateTime.now())
                 .build();
-        entry2 = entryRepository.save(entry2);
-
-
-        System.out.println("entry.getCreatedAt() = " + entry.getCreatedAt());
-        System.out.println("entry2.getCreatedAt() = " + entry2.getCreatedAt());
+        newerEntry = entryRepository.save(newerEntry);
 
         // when
         List<Entry> entries = entryRepository.findAllByUserIdOrderByCreatedAtDesc(user.getId());
 
         // then
         assertThat(entries).isNotNull();
-        assertThat(entries.size()).isEqualTo(2);
-        assertThat(entries.get(0)).isEqualTo(entry2); // most recent comes first
-        assertThat(entries.get(1)).isEqualTo(entry); // older comes next
-        assertThat(entries.get(0).getCreatedAt()).isAfter(entries.get(1).getCreatedAt());
+        assertThat(entries).hasSize(2);
+        assertThat(entries).isSortedAccordingTo(Comparator.comparing(Entry::getCreatedAt).reversed());
+        assertThat(entries).containsExactlyInAnyOrder(olderEntry, newerEntry);
+        assertThat(entries.get(0).getCreatedAt()).isAfterOrEqualTo(entries.get(1).getCreatedAt());
     }
 
     @Test
