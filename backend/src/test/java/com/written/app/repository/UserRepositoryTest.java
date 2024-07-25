@@ -128,4 +128,19 @@ public class UserRepositoryTest {
         assertThat(softDeletedUser.get().isDeleted()).isTrue();
     }
 
+    @Test
+    public void UserRepository_Update_ReturnUser() {
+        // given
+        user.setNick("Updated Nickname");
+        user.setPassword("Updated Password");
+
+        // when
+        User savedUser = userRepository.save(user);
+
+        // then
+        assertThat(savedUser).isNotNull();
+        assertThat(savedUser.getNick()).isEqualTo("Updated Nickname");
+        assertThat(savedUser.getPassword()).isEqualTo("Updated Password");
+    }
+
 }
