@@ -69,19 +69,63 @@ public class UserRepositoryTest {
                 .createdAt(LocalDateTime.now())
                 .isDeleted(false)
                 .build();
-        User savedUser = userRepository.save(userToDelete);
+        User savedUserToSoftDelete = userRepository.save(userToDelete);
         entityManager.flush();
         entityManager.clear();
 
         // when
-        userRepository.softDeleteById(savedUser.getId());
+        userRepository.softDeleteById(savedUserToSoftDelete.getId());
 
 
         // then
-        User updatedUser = userRepository.findById(savedUser.getId()).orElseThrow();
+        User updatedUser = userRepository.findById(savedUserToSoftDelete.getId()).orElseThrow();
         assertThat(updatedUser).isNotNull();
         assertThat(updatedUser.isDeleted()).isTrue();
         assertThat(updatedUser.getEmail()).isEqualTo("delete@example.com");
+    }
+
+    @Test
+    public void UserRepository_FindByIdAndIsDeletedFalse_ReturnUser() {
+        // given
+        User userToDelete = User.builder()
+                .email("delete@example.com")
+                .password("password")
+                .role(Role.USER)
+                .createdAt(LocalDateTime.now())
+                .isDeleted(false)
+                .build();
+        User savedUserToDelete = userRepository.save(userToDelete);
+
+        User userToKeep = User.builder()
+                .email("keep@example.com")
+                .password("password")
+                .role(Role.USER)
+                .createdAt(LocalDateTime.now())
+                .isDeleted(false)
+                .build();
+        User savedUserToKeep = userRepository.save(userToKeep);
+
+        // flush to db insert
+        entityManager.flush();
+        entityManager.clear();
+
+        // soft delete
+        userRepository.softDeleteById(savedUserToDelete.getId());
+
+
+        // when
+        Optional<User> resultDeletedUser = userRepository.findByIdAndIsDeletedFalse(savedUserToDelete.getId());
+        Optional<User> resultKeptUser = userRepository.findByIdAndIsDeletedFalse(savedUserToKeep.getId());
+
+        // then
+        assertThat(resultDeletedUser).isEmpty();
+        assertThat(resultKeptUser).isPresent();
+        assertThat(resultKeptUser.get().getEmail()).isEqualTo("keep@example.com");
+        assertThat(resultKeptUser.get().isDeleted()).isFalse();
+
+        Optional<User> softDeletedUser = userRepository.findById(savedUserToDelete.getId());
+        assertThat(softDeletedUser).isPresent();
+        assertThat(softDeletedUser.get().isDeleted()).isTrue();
     }
 
 }
