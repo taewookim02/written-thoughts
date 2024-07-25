@@ -2,13 +2,14 @@ package com.written.app.repository;
 
 import com.written.app.model.Role;
 import com.written.app.model.User;
-import org.assertj.core.api.Assertions;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -21,6 +22,8 @@ public class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EntityManager entityManager;
 
     private User user;
 
@@ -54,6 +57,31 @@ public class UserRepositoryTest {
         Optional<User> deletedUser = userRepository.findById(savedUserToDelete.getId());
 
         assertThat(deletedUser).isEmpty();
+    }
+
+    @Test
+    public void UserRepository_SoftDelete_MarkUserIsDeleted() {
+        // given
+        User userToDelete = User.builder()
+                .email("delete@example.com")
+                .password("password")
+                .role(Role.USER)
+                .createdAt(LocalDateTime.now())
+                .isDeleted(false)
+                .build();
+        User savedUser = userRepository.save(userToDelete);
+        entityManager.flush();
+        entityManager.clear();
+
+        // when
+        userRepository.softDeleteById(savedUser.getId());
+
+
+        // then
+        User updatedUser = userRepository.findById(savedUser.getId()).orElseThrow();
+        assertThat(updatedUser).isNotNull();
+        assertThat(updatedUser.isDeleted()).isTrue();
+        assertThat(updatedUser.getEmail()).isEqualTo("delete@example.com");
     }
 
 }

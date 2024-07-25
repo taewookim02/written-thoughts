@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Modifying
     @Query("UPDATE User u SET u.isDeleted = true WHERE u.id = :id")
-    void softDeleteById(@Param("Id") Integer id);
+    void softDeleteById(@Param("id") Integer id);
 
     Optional<User> findByIdAndIsDeletedFalse(Integer id);
 
