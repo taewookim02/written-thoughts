@@ -188,12 +188,33 @@ public class EntryServiceTest {
         UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
         when(authToken.getPrincipal()).thenReturn(user);
         when(entryRepository.findById(entryId)).thenReturn(Optional.of(entry));
-        
+
         // when
         Entry resultEntry = entryService.findById(entryId, authToken);
 
         // then
         assertThat(resultEntry).isNotNull();
+    }
+
+    @Test
+    public void EntryService_DownloadEntries_ReturnStringOfEntries() {
+        // given
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+
+        List<Entry> expectedEntries = Arrays.asList(
+                Entry.builder().id(2).title("Entry 2").content("Content 2").user(user).build(),
+                Entry.builder().id(1).title("Entry 1").content("Content 1").user(user).build()
+        );
+        when(entryRepository.findAllByUserIdOrderByCreatedAtDesc(user.getId())).thenReturn(expectedEntries);
+
+        // when
+        String result = entryService.downloadEntries(authToken);
+
+        // then
+        assertThat(result).isNotNull();
+        assertThat(result).contains("Entry 2", "Content 2");
+        assertThat(result).contains("Entry 1", "Content 2");
     }
 
 
