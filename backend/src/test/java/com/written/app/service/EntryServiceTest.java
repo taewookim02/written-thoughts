@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -137,7 +138,6 @@ public class EntryServiceTest {
 
         when(entryRepository.findById(entryId)).thenReturn(Optional.of(entryToDelete));
 
-
         // when
         Assertions.assertThatCode(() -> entryService.delete(entryId, authToken))
                 .doesNotThrowAnyException();
@@ -146,5 +146,40 @@ public class EntryServiceTest {
         verify(entryRepository).findById(entryId);
         verify(entryRepository).delete(entryToDelete);
     }
+
+    @Test
+    public void EntryService_Update_ReturnEntry() throws AccessDeniedException {
+        // given
+        Integer entryId = 1;
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+
+        Entry entryToUpdate = Entry.builder()
+                .id(entryId)
+                .title("title")
+                .content("content")
+                .user(user)
+                .build();
+        when(entryRepository.findById(entryId)).thenReturn(Optional.of(entryToUpdate));
+
+        EntryDto dto = new EntryDto("updated title", "updated content", null, true);
+
+        // return the passed on entry
+        when(entryRepository.save(any(Entry.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // when
+        Entry updatedEntry = entryService.update(entryId, dto, authToken);
+
+        // then
+        assertThat(updatedEntry).isNotNull();
+        assertThat(updatedEntry.getTitle()).isEqualTo("updated title");
+        assertThat(updatedEntry.getContent()).isEqualTo("updated content");
+        assertThat(updatedEntry.isPublic()).isTrue();
+        assertThat(updatedEntry.getUser()).isEqualTo(user);
+
+        verify(entryRepository).findById(entryId);
+        verify(entryRepository).save(entryToUpdate);
+    }
+
 
 }
