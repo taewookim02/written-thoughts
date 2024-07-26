@@ -4,6 +4,7 @@ import com.written.app.dto.ListDto;
 import com.written.app.model.Role;
 import com.written.app.model.User;
 import com.written.app.repository.ListRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -131,6 +132,30 @@ public class ListServiceTest {
         assertThat(updatedListDto.title()).isEqualTo("Updated List");
 
         verify(listRepository).save(any(com.written.app.model.List.class));
+    }
+
+    @Test
+    public void ListService_Delete_ReturnVoid() {
+        // given
+        Integer listId = 1;
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+
+        com.written.app.model.List listToDelete = com.written.app.model.List.builder()
+                .id(listId)
+                .user(user)
+                .title("List to delete")
+                .build();
+
+        when(listRepository.findById(listId)).thenReturn(Optional.of(listToDelete));
+
+        // when
+        Assertions.assertThatCode(() -> listService.delete(listId, authToken))
+                .doesNotThrowAnyException();
+
+        // then
+        verify(listRepository).findById(listId);
+        verify(listRepository).deleteById(listId);
     }
 
 }
