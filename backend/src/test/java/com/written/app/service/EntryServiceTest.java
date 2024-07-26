@@ -181,5 +181,20 @@ public class EntryServiceTest {
         verify(entryRepository).save(entryToUpdate);
     }
 
+    @Test
+    public void EntryService_FindById_ReturnEntry() throws AccessDeniedException {
+        // given
+        Integer entryId = 1;
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+        when(entryRepository.findById(entryId)).thenReturn(Optional.of(entry));
+        
+        // when
+        Entry resultEntry = entryService.findById(entryId, authToken);
+
+        // then
+        assertThat(resultEntry).isNotNull();
+    }
+
 
 }
