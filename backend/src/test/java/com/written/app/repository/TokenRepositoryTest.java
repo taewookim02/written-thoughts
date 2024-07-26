@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,6 +45,7 @@ public class TokenRepositoryTest {
         // given
         Token token = Token.builder()
                 .user(user)
+                .token("testJwtToken")
                 .tokenType(TokenType.BEARER)
                 .revoked(false)
                 .expired(false)
@@ -52,6 +54,7 @@ public class TokenRepositoryTest {
 
         Token revokedToken = Token.builder()
                 .user(user)
+                .token("revokedJwtToken")
                 .tokenType(TokenType.BEARER)
                 .revoked(true)
                 .expired(false)
@@ -60,13 +63,12 @@ public class TokenRepositoryTest {
 
         Token expiredToken = Token.builder()
                 .user(user)
+                .token("expiredJwtToken")
                 .tokenType(TokenType.BEARER)
                 .revoked(false)
                 .expired(true)
                 .build();
         tokenRepository.save(expiredToken);
-
-
 
         // when
         List<Token> allValidTokensByUser = tokenRepository.findAllValidTokensByUser(user.getId());
@@ -77,6 +79,27 @@ public class TokenRepositoryTest {
         assertThat(allValidTokensByUser.get(0).getUser()).isEqualTo(user);
         assertThat(allValidTokensByUser.get(0).isExpired()).isFalse();
         assertThat(allValidTokensByUser.get(0).isRevoked()).isFalse();
+    }
+
+
+    @Test
+    public void TokenRepository_FindByToken_ReturnOptionalToken() {
+        // given
+        Token token = Token.builder()
+                .token("jwt-token")
+                .expired(false)
+                .revoked(false)
+                .user(user)
+                .build();
+        tokenRepository.save(token);
+
+        // when
+        Optional<Token> resultToken = tokenRepository.findByToken("jwt-token");
+
+        // then
+        assertThat(resultToken).isPresent();
+        assertThat(resultToken.get().getToken()).isEqualTo("jwt-token");
+        assertThat(resultToken.get().getUser()).isEqualTo(user);
     }
 
 }
