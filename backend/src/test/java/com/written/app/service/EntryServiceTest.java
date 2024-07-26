@@ -18,6 +18,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -92,6 +94,30 @@ public class EntryServiceTest {
         verify(labelRepository).findById(1);
         verify(entryRepository).save(any(Entry.class));
 
+    }
+
+    @Test
+    public void EntryService_FindAllByUser_ReturnEntryList() {
+        // given
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+
+        List<Entry> expectedEntries = Arrays.asList(
+                Entry.builder().id(2).title("Entry 2").content("Content 2").user(user).build(),
+                Entry.builder().id(1).title("Entry 1").content("Content 1").user(user).build()
+        );
+
+        when(entryRepository.findAllByUserIdOrderByCreatedAtDesc(user.getId())).thenReturn(expectedEntries);
+
+        // when
+        List<Entry> result = entryService.findAllByUser(authToken);
+
+        // then
+        assertThat(result).isNotNull();
+        assertThat(result).hasSize(2);
+        assertThat(result).isEqualTo(expectedEntries);
+
+        verify(entryRepository).findAllByUserIdOrderByCreatedAtDesc(user.getId());
     }
 
 }
