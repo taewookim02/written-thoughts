@@ -64,11 +64,7 @@ public class EntryServiceTest {
     public void EntryService_Create_ReturnEntry() {
         // given
         EntryDto dto = new EntryDto("Test title", "Test content", 1, true);
-
-//        Principal mockPrincipal = mock(Principal.class);
         UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
-
-//        when(mockPrincipal.getName()).thenReturn("test@example.com");
         when(authToken.getPrincipal()).thenReturn(user);
 
         Label mockLabel = Label.builder().id(1).name("Test label").user(user).build();
@@ -77,7 +73,6 @@ public class EntryServiceTest {
         when(entryRepository.save(any(Entry.class))).thenAnswer(invocation -> {
             Entry savedEntry = invocation.getArgument(0);
             savedEntry.setId(1);
-            ;
             return savedEntry;
         });
 
