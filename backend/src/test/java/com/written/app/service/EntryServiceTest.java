@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -76,7 +75,8 @@ public class EntryServiceTest {
         when(labelRepository.findById(1)).thenReturn(Optional.of(mockLabel));
         when(entryRepository.save(any(Entry.class))).thenAnswer(invocation -> {
             Entry savedEntry = invocation.getArgument(0);
-            savedEntry.setId(1);;
+            savedEntry.setId(1);
+            ;
             return savedEntry;
         });
 
@@ -118,6 +118,33 @@ public class EntryServiceTest {
         assertThat(result).isEqualTo(expectedEntries);
 
         verify(entryRepository).findAllByUserIdOrderByCreatedAtDesc(user.getId());
+    }
+
+    @Test
+    public void EntryService_Delete_ReturnVoid() {
+        // given
+        Integer entryId = 1;
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+
+
+        Entry entryToDelete = Entry.builder()
+                .id(entryId)
+                .title("Test entry to delte")
+                .content("Test entry content")
+                .user(user)
+                .build();
+
+        when(entryRepository.findById(entryId)).thenReturn(Optional.of(entryToDelete));
+
+
+        // when
+        Assertions.assertThatCode(() -> entryService.delete(entryId, authToken))
+                .doesNotThrowAnyException();
+
+        // then
+        verify(entryRepository).findById(entryId);
+        verify(entryRepository).delete(entryToDelete);
     }
 
 }
