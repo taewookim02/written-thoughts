@@ -88,3 +88,4 @@ target/
 
 /bin
 /sqlWorkspace
+env.properties

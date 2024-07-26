@@ -1,11 +1,13 @@
 spring:
+  config:
+    import: env.properties
   application:
     name: app
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/spring_db
-    username: postgres
-    password: taewookimcoding
+    url: jdbc:postgresql://localhost:5432/${DB_DATABASE_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -22,7 +24,7 @@ spring:
 application:
   security:
     jwt:
-      secret-key: 66790f1b278f5f70d67b7ca193ae5f597642c504b0351c145e7215f4ae13718f
+      secret-key: ${JWT_SECRET_KEY}
       expiration: 86400000 # 1 day
       refresh-token:
         expiration: 604800000 # 7 days
