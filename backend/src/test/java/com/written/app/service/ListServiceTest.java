@@ -1,10 +1,6 @@
 package com.written.app.service;
 
-import com.written.app.dto.EntryDto;
 import com.written.app.dto.ListDto;
-import com.written.app.mapper.ListMapper;
-import com.written.app.model.Entry;
-import com.written.app.model.Label;
 import com.written.app.model.Role;
 import com.written.app.model.User;
 import com.written.app.repository.ListRepository;
@@ -16,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -85,7 +82,7 @@ public class ListServiceTest {
 
         when(listRepository.save(any(com.written.app.model.List.class))).thenAnswer(invocation -> {
             com.written.app.model.List savedList = invocation.getArgument(0);
-            savedList.setId(1);
+            savedList.setId(listId);
             return savedList;
         });
 
@@ -95,10 +92,45 @@ public class ListServiceTest {
         // then
         assertThat(resultDto).isNotNull();
         assertThat(resultDto.title()).isEqualTo("List01");
-        assertThat(resultDto.userId()).isEqualTo(1);
+        assertThat(resultDto.userId()).isEqualTo(listId);
 
         verify(listRepository).save(any(com.written.app.model.List.class));
     }
 
+    @Test
+    public void ListRepository_Update_ReturnListDto() throws AccessDeniedException {
+        // given
+        Integer listId = 1;
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+
+        ListDto listDto = new ListDto(listId, user.getId(), "Updated List");
+
+
+        com.written.app.model.List existingList = com.written.app.model.List.builder()
+                .id(listId)
+                .user(user)
+                .title("Original List")
+                .build();
+
+        com.written.app.model.List updatedList = com.written.app.model.List.builder()
+                .id(listId)
+                .user(user)
+                .title(listDto.title())
+                .build();
+        when(listRepository.findById(listId)).thenReturn(Optional.of(existingList));
+        when(listRepository.save(any(com.written.app.model.List.class))).thenReturn(updatedList);
+
+        // when
+        ListDto updatedListDto = listService.update(listId, listDto, authToken);
+
+        // then
+        assertThat(updatedListDto).isNotNull();
+        assertThat(updatedListDto.id()).isEqualTo(listId);
+        assertThat(updatedListDto.userId()).isEqualTo(user.getId());
+        assertThat(updatedListDto.title()).isEqualTo("Updated List");
+
+        verify(listRepository).save(any(com.written.app.model.List.class));
+    }
 
 }
