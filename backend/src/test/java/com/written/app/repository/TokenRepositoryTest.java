@@ -102,4 +102,13 @@ public class TokenRepositoryTest {
         assertThat(resultToken.get().getUser()).isEqualTo(user);
     }
 
+    @Test
+    public void TokenRepository_FindByTokenWhenTokenNonexistent_ReturnEmptyOptional() {
+        // when
+        Optional<Token> resultToken = tokenRepository.findByToken("non-existent-token");
+
+        // then
+        assertThat(resultToken).isEmpty();
+    }
+
 }
