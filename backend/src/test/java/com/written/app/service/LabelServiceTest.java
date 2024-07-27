@@ -117,4 +117,40 @@ public class LabelServiceTest {
         verify(labelRepository).findById(1);
         verify(labelRepository).delete(labelToDelete);
     }
+
+    @Test
+    public void LabelService_Update_ReturnLabelDto() throws AccessDeniedException {
+        // given
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+
+        Integer labelId = 1;
+        Label labelToUpdate = Label.builder()
+                .id(labelId)
+                .name("Label to update")
+                .user(user)
+                .build();
+        when(labelRepository.findById(labelId)).thenReturn(Optional.of(labelToUpdate));
+
+        LabelDto inputDto = new LabelDto(labelId, "Updated Label", user.getId());
+
+        Label updatedLabel = Label.builder()
+                .id(inputDto.id())
+                .name(inputDto.name())
+                .user(user)
+                .build();
+        when(labelRepository.save(any(Label.class))).thenReturn(updatedLabel);
+
+        // when
+        LabelDto result = labelService.update(labelId, inputDto, authToken);
+
+        // then
+        assertThat(result).isNotNull();
+        assertThat(result.name()).isEqualTo("Updated Label");
+        assertThat(result.id()).isEqualTo(labelId);
+        assertThat(result.userId()).isEqualTo(user.getId());
+
+        verify(labelRepository).findById(labelId);
+        verify(labelRepository).save(any(Label.class));
+    }
 }
