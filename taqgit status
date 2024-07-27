@@ -1,0 +1,1173 @@
+[33mcommit 259241a49b480e61980030311999faf01648e700[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mtest/unit-list-item-service[m[33m)[m
+Merge: 852da29 0a7bc99
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 27 12:42:28 2024 +0900
+
+    Merge branch 'main' of github.com:taewookim02/written-thoughts into test/unit-list-item-service
+
+[33mcommit 0a7bc99adca0841ad92efa67060a49364180c01e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Merge: 9de111c 4faa55c
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Sat Jul 27 02:30:03 2024 +0900
+
+    Merge pull request #37 from taewookim02/fix/hide-credentials
+    
+    fix: hide db and jwt key
+
+[33mcommit 4faa55cd920dcf36907441cd1b93f3a9c6d2d43a[m[33m ([m[1;31morigin/fix/hide-credentials[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 27 02:23:02 2024 +0900
+
+    fix: hide db and jwt key
+
+[33mcommit 852da295bdad6d5bfdfe68a03c571e8c82347cda[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 27 01:09:45 2024 +0900
+
+    chore: add boilerplate code
+
+[33mcommit 9de111c39f6aa8eb8ae9c83961e158da11ceb6ac[m
+Merge: 233c8f0 10dbc6b
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Sat Jul 27 00:59:40 2024 +0900
+
+    Merge pull request #35 from taewookim02/test/unit-list-service
+    
+    test: list service
+
+[33mcommit 10dbc6bf9fac1fbb25d0592215ef6fef9515dc55[m[33m ([m[1;31morigin/test/unit-list-service[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 27 00:57:26 2024 +0900
+
+    test: list service delete
+
+[33mcommit ce49a81b0608d1b6c7fa4d9537d10f4b5fae3289[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 27 00:52:39 2024 +0900
+
+    test: list service update
+
+[33mcommit 0af6c6de24fd4545ffd9d3b5f6c9c8aacf269b46[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 27 00:43:26 2024 +0900
+
+    test: list service create
+
+[33mcommit 6b84b169a0388dd67589436b4406eadaa2675221[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 27 00:03:13 2024 +0900
+
+    test: list service findAllByUser
+
+[33mcommit 233c8f0e54eb5978042ca16e96b92b0ad855de50[m
+Merge: 4e00093 3f87238
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Fri Jul 26 23:30:26 2024 +0900
+
+    Merge pull request #34 from taewookim02/test/unit-entry-service
+    
+    test: entry service
+
+[33mcommit 3f87238e15c8eca7e2014567820f4129e5dd0048[m[33m ([m[1;31morigin/test/unit-entry-service[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 26 23:26:53 2024 +0900
+
+    test: entry service downloadEntries
+
+[33mcommit f70b2c0d26a58280c6344efd976fa15b2c3bd305[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 26 22:25:19 2024 +0900
+
+    test: entry service findById
+
+[33mcommit 117717c7a63b1a948795d4fa2583e4f245ebfe41[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 26 22:20:30 2024 +0900
+
+    test: entry service update
+
+[33mcommit e36efa1eaab6089905900922d3a676dab3892bb1[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 26 19:37:59 2024 +0900
+
+    test: entry service delete
+
+[33mcommit 8fce203b758e5dbb3c6f53b525802ee998027e52[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 26 18:39:38 2024 +0900
+
+    test: entry service findAllByUser
+
+[33mcommit 8faa967c351d0b1defa647285c758f468a53b4ea[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 26 18:28:49 2024 +0900
+
+    test: entry service create
+
+[33mcommit 4e00093495b4241fd06cef79a069879f656bb48c[m
+Merge: f917cce 2fba7a4
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Fri Jul 26 12:17:09 2024 +0900
+
+    Merge pull request #32 from taewookim02/test/unit-token-repository
+    
+    test: token repository
+
+[33mcommit 2fba7a45abce3e8ca7572cabffc443940a5362ff[m[33m ([m[1;31morigin/test/unit-token-repository[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 26 12:15:07 2024 +0900
+
+    test: token when nonexistent findByToken
+
+[33mcommit e0b2f5a592430726d2544d0df7dac75745416bf1[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 26 12:13:23 2024 +0900
+
+    test: token findByToken
+
+[33mcommit 128802d239c471fd066aa0cd3721794be67ad97b[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 20:44:30 2024 +0900
+
+    test: token findAllValidTokensByUser
+
+[33mcommit c20d3635d6c6a5c2cd8dc00db511a183f16ab027[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 20:44:11 2024 +0900
+
+    fix: findAllValidTokens logic error
+
+[33mcommit f917cce3db973650f4bd0d532f4de6bc97836859[m
+Merge: e7817df 071f8ff
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Thu Jul 25 10:24:19 2024 +0900
+
+    Merge pull request #31 from taewookim02/test/unit-user-repository
+    
+    test: user repository
+
+[33mcommit 071f8ffc8546e9beb0f91ef7f1772d609946229d[m[33m ([m[1;31morigin/test/unit-user-repository[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 10:01:32 2024 +0900
+
+    test: user update
+
+[33mcommit 6fd72db02552ec9e432a04180b8b28d7451d3588[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 09:43:18 2024 +0900
+
+    test: user findByIdAndIsNotDeletedFalse
+
+[33mcommit ec6d1d5d2431ebb5a70d7dd3cc0b77e23d5cd64a[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 09:10:55 2024 +0900
+
+    test: user softDelete
+
+[33mcommit 6f25897fd733fc7b0f30e84576f56bb571dd5355[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 08:42:39 2024 +0900
+
+    feat: softDelete and findByIdAndIsDeletedFalse
+
+[33mcommit ef622580b9bba5c5457870176d8e16819a9a0106[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 06:50:40 2024 +0900
+
+    test: user delete
+
+[33mcommit d2c63eff664c3c6c3251928a784f16db7fdfcc8a[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 06:40:40 2024 +0900
+
+    fix: entry findAllByUserIdOrderByCreatedAtDesc test
+
+[33mcommit e7817df952caab884a3b7660fa0e3c1bd35be496[m
+Merge: 16c0768 b715519
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Thu Jul 25 06:21:15 2024 +0900
+
+    Merge pull request #30 from taewookim02/test/unit-list-item-repository
+    
+    test: list item repository
+
+[33mcommit b7155192b36704a9bf6a707630b681e5981759d7[m[33m ([m[1;31morigin/test/unit-list-item-repository[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 06:19:17 2024 +0900
+
+    test: list item delete
+
+[33mcommit e155d1ef5bfe52b69c21e961a695df0b45147cf8[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 06:16:46 2024 +0900
+
+    test: list item update
+
+[33mcommit b70b38de8f38a3700cd2d9cd269f6cc4524c4d06[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 06:10:16 2024 +0900
+
+    test: list item findById
+
+[33mcommit ce6b5962245754571c60e39e42983be7f22c2973[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 02:56:18 2024 +0900
+
+    test: list item save
+
+[33mcommit 16c07686887698cde608a31d86cf56e04abbdd7b[m
+Merge: af5176b e1c23a1
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Thu Jul 25 02:34:14 2024 +0900
+
+    Merge pull request #29 from taewookim02/test/unit-list-repository
+    
+    test: list repository
+
+[33mcommit e1c23a1671a60c0ea30ab04bade75d7ed6d2055c[m[33m ([m[1;31morigin/test/unit-list-repository[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 02:21:54 2024 +0900
+
+    test: list deleteById
+
+[33mcommit 4720619891b88b07f0982e2156985cb0da0fc982[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 02:04:53 2024 +0900
+
+    test: list save
+
+[33mcommit a0598651c5d4e6231859d5a700f09482c059df5f[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 01:51:32 2024 +0900
+
+    test: list findAllByUserId
+
+[33mcommit af5176bc574ec0b25ad00103c139759cebe03ebe[m
+Merge: 700216e 870cc03
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Thu Jul 25 00:52:05 2024 +0900
+
+    Merge pull request #26 from taewookim02/test/unit-entry-repository
+    
+    test: entry delete
+
+[33mcommit 870cc03aaf59dfd0b002cd82cd6141c36b2de6e1[m[33m ([m[1;31morigin/test/unit-entry-repository[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jul 25 00:50:28 2024 +0900
+
+    test: entry delete
+
+[33mcommit 700216e111e86e44d7ae43392969c9017bbad1eb[m
+Merge: 97707c8 be687a9
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Wed Jul 24 21:17:04 2024 +0900
+
+    Merge pull request #23 from taewookim02/test/unit-label-repository
+    
+    test: unit test LabelRepository
+
+[33mcommit be687a9487c45f5be4e4552916fb4cc17814db2c[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 24 18:20:37 2024 +0900
+
+    test: label findAllByUserId
+
+[33mcommit 01e53f23ddbf3086021b7e7ea51dc961bd0ac4c2[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 24 18:11:07 2024 +0900
+
+    test: label delete
+
+[33mcommit db751afb31e00e63390cfd9c6d282b8cf2d31ba5[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 24 18:04:32 2024 +0900
+
+    test: label findById
+
+[33mcommit 55f85e5db53f4ef31e31591c3f88af7b9d40fb17[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 24 18:00:12 2024 +0900
+
+    test: label save
+
+[33mcommit 97707c8018ca543493cad22cfec0efeea3f37dce[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 24 17:46:05 2024 +0900
+
+    fix: entry FindById
+
+[33mcommit 8433194d317992dd313ad7117469784dd1e8bb97[m
+Merge: 8605737 f486d7c
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Tue Jul 23 23:36:48 2024 +0900
+
+    Merge pull request #22 from taewookim02/test/unit-repository-entry
+    
+    test: unit test EntryRepository
+
+[33mcommit f486d7c8dd494bb613ca023ecf596a9a57853b17[m[33m ([m[1;31morigin/test/unit-repository-entry[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 22 16:59:58 2024 +0900
+
+    test: entry findById
+
+[33mcommit 3ef3439058fa75f8b2f1c1e96a60bc165da70d0b[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 22 16:34:10 2024 +0900
+
+    test: findAllByUserIdOrderByCreatedAtDesc
+
+[33mcommit 25258b883449c5cac726134bd00b4e209702af72[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 22 16:20:13 2024 +0900
+
+    refactor: use @BeforeEach for user creation
+
+[33mcommit ea8ebe9831d8698334ccb3a91ea7892844c7648d[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 22 13:33:47 2024 +0900
+
+    refactor: change test names
+
+[33mcommit 221804890075307432e689831d234357bf238efa[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 22 12:47:33 2024 +0900
+
+    test: entry save without label
+
+[33mcommit e1cb88554e37923098b33f75d9b1c2e89a1e5da1[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 22 12:37:26 2024 +0900
+
+    test: entry save
+
+[33mcommit ddfab4499213697cc65f9c38aafc00ac60adeeaa[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sun Jul 21 19:11:46 2024 +0900
+
+    fix: swagger ui url mapping
+
+[33mcommit 860573777fae059c79397a0d289a77e066011c05[m
+Merge: b9f3067 5da6927
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Sun Jul 21 14:39:20 2024 +0900
+
+    Merge pull request #21 from taewookim02/fix/validate-user-principal
+    
+    fix: remove unnecessary methods and add delete auth validation
+
+[33mcommit 5da692712ae85e617bf5173a8abdd755bbb50b19[m[33m ([m[1;31morigin/fix/validate-user-principal[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sun Jul 21 14:36:13 2024 +0900
+
+    fix: remove unnecessary methods and add delete auth validation
+
+[33mcommit b9f30675c8dc5398669310a86bc8693bac4be0a9[m
+Merge: ef73b6f 5d8ccfb
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Sun Jul 21 13:37:21 2024 +0900
+
+    Merge pull request #20 from taewookim02/fix/validate-list-item-principal
+    
+    fix: list item auth with principal
+
+[33mcommit 5d8ccfb81f55230d0b5b7d6f05f41f3a0d633190[m[33m ([m[1;31morigin/fix/validate-list-item-principal[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sun Jul 21 13:35:43 2024 +0900
+
+    fix: list item delete auth validation
+
+[33mcommit a042d6b43675ec530165c7633e6e4adc54a7f959[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sun Jul 21 13:13:30 2024 +0900
+
+    fix: list item create auth validation
+
+[33mcommit 056fc5aa9360cce4a626f408955c2ab9f649350a[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sun Jul 21 13:08:55 2024 +0900
+
+    fix: list item update auth validation
+
+[33mcommit ef73b6fe6e48ddcd39d851620f9aa521f3f0e9de[m
+Merge: 5d2ead4 eb5e067
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Sat Jul 20 20:40:13 2024 +0900
+
+    Merge pull request #19 from taewookim02/fix/validate-list-principal
+    
+    fix: list auth with principal
+
+[33mcommit eb5e0674eecec419ea1807588d16e736e15a88f8[m[33m ([m[1;31morigin/fix/validate-list-principal[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 20:37:37 2024 +0900
+
+    fix: list delete auth validation
+
+[33mcommit 07360db01a2fb9e68ec4b38e690e94dc7cdfebdd[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 20:33:46 2024 +0900
+
+    fix: list update auth validation
+
+[33mcommit 5fc1801ebafd4f3370d2d63c4bae73f1dafafb99[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 20:29:59 2024 +0900
+
+    fix: list create auth validation
+
+[33mcommit 9734df0d3303d6724c25fc7120bec901287abb41[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 20:27:02 2024 +0900
+
+    fix: list get auth validation
+
+[33mcommit 5d2ead41c39e94c0eb8b74e004c3a7a44384dac6[m
+Merge: 0eb408c d76e3bb
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Sat Jul 20 20:21:23 2024 +0900
+
+    Merge pull request #18 from taewookim02/fix/validate-label-principal
+    
+    fix: label auth with principal
+
+[33mcommit d76e3bb9d85ddb05f82ab6a009796b82b783d1df[m[33m ([m[1;31morigin/fix/validate-label-principal[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 20:17:48 2024 +0900
+
+    chore: comment delete
+
+[33mcommit d2e84f668209e1e8d046e62979b4ac24b5304b1c[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 20:17:16 2024 +0900
+
+    fix: label update auth validation
+
+[33mcommit 39142978d2d0fe16af5cb4c511415182dd6ea64b[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 20:06:28 2024 +0900
+
+    fix: label delete auth validation
+
+[33mcommit 0c2050ad1ad539a3f55248f1ad7d95b040766b2d[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 19:23:13 2024 +0900
+
+    fix: label create auth validation
+
+[33mcommit 03a34748fb02424e8aec387d7a9df4f82b32e774[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 19:17:13 2024 +0900
+
+    fix: label get auth validation
+
+[33mcommit 0eb408cf8874d42ebfa1b4d766179c2a18f2b2ad[m
+Merge: 66f9f9a fa4aff2
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Sat Jul 20 18:58:46 2024 +0900
+
+    Merge pull request #17 from taewookim02/refactor/validate-entry-principal
+    
+    fix: entry auth with principal
+
+[33mcommit fa4aff29d092b74f7d800153cfaad6df665923fa[m[33m ([m[1;31morigin/refactor/validate-entry-principal[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 18:50:51 2024 +0900
+
+    fix: entry download auth validation
+
+[33mcommit c92ad7e388e3f9038eda35a4de61865128325de7[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 18:44:20 2024 +0900
+
+    fix: entry update auth validation
+
+[33mcommit e564280ff8f73cee1f451bf24a2cf13718146eee[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 18:39:13 2024 +0900
+
+    fix: entry delete auth validation
+
+[33mcommit 339f4c64e24d41910c43dae60f5f54bc950ef0fa[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 18:33:54 2024 +0900
+
+    fix: entry create auth validation
+
+[33mcommit d9b2248088ed9a4a87bf5e3cfb4c2655f68aceb6[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 18:27:39 2024 +0900
+
+    fix: entry findAllByUser auth validation
+
+[33mcommit fc9303bc673b140f490506132420d48e391880d2[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 20 18:20:37 2024 +0900
+
+    refactor: entry findById auth validation
+
+[33mcommit 66f9f9a233cba6b4982976c7dcac929724947452[m
+Merge: d7c29d3 43afd9e
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Fri Jul 19 18:31:48 2024 +0900
+
+    Merge pull request #16 from taewookim02/feature/jwt-refresh-token
+    
+    feat: jwt refresh token
+
+[33mcommit 43afd9ec91deaabf20fe493728398e2b322a0749[m[33m ([m[1;31morigin/feature/jwt-refresh-token[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 19 18:30:32 2024 +0900
+
+    feat: add refresh token endpoint and service
+
+[33mcommit ba9960827d3490c40664e969e0c87fda00072693[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 19 18:05:00 2024 +0900
+
+    feat: generate and return refresh tokens
+
+[33mcommit 5bfe183fdbcb72c7935024853f579e4dca1de023[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 19 17:55:04 2024 +0900
+
+    feat: generateRefreshToken
+
+[33mcommit b885ed5513d609e36d94f7d8a954bbc0c204a874[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 19 17:08:23 2024 +0900
+
+    refactor: extract buildToken from generateToken
+
+[33mcommit 080a8f6d9dba1c4fcb2fd9d26695180c5d786b85[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 19 17:06:01 2024 +0900
+
+    feat: add refresh-token field and yml config
+
+[33mcommit d7c29d34a8131fa8f6f544fdfb055b63621a66fd[m
+Merge: 1dfbd34 6f3019c
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Fri Jul 19 14:58:20 2024 +0900
+
+    Merge pull request #15 from taewookim02/feature/user-crud
+    
+    feat: User patch, delete
+
+[33mcommit 6f3019c48f01f88d248e50093282df85f0ed3935[m[33m ([m[1;31morigin/feature/user-crud[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 19 14:51:28 2024 +0900
+
+    feat: change nick
+
+[33mcommit df9d95c56676a9d62fbce8c9ac0a097e9779c2b2[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 19 14:42:18 2024 +0900
+
+    feat: change password
+
+[33mcommit a5c4e6437ba31220740ff380431a21ed1c333241[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 19 12:48:09 2024 +0900
+
+    feat: user delete
+
+[33mcommit 1dfbd34cc077eaf02477a6125ab6a80fbb235f2a[m
+Merge: 8c638eb ee7fdb8
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Thu Jul 18 15:28:48 2024 +0900
+
+    Merge pull request #14 from taewookim02/feature/jwt-logout
+    
+    feat: Logout
+
+[33mcommit ee7fdb8dd772a706b125907de6393ae25439cb1a[m[33m ([m[1;31morigin/feature/jwt-logout[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 17 23:00:53 2024 +0900
+
+    feat: add logoutHandler
+
+[33mcommit 3ec8a6fda0446c471e251d4db3f3fe35fb776fd1[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 17 22:41:56 2024 +0900
+
+    feat: implement checking of valid token on AuthFilter
+
+[33mcommit 7073c14fb2a97240e8fe537b0dd5da07ebc637c1[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 17 22:03:43 2024 +0900
+
+    feat: revokeAllTokens of user on authenticate, then save new
+
+[33mcommit 850efaba594ab49246638ad87696767154e23e17[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 17 21:23:55 2024 +0900
+
+    fix: String token on autheticate because it is not needed atm
+
+[33mcommit 09a0c7fb429b706edaa7f18dedc4c9741d84390a[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 17 21:18:18 2024 +0900
+
+    feat: save token implemented on service layer
+
+[33mcommit 3d8079c885ecd1ff14dfcf3d52ed29aba9d087a4[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 17 19:26:39 2024 +0900
+
+    feat: save token on register
+
+[33mcommit 34f80402151473a630e9263fc5908eb7880bedda[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 17 19:21:23 2024 +0900
+
+    feat: add tokenRepository
+
+[33mcommit 2a189442b5563454bf011f137d8eb2032811df5a[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jul 17 19:20:51 2024 +0900
+
+    feat: add Token entity
+
+[33mcommit 8c638eb11f4b4c916aab17d8730218d55e7d6e0a[m
+Merge: 87af3c3 e99fae3
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Tue Jul 16 00:25:37 2024 +0900
+
+    Merge pull request #13 from taewookim02/twk-feat-public-entry
+    
+    Adding public entry features
+
+[33mcommit e99fae3f3ec25daa180b7447b4ebf86ae04778e2[m[33m ([m[1;31morigin/twk-feat-public-entry[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Tue Jul 16 00:20:24 2024 +0900
+
+    feat: add top 20 public entries ordered by date desc
+
+[33mcommit 20dbe29da09420b96b76cc647a1daa6791b23585[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Tue Jul 16 00:17:12 2024 +0900
+
+    feat: add entry dummy data with javafaker
+
+[33mcommit f4d7a78af4048798439231861eb8b594101c38c8[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 23:23:34 2024 +0900
+
+    refactor: change isPrivate to isPublic
+
+[33mcommit 87af3c3e32b2948a102c4fe0af17d75fd023f1cc[m
+Merge: f5fff15 e87a6e7
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Mon Jul 15 20:02:13 2024 +0900
+
+    Merge pull request #12 from taewookim02/twk-feat-download
+    
+    Download feature for users to backup entries
+
+[33mcommit e87a6e714c115104aee53421404ed086cc4aa77c[m[33m ([m[1;31morigin/twk-feat-download[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 20:00:21 2024 +0900
+
+    feat: download entries for users to backup
+
+[33mcommit f5fff1578b8583afa4110593290af7bc8ea85530[m
+Merge: 3400d85 67d4d83
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Mon Jul 15 18:48:41 2024 +0900
+
+    Merge pull request #11 from taewookim02/twk-feat-list-item
+    
+    Adding List-Item CRUD features
+
+[33mcommit 67d4d83f16900838a157db8774a842dc6fc7dbcd[m[33m ([m[1;31morigin/twk-feat-list-item[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 18:46:38 2024 +0900
+
+    feat: list-item delete
+
+[33mcommit 6cbb1efe52b43919c4d8f42f7b7e793ac938729e[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 18:46:14 2024 +0900
+
+    feat: list-item update
+
+[33mcommit 1241d00d7527b3c8f5f2c571ce30a3ea2b819f28[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 18:33:30 2024 +0900
+
+    feat: list-item create
+
+[33mcommit 3400d8581293c424b38091b9e61955b5f96a83a8[m
+Merge: 48bcd94 3b1b417
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Mon Jul 15 18:16:57 2024 +0900
+
+    Merge pull request #10 from taewookim02/twk-feat-list
+    
+    Adding List CRUD features
+
+[33mcommit 3b1b4170cad1619f1e46683bf4e91a586e3d732d[m[33m ([m[1;31morigin/twk-feat-list[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 18:13:06 2024 +0900
+
+    feat: list delete
+
+[33mcommit ee83b67157ea24799416760d1a99a12b33808e9c[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 17:47:50 2024 +0900
+
+    feat: list update
+
+[33mcommit 816e10175aa198f6f020c0efe3e4f079da14cf13[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 17:36:49 2024 +0900
+
+    feat: list create
+
+[33mcommit 61b04c1450e0daabde273edbcd9e0e848072be7f[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 17:23:54 2024 +0900
+
+    feat: list read
+
+[33mcommit 48bcd94330dcfcbd2680e0aea90148544da9656a[m
+Merge: dd9207b da78928
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Mon Jul 15 16:58:38 2024 +0900
+
+    Merge pull request #9 from taewookim02/twk-feat-entry
+    
+    Adding Entry CRUD features
+
+[33mcommit da7892822d18d9f9988280768da7cfe96431ce8f[m[33m ([m[1;31morigin/twk-feat-entry[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 16:58:08 2024 +0900
+
+    chore: add TODO comment
+
+[33mcommit f3a61693a72dc1e4425822228bd4bfb0672d3338[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 16:42:31 2024 +0900
+
+    feat: entry findById
+
+[33mcommit f40fcce2e7fe5e1297afd07f1829da19677a6026[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 16:37:43 2024 +0900
+
+    feat: entry update
+
+[33mcommit 25a3ad61a2ebe52fc8abf6e5cf4e87e6b45b8258[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 16:11:05 2024 +0900
+
+    fix: use patch instead of put
+
+[33mcommit 5180cde20d85279a13d1df8fa9529e83ed87af8d[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 15:28:11 2024 +0900
+
+    feat: entry delete
+
+[33mcommit 487ae74fdfe5fe6a50a4c851767408489e0a971d[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 15:24:55 2024 +0900
+
+    feat: entry create
+
+[33mcommit 68d22e8ab558a8c57b0be2b81343709d6d38b7fc[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 15:03:10 2024 +0900
+
+    feat: entry read
+
+[33mcommit dd9207bccd15d1a1146c90a5dc80c68e9cd4228c[m
+Merge: da42344 89bbc7a
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Mon Jul 15 14:53:04 2024 +0900
+
+    Merge pull request #8 from taewookim02/twk-feat-label
+    
+    Adding Label CRUD features
+
+[33mcommit 89bbc7a40a64a69ec6dcec6dfe1cfb5edffea61c[m[33m ([m[1;31morigin/twk-feat-label[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 14:00:07 2024 +0900
+
+    feat: label update
+
+[33mcommit 01dd926da41d8a78b2d7bfc0cfbfa97a8a22d0f9[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 11:57:36 2024 +0900
+
+    feat: label delete
+
+[33mcommit ea1862d915d2b0af350cf2c62427f963cda82e53[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 11:48:07 2024 +0900
+
+    feat: label create
+
+[33mcommit e6f949fec70820ccc9575d509cb60c95811cceb7[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 11:30:20 2024 +0900
+
+    refactor: use dto pattern for label findAll
+
+[33mcommit 97d197b6f6479b8283f1f23e68b6cf02472f3bc8[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jul 15 11:22:12 2024 +0900
+
+    feat: add findAllByUserId for label
+
+[33mcommit da42344a22781ee95f3dad9537d5fecc3f12386c[m
+Merge: f944454 e9e2fe2
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Sun Jul 14 11:55:46 2024 +0900
+
+    Merge pull request #7 from taewookim02/twk-swagger-ui
+    
+    Adding swagger-ui
+
+[33mcommit e9e2fe24c7bce35aceb12a0bcf2d1fe3a56bd4f8[m[33m ([m[1;31morigin/twk-swagger-ui[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sun Jul 14 11:51:58 2024 +0900
+
+    chore: add hidden annotation with comment for swagger
+
+[33mcommit 7fb1784998a4be1e5b36893d2e68422802636016[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sun Jul 14 11:44:52 2024 +0900
+
+    feat: add demo description for swagger on userController
+
+[33mcommit b131017c45678850005b207aef6c3ac97f81dbd2[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sun Jul 14 11:39:17 2024 +0900
+
+    feat: add swagger ui and openapi config
+
+[33mcommit f9444544bd4ee9d0467f887c56acb54c45a84559[m
+Merge: 20a3217 f82bead
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Sat Jul 13 23:53:43 2024 +0900
+
+    Merge pull request #6 from taewookim02/twk-jpa-ddl
+    
+    Adding entities
+
+[33mcommit f82bead0f8331c629c4d58f67094bae34c6408d3[m[33m ([m[1;31morigin/twk-jpa-ddl[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 13 23:49:54 2024 +0900
+
+    feat: add label entity
+
+[33mcommit a821e36205c710022fd2b0f7948b5557e2e2e94e[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 13 23:24:44 2024 +0900
+
+    feat: add list item entity
+
+[33mcommit c8d5f45c0039872b74b7ed7e4a2ea8895f03159c[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 13 23:08:22 2024 +0900
+
+    feat: add list entity
+
+[33mcommit 56aaeade30d10097a1a948a526af514c2d0a6c06[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 13 22:02:32 2024 +0900
+
+    feat: add dummy entry and user with its list api
+
+[33mcommit 9c8caf805c2bcd1c4b27e23e7c1a0d4094ffea30[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 13 18:35:34 2024 +0900
+
+    feat: add Entry entity ddl
+
+[33mcommit 20a32174e6b9de13f9c1e4f3dd505e3159ec6217[m
+Merge: 159360d 10fddb4
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Sat Jul 13 18:08:10 2024 +0900
+
+    Merge pull request #5 from taewookim02/twk-refactor-project-structure
+    
+    chore: edit folder structure to follow mvc
+
+[33mcommit 10fddb4171df1b8ab0c47edb1ba6a1d4d8d520e8[m[33m ([m[1;31morigin/twk-refactor-project-structure[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 13 18:06:33 2024 +0900
+
+    chore: edit folder structure to follow mvc
+
+[33mcommit 159360d03a602a5c04ee5da4078e0a57be0226c3[m
+Merge: 1d429c9 bc64a20
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Sat Jul 13 01:39:32 2024 +0900
+
+    Merge pull request #4 from taewookim02/twk-refactor-project-structure
+    
+    Refactor project structure
+
+[33mcommit bc64a20c17f99d3075e34dc5437f4e08e25c5692[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 13 01:37:42 2024 +0900
+
+    chore: remove cached sqlWorkspace directory
+
+[33mcommit 471153715a783d1a41e5fc33db13f3477bbe689c[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 13 01:36:06 2024 +0900
+
+    chore: edit .gitignore for removing sqlWorkspace
+
+[33mcommit 307c1ea686367b11f13391a1bd7f3d3372d5e042[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Sat Jul 13 01:33:17 2024 +0900
+
+    refactor: project structure to frontend and backend
+
+[33mcommit 1d429c9802af2ded3256f6a577be0fdf6c540a30[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jul 5 13:45:03 2024 +0900
+
+    feat: add webconfig for corsmappings
+
+[33mcommit aa1f254c7ccf63de401521162bc133456cefe6ee[m
+Merge: 47a490e dea1959
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Fri Jun 28 11:40:36 2024 +0900
+
+    Merge pull request #3 from taewookim02/twk-spring-security
+    
+    Implement Spring Security with JWT Token
+
+[33mcommit dea19598e810f6b3492aecb6c0fdc02490f0787e[m[33m ([m[1;31morigin/twk-spring-security[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Fri Jun 28 00:05:20 2024 +0900
+
+    fix: add token email validation to match req email
+
+[33mcommit 539c21b365d89a0def6e9445c86a255d70f0e235[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 23:18:11 2024 +0900
+
+    refactor: hide jwt key in application.yml
+
+[33mcommit 522d618818d62ecb79ba36d06281448e0212acc7[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 22:59:07 2024 +0900
+
+    fix: default values for user register
+
+[33mcommit 25f666b1eba501686aa46e65db95e4d50d64d59a[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 22:51:56 2024 +0900
+
+    fix: fix requestMatcher path and daoAuthenticationProvider
+
+[33mcommit d739f37c638957bec0ba8d3e11c91ae71afd8da9[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 19:52:59 2024 +0900
+
+    feat: add authenticationService
+
+[33mcommit 0080b73fe736eb49d59e14e8cc227e632133f3a4[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 19:52:31 2024 +0900
+
+    fix: mybatis overlapping with jpa
+
+[33mcommit 9a92abbcf43b32d58d6bb716059a6c27a10eab1a[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 19:12:15 2024 +0900
+
+    chore: add config and 2 endpoints
+
+[33mcommit bc3aa9a79ef479295343b3e33412dcf3afc0d271[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 18:35:18 2024 +0900
+
+    chore: set authToken and doFilter
+
+[33mcommit f9b693a16983336fb94d48a8ca1a3a3a8497a41a[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 18:29:29 2024 +0900
+
+    chore: add user details service
+
+[33mcommit e3443fb450bed10b660efd1867a9eabb6eccbb3d[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 18:20:24 2024 +0900
+
+    feat: token validity
+
+[33mcommit 121ef2a447fd12412bc51f9bdf1ff519eca8c595[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 18:16:52 2024 +0900
+
+    feat: add generateToken, extractClaim
+
+[33mcommit d3b0b435546ac2417c82f77adfa7dd66ff3d57fe[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 18:03:52 2024 +0900
+
+    feat: add extractClaims, signInKey, and jwt secret key
+
+[33mcommit b660edeef26d0bda9dbae0728a01574c480f7c15[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 17:42:24 2024 +0900
+
+    chore: add jwt dependencies
+
+[33mcommit 0e4a1050bb8dac674556b6948d74a59e02fc5649[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 17:31:31 2024 +0900
+
+    feat: add jwt auth filter, service
+
+[33mcommit 9a84d4baad0832b67de3afe40365b44ac03e64e1[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 17:17:11 2024 +0900
+
+    feat: add user repository
+
+[33mcommit 789d071c25197832feb41223b13dd6fe8ed3ebd8[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 17:12:59 2024 +0900
+
+    feat: add role and user overriding methods
+
+[33mcommit 38a13cb1e2b66b875f387389ed4aa80e3e522ad2[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 17:02:03 2024 +0900
+
+    refactor: member table to _user table
+
+[33mcommit 57b05c459bc8257dc91ceaaf86c2f17b044576c7[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 16:47:08 2024 +0900
+
+    feat: add member table jpa init
+
+[33mcommit 47a490efa17c33bbb250c2c8b3447f482ca838c4[m
+Merge: 05c83fe e5c0757
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Thu Jun 27 15:29:44 2024 +0900
+
+    Merge pull request #2 from taewookim02/twk-react-ui
+    
+    Add sign in, sign up page, and CORS filter
+
+[33mcommit e5c0757884dbbcbd3c38ad59e321500ad2518bac[m[33m ([m[1;31morigin/twk-react-ui[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 15:28:29 2024 +0900
+
+    style: add sign up page
+
+[33mcommit b77854365432b695a2369098e518002371ecb5e7[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 10:51:45 2024 +0900
+
+    feat: add fetch feature for login
+
+[33mcommit 818be332114b2379c6cf6fa4eb799185a2e257ff[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 10:40:45 2024 +0900
+
+    feat: Add cors filter
+
+[33mcommit efbb5be7b81905c1dfd9d8d7d99839adc1eb6b93[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Thu Jun 27 09:21:27 2024 +0900
+
+    style: add basic navbar
+
+[33mcommit 05c83feacf1bb2db3dfe09f2af35ffcb9c616745[m
+Merge: d53f132 20db4aa
+Author: Tae Woo Kim <65373329+taewookim02@users.noreply.github.com>
+Date:   Wed Jun 26 19:09:43 2024 +0900
+
+    Merge pull request #1 from taewookim02/twk-react-router
+    
+    Add react-router-dom, tailwind
+
+[33mcommit 20db4aaa0e357c46513dbe89d4eebb3e701c9cf3[m[33m ([m[1;31morigin/twk-react-router[m[33m)[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jun 26 19:07:55 2024 +0900
+
+    style: tailwindcss config
+
+[33mcommit 10c60781643738db350b498b46e7b2c4f87c1b42[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jun 26 19:00:03 2024 +0900
+
+    style: add tailwindcss
+
+[33mcommit b56bb86bc1d08e06000fb0621ee024f602538bde[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jun 26 18:07:57 2024 +0900
+
+    Add pages and react routers
+
+[33mcommit 62c85d35bb0d588bb47054af0d807ef1baf523df[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jun 26 17:48:27 2024 +0900
+
+    Add ddl
+
+[33mcommit 768a5dc6a8cef9b3ded9a7ae1457bb9d1979bc76[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jun 26 13:24:02 2024 +0900
+
+    Add react-router-dom
+
+[33mcommit 7ca7a8413f0f87a63dee7da11635cfada2c4e7e2[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jun 26 13:09:54 2024 +0900
+
+    Add fetch and crossorigin
+
+[33mcommit d53f132dfa3622d5d85a02fe9c9f8508fcead5a7[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jun 26 12:34:27 2024 +0900
+
+    Add spring security
+
+[33mcommit 73f45ed52d3dc2210a76784e7b48e221b73e039f[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Wed Jun 26 12:34:11 2024 +0900
+
+    Add frontend
+
+[33mcommit ed6e344d0ad1f077b9b03ad79c3ea2efcbf4783f[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jun 24 16:57:26 2024 +0900
+
+    Add basic mybatis query
+
+[33mcommit 6da7d464c32d87978bd24ea5e4b37501c2f33ea6[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jun 24 16:31:36 2024 +0900
+
+    Add member beans
+
+[33mcommit ebc96820067d3d4014c3f85eaa5d2003e3f2c96b[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jun 24 16:31:27 2024 +0900
+
+    chore: add postgresql info
+
+[33mcommit 6afc24964fd13e0d40a4778066f92376d73676c1[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jun 24 15:13:03 2024 +0900
+
+    chore: add basic project setup
+
+[33mcommit 36d7ddba187a1886d710b4a8dc0e9e98ca215871[m
+Author: Tae Woo Kim <taewookim02@gmail.com>
+Date:   Mon Jun 24 15:03:30 2024 +0900
+
+    first commit
