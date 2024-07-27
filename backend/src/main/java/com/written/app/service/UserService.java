@@ -43,8 +43,7 @@ public class UserService {
     public void changePassword(ChangePasswordRequestDto request, Principal connectedUser) {
         // get current user
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        System.out.println("user.getId() = " + user.getId());
-        System.out.println("user.getPassword() = " + user.getPassword());
+
         // check if the current password is correct
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
             throw new IllegalStateException("Wrong password");
