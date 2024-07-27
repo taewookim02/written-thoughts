@@ -126,5 +126,34 @@ public class ListItemServiceTest {
         verify(listItemRepository).save(any(ListItem.class));
     }
 
+    @Test
+    public void ListItemService_Delete_ReturnVoid() throws AccessDeniedException {
+        // given
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+
+        Integer listId = 1;
+        Integer listItemId = 1;
+        List list = List.builder()
+                .id(listId)
+                .title("List01")
+                .user(user)
+                .build();
+        ListItem foundListItem = ListItem.builder()
+                .id(listItemId)
+                .list(list)
+                .content("Found list item")
+                .build();
+
+        when(listItemRepository.findById(listItemId)).thenReturn(Optional.of(foundListItem));
+
+        // when
+        listItemService.delete(listItemId, authToken);
+
+        // then
+        verify(listItemRepository).findById(listItemId);
+        verify(listItemRepository).delete(foundListItem);
+    }
+
 
 }
