@@ -1,5 +1,6 @@
 package com.written.app.service;
 
+import com.written.app.dto.ChangeNickRequestDto;
 import com.written.app.dto.ChangePasswordRequestDto;
 import com.written.app.model.Role;
 import com.written.app.model.User;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.in;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -76,5 +78,21 @@ public class UserServiceTest {
         assertThat(user.getPassword()).isEqualTo("encodedNewPassword");
 
         verify(userRepository).save(any(User.class));
+    }
+
+    @Test
+    public void UserService_ChangeNick_ReturnVoid() {
+        // given
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+
+        ChangeNickRequestDto inputDto = new ChangeNickRequestDto("Updated Nick");
+
+        // when
+        userService.changeNick(inputDto, authToken);
+
+        // then
+        assertThat(user.getNick()).isEqualTo("Updated Nick");
+        verify(userRepository).save(user);
     }
 }
