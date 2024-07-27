@@ -22,7 +22,8 @@ public class ListItemController {
                               Principal connectedUser) throws AccessDeniedException {
         return listItemService.create(dto, connectedUser);
     }
- 
+
+    // FIXME: duplicate list-item-id?
     @PatchMapping("/list-items/{list-item-id}")
     public ListItemDto update(
             @PathVariable("list-item-id") Integer listItemId,
