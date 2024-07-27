@@ -68,4 +68,30 @@ public class LabelServiceTest {
         verify(authToken).getPrincipal();
         verify(labelRepository).findAllByUserId(user.getId());
     }
+
+    @Test
+    public void LabelService_Create_ReturnLabelDto() {
+        // given
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+
+        LabelDto inputDto = new LabelDto(null, "Label01", user.getId());
+        Label expectedLabel = Label.builder()
+                .id(1)
+                .name(inputDto.name())
+                .user(user)
+                .build();
+        when(labelRepository.save(any(Label.class))).thenReturn(expectedLabel);
+
+        // when
+        LabelDto resultDto = labelService.create(inputDto, authToken);
+
+        // then
+        assertThat(resultDto).isNotNull();
+        assertThat(resultDto.name()).isEqualTo(inputDto.name());
+        assertThat(resultDto.id()).isEqualTo(1);
+        assertThat(resultDto.userId()).isEqualTo(user.getId());
+
+        verify(labelRepository).save(any(Label.class));
+    }
 }
