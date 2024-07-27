@@ -7,7 +7,6 @@ import com.written.app.model.Role;
 import com.written.app.model.User;
 import com.written.app.repository.ListItemRepository;
 import com.written.app.repository.ListRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -84,6 +83,48 @@ public class ListItemServiceTest {
         verify(listItemRepository).save(any(ListItem.class));
     }
 
+    @Test
+    public void ListItemService_Update_ReturnListItemDto() throws AccessDeniedException {
+        // given
+        UsernamePasswordAuthenticationToken authToken = mock(UsernamePasswordAuthenticationToken.class);
+        when(authToken.getPrincipal()).thenReturn(user);
+
+        Integer listId = 1;
+        Integer listItemId = 1;
+        ListItemDto inputDto = new ListItemDto(listItemId, "Updated content", listId);
+
+        List list = List.builder()
+                .id(listId)
+                .title("List01")
+                .user(user)
+                .build();
+
+        ListItem savedListItem = ListItem.builder()
+                .id(listItemId)
+                .content("Test content")
+                .list(list)
+                .build();
+        when(listItemRepository.findById(listItemId)).thenReturn(Optional.of(savedListItem));
+
+        ListItem updatedListItem = ListItem.builder()
+                .id(inputDto.id())
+                .content(inputDto.content())
+                .list(list)
+                .build();
+        when(listItemRepository.save(savedListItem)).thenReturn(updatedListItem);
+
+        // when
+        ListItemDto resultDto = listItemService.update(listItemId, inputDto, authToken);
+
+        // then
+        assertThat(resultDto).isNotNull();
+        assertThat(resultDto.content()).isEqualTo(inputDto.content());
+        assertThat(resultDto.id()).isEqualTo(listItemId);
+        assertThat(resultDto.listId()).isEqualTo(listId);
+
+        verify(listItemRepository).findById(listItemId);
+        verify(listItemRepository).save(any(ListItem.class));
+    }
 
 
 }
