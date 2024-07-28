@@ -114,13 +114,22 @@ public class JwtServiceTest {
     }
 
 
-    // TODO: add extractClaim
-    /*@Test
-    public void JwtService_ExtractClaim_() {
+    @Test
+    public void JwtService_ExtractClaim_ReturnExtractSubject() {
         // given
-    }*/
+        String subject = "test@example.com";
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("sub", subject);
+        String token = jwtService.generateToken(claims, userDetails);
 
-    
+        // when
+        String extractedSubject = jwtService.extractClaim(token, Claims::getSubject);
+
+        // then
+        assertThat(extractedSubject).isEqualTo(subject);
+    }
+
+
 
 
 }
