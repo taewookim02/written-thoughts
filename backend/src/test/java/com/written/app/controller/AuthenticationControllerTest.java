@@ -2,6 +2,7 @@ package com.written.app.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.written.app.config.JwtAuthenticationFilter;
+import com.written.app.dto.AuthenticationRequest;
 import com.written.app.dto.AuthenticationResponse;
 import com.written.app.dto.RegisterRequest;
 import com.written.app.service.AuthenticationService;
@@ -65,6 +66,35 @@ public class AuthenticationControllerTest {
                 .andExpect(jsonPath("$.access_token").value("jwtToken"))
                 .andExpect(jsonPath("$.refresh_token").value("refreshToken"));
         verify(authenticationService).register(inputRequest);
+    }
+
+
+    @Test
+    public void AuthenticationController_Authenticate_ReturAuthResponse() throws Exception {
+        // given
+        AuthenticationRequest inputRequest = AuthenticationRequest.builder()
+                .email("test@example.com")
+                .password("password")
+                .build();
+
+        AuthenticationResponse authResponse = AuthenticationResponse.builder()
+                .accessToken("jwtToken")
+                .refreshToken("refreshToken")
+                .build();
+        when(authenticationService.authenticate(inputRequest)).thenReturn(authResponse);
+
+        // when
+        ResultActions response = mockMvc.perform(post("/auth/authenticate")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(inputRequest)));
+
+        // then
+        response.andExpect(status().isOk())
+                .andExpect(jsonPath("$.access_token").value("jwtToken"))
+                .andExpect(jsonPath("$.refresh_token").value("refreshToken"));
+        verify(authenticationService).authenticate(inputRequest);
+
+
     }
 
 }
