@@ -20,13 +20,12 @@ import java.io.IOException;
 public class AuthenticationController {
 
     private final AuthenticationService service;
-    private final JwtService jwtService;
+//    private final JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) {
-        System.out.println("request = " + request);
         return ResponseEntity.ok(service.register(request));
     }
 

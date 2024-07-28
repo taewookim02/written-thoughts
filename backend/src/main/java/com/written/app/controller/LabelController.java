@@ -20,8 +20,9 @@ public class LabelController {
     }
 
     @GetMapping("/labels")
-    public List<LabelDto> findAllByUser(Principal connectedUser)  {
-        return labelService.findAllByUser(connectedUser);
+    public ResponseEntity<List<LabelDto>> findAllByUser(Principal connectedUser)  {
+        List<LabelDto> labels = labelService.findAllByUser(connectedUser);
+        return ResponseEntity.ok(labels);
     }
 
     @PostMapping("/labels")
@@ -32,7 +33,7 @@ public class LabelController {
     }
 
     @DeleteMapping("/labels/{label-id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("label-id") Integer id,
                        Principal connectedUser) throws AccessDeniedException {
         labelService.delete(id, connectedUser);

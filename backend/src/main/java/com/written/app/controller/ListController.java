@@ -3,8 +3,10 @@ package com.written.app.controller;
 import com.written.app.dto.ListDto;
 import com.written.app.service.ListService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.List;
@@ -19,30 +21,35 @@ public class ListController {
     }
 
     @GetMapping("/lists")
-    public List<com.written.app.model.List> findAllByUser(
+    public ResponseEntity<List<com.written.app.model.List>> findAllByUser(
         Principal connectedUser
     ) {
-        return listService.findAllByUser(connectedUser);
+        List<com.written.app.model.List> lists = listService.findAllByUser(connectedUser);
+        return ResponseEntity.ok(lists);
     }
 
     @PostMapping("/lists")
-    public ListDto create(@RequestBody ListDto dto,
+    public ResponseEntity<ListDto> create(@RequestBody ListDto dto,
                           Principal connectedUser) {
-        return listService.create(dto, connectedUser);
+        ListDto listDto = listService.create(dto, connectedUser);
+        return ResponseEntity
+                .created(URI.create("/lists/" + listDto.id()))
+                .body(listDto);
     }
 
     @PatchMapping("/lists/{list-id}")
-    public ListDto update(
+    public ResponseEntity<ListDto> update(
             @PathVariable("list-id") Integer listId,
             @RequestBody ListDto dto,
             Principal connectedUser
     ) throws AccessDeniedException {
-        return listService.update(listId, dto, connectedUser
+        ListDto listDto = listService.update(listId, dto, connectedUser
         );
+        return ResponseEntity.ok(listDto);
     }
 
     @DeleteMapping("/lists/{list-id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(
             @PathVariable("list-id") Integer listId,
             Principal connectedUser

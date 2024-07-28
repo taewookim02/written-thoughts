@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.List;
@@ -30,7 +31,7 @@ public class EntryController {
             Principal connectedUser
     ) throws AccessDeniedException {
         Entry entry = entryService.findById(entryId, connectedUser);
-        return ResponseEntity.ok(entry);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(entry);
     }
 
     @GetMapping("/entry/user")
@@ -41,13 +42,16 @@ public class EntryController {
     }
 
     @PostMapping("/entry")
-    public Entry create(@RequestBody EntryDto dto,
+    public ResponseEntity<Entry> create(@RequestBody EntryDto dto,
                         Principal connectedUser) {
-        return entryService.create(dto, connectedUser);
+        Entry savedEntry = entryService.create(dto, connectedUser);
+        return ResponseEntity
+                .created(URI.create("/entry/" + savedEntry.getId()))
+                .body(savedEntry);
     }
 
     @DeleteMapping("/entry/{entry-id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(
             @PathVariable("entry-id") Integer entryId,
             Principal connectedUser
@@ -56,12 +60,13 @@ public class EntryController {
     }
 
     @PatchMapping("/entry/{entry-id}")
-    public Entry update(
+    public ResponseEntity<Entry> update(
             @PathVariable("entry-id") Integer entryId,
             @RequestBody EntryDto dto,
             Principal connectedUser
     ) throws AccessDeniedException {
-        return entryService.update(entryId, dto, connectedUser);
+        Entry updatedEntry = entryService.update(entryId, dto, connectedUser);
+        return ResponseEntity.ok(updatedEntry);
     }
 
 
