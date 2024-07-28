@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -36,8 +37,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(
         controllers = EntryController.class,
@@ -185,5 +185,27 @@ public class EntryControllerTest {
                 .andExpect(jsonPath("$.title").value(entry.getTitle()))
                 .andExpect(jsonPath("$.content").value(entry.getContent()))
                 .andExpect(jsonPath("$.id").value(entry.getId()));
+    }
+
+    @Test
+    public void EntryController_DownloadEntries_ReturnResource() throws Exception {
+        // given
+        String content = "Entry 1\nEntry 2\nEntry 3";
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("test@example.com");
+        when(entryService.downloadEntries(mockPrincipal)).thenReturn(content);
+
+        // when
+        ResultActions response = mockMvc.perform(get("/entry/download")
+                .principal(mockPrincipal));
+
+        // then
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=entries.txt"))
+                .andExpect(content().contentType(MediaType.TEXT_PLAIN))
+                .andExpect(content().string(content));
+
+        verify(entryService).downloadEntries(mockPrincipal);
     }
 }
