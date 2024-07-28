@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.List;
@@ -41,9 +42,12 @@ public class EntryController {
     }
 
     @PostMapping("/entry")
-    public Entry create(@RequestBody EntryDto dto,
+    public ResponseEntity<Entry> create(@RequestBody EntryDto dto,
                         Principal connectedUser) {
-        return entryService.create(dto, connectedUser);
+        Entry savedEntry = entryService.create(dto, connectedUser);
+        return ResponseEntity
+                .created(URI.create("/entry/" + savedEntry.getId()))
+                .body(savedEntry);
     }
 
     @DeleteMapping("/entry/{entry-id}")

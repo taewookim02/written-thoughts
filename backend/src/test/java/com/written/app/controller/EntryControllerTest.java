@@ -145,4 +145,9 @@ public class EntryControllerTest {
                 .andExpect(jsonPath("$.id").value(entry.getId()))
                 .andExpect(jsonPath("$.title").value(entry.getTitle()));
     }
+
+    @Test
+    public void EntryController_Delete_ReturnOk() {
+
+    }
 }
