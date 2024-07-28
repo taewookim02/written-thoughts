@@ -17,10 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -30,7 +27,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -48,11 +45,11 @@ public class AuthenticationService {
                 .createdAt(LocalDateTime.now()) // default
                 .role(Role.USER)
                 .build();
-        var savedUser = repository.save(user);
+        var savedUser = userRepository.save(user);
 
         // generate access, refresh tokens
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+        var jwtToken = jwtService.generateToken(savedUser);
+        var refreshToken = jwtService.generateRefreshToken(savedUser);
 
         saveUserToken(savedUser, jwtToken);
 
@@ -65,25 +62,7 @@ public class AuthenticationService {
 
 
     public AuthenticationResponse authenticate(AuthenticationRequest request
-//            , String token
     ) {
-        /*// extract token
-        String reqjwtToken = token.substring(7);
-        System.out.println("jwtToken = " + reqjwtToken);
-
-        // extract email
-        String tokenEmail = jwtService.extractUsername(reqjwtToken);
-        System.out.println("tokenEmail = " + tokenEmail);
-
-        // req email
-        String reqEmail = request.getEmail();
-        System.out.println("reqEmail = " + reqEmail);
-
-        // Check if the email from the token matches the email in the request body
-        if (!tokenEmail.equals(reqEmail)) {
-            throw new IllegalArgumentException("Unauthorized: Email does not match the token");
-        }*/
-
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -91,7 +70,7 @@ public class AuthenticationService {
                 )
         );
 
-        var user = repository.findByEmail(request.getEmail())
+        var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(); // TODO: throw precise exception and handle
 
         // generate access, refresh tokens
@@ -148,7 +127,7 @@ public class AuthenticationService {
 
         userEmail = jwtService.extractUsername(refreshToken);
         if (userEmail != null) {
-            var userDetails = this.repository.findByEmail(userEmail)
+            var userDetails = this.userRepository.findByEmail(userEmail)
                     .orElseThrow();
 
             // check if token valid in db
