@@ -1,7 +1,7 @@
 package com.written.app.service;
 
 import com.written.app.model.User;
-import org.assertj.core.api.Assertions;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,9 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
 public class JwtServiceTest {
@@ -42,7 +42,6 @@ public class JwtServiceTest {
     }
 
 
-
     @Test
     public void JwtService_ExtractUsername_ReturnUsername() {
         // given
@@ -68,5 +67,31 @@ public class JwtServiceTest {
         assertThat(jwtService.extractUsername(token)).isEqualTo(username);
     }
 
+    @Test
+    public void JwtService_IsTokenValid_ReturnTrue() {
+        // given
+        String token = jwtService.generateToken(userDetails);
+
+        // when
+        boolean isValid = jwtService.isTokenValid(token, userDetails);
+
+        // then
+        assertThat(isValid).isTrue();
+    }
+
+    @Test
+    public void JwtService_IsTokenValid_ReturnFalseForExpiredToken() {
+        // given
+        ReflectionTestUtils.setField(jwtService, "jwtExpiration", -1000L);
+        String token = jwtService.generateToken(userDetails);
+
+
+        // when
+        assertThatThrownBy(() -> jwtService.isTokenValid(token, userDetails)).isInstanceOf(ExpiredJwtException.class);
+//        boolean isValid = jwtService.isTokenValid(token, userDetails);
+
+        // then
+//        assertThat(isValid).isFalse();
+    }
 
 }
