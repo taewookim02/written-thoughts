@@ -22,6 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
@@ -29,8 +30,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -113,7 +113,6 @@ public class ListControllerTest {
     public void ListController_Create_ReturnListDto() throws Exception {
         // given
         Principal mockPrincipal = mock(Principal.class);
-        when(mockPrincipal.getName()).thenReturn("test@example.com");
         when(listService.create(listDto, mockPrincipal)).thenReturn(listDto);
 
         // when
@@ -128,7 +127,27 @@ public class ListControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(listDto.id()))
                 .andExpect(jsonPath("$.title").value(listDto.title()));
+    }
 
+    @Test
+    public void ListController_Update_ReturnListDto() throws Exception {
+        // given
+        Principal mockPrincipal = mock(Principal.class);
+        Integer listId = 1;
+
+        when(listService.update(listId, listDto, mockPrincipal)).thenReturn(listDto);
+
+        // when
+        ResultActions response = mockMvc.perform(patch("/lists/{list-id}", listId)
+                .principal(mockPrincipal)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(listDto)));
+
+        // then
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value(listDto.title()))
+                .andExpect(jsonPath("$.id").value(listDto.id()));
     }
 
 }

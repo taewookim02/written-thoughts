@@ -38,13 +38,14 @@ public class ListController {
     }
 
     @PatchMapping("/lists/{list-id}")
-    public ListDto update(
+    public ResponseEntity<ListDto> update(
             @PathVariable("list-id") Integer listId,
             @RequestBody ListDto dto,
             Principal connectedUser
     ) throws AccessDeniedException {
-        return listService.update(listId, dto, connectedUser
+        ListDto listDto = listService.update(listId, dto, connectedUser
         );
+        return ResponseEntity.ok(listDto);
     }
 
     @DeleteMapping("/lists/{list-id}")
