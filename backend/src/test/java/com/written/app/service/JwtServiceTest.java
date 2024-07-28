@@ -87,11 +87,21 @@ public class JwtServiceTest {
 
 
         // when
+        // then
         assertThatThrownBy(() -> jwtService.isTokenValid(token, userDetails)).isInstanceOf(ExpiredJwtException.class);
 //        boolean isValid = jwtService.isTokenValid(token, userDetails);
-
-        // then
 //        assertThat(isValid).isFalse();
     }
 
+    @Test
+    public void JwtService_GenerateRefreshToken_ReturnRefreshToken() {
+        // given
+
+        // when
+        String refreshToken = jwtService.generateRefreshToken(userDetails);
+
+        // then
+        assertThat(refreshToken).isNotBlank();
+        assertThat(jwtService.extractUsername(refreshToken)).isEqualTo(username);
+    }
 }
