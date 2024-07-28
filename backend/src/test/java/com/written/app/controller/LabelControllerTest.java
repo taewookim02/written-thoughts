@@ -110,5 +110,27 @@ public class LabelControllerTest {
         verify(labelService).delete(labelId, mockPrincipal);
     }
 
+    @Test
+    public void LabelController_Update_ReturnLabelDto() throws Exception {
+        // given
+        Integer labelId = 1;
+        Principal mockPrincipal = mock(Principal.class);
+        LabelDto inputDto = new LabelDto(null, "Updated Label", 1);
+        LabelDto updateDto = new LabelDto(1, "Updated Label", 1);
+        when(labelService.update(labelId, inputDto, mockPrincipal)).thenReturn(updateDto);
+
+        // when
+        ResultActions response = mockMvc.perform(patch("/labels/{label-id}", labelId)
+                .principal(mockPrincipal)
+                .content(objectMapper.writeValueAsString(inputDto))
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        response.andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(labelId))
+                .andExpect(jsonPath("$.name").value("Updated Label"));
+        verify(labelService).update(labelId, inputDto, mockPrincipal);
+    }
+
 
 }
