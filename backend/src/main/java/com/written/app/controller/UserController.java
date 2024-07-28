@@ -53,7 +53,7 @@ public class UserController {
 
 
     @DeleteMapping("/users")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Principal connectedUser) {
         userService.delete(connectedUser);
     }
