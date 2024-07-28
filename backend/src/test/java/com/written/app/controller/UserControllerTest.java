@@ -3,6 +3,7 @@ package com.written.app.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.written.app.config.JwtAuthenticationFilter;
+import com.written.app.dto.ChangePasswordRequestDto;
 import com.written.app.dto.EntryDto;
 import com.written.app.dto.ListDto;
 import com.written.app.dto.ListItemDto;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -27,6 +29,8 @@ import java.security.Principal;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(
@@ -92,7 +96,29 @@ public class UserControllerTest {
         // then
         response.andExpect(status().isNoContent());
         verify(userService).delete(mockPrincipal);
+    }
 
+    @Test
+    public void UserController_ChangePassword_ReturnOk() throws Exception {
+        // given
+        Principal mockPrincipal = mock(Principal.class);
+        ChangePasswordRequestDto inputDto = ChangePasswordRequestDto.builder()
+                .currentPassword("password")
+                .newPassword("newPassword")
+                .confirmationPassword("newPassword")
+                .build();
+        doNothing().when(userService).changePassword(inputDto, mockPrincipal);
+
+        // when
+        ResultActions response = mockMvc.perform(patch("/users/password")
+                .principal(mockPrincipal)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(inputDto)));
+
+        // then
+        response.andExpect(status().isOk())
+                .andExpect(content().string(""));
+        verify(userService).changePassword(inputDto, mockPrincipal);
     }
 
 
