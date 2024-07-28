@@ -60,12 +60,13 @@ public class EntryController {
     }
 
     @PatchMapping("/entry/{entry-id}")
-    public Entry update(
+    public ResponseEntity<Entry> update(
             @PathVariable("entry-id") Integer entryId,
             @RequestBody EntryDto dto,
             Principal connectedUser
     ) throws AccessDeniedException {
-        return entryService.update(entryId, dto, connectedUser);
+        Entry updatedEntry = entryService.update(entryId, dto, connectedUser);
+        return ResponseEntity.ok(updatedEntry);
     }
 
 
