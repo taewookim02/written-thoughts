@@ -28,8 +28,7 @@ import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -127,5 +126,23 @@ public class ListItemControllerTest {
                 .andExpect(jsonPath("$.content").value(updatedListItem.content()));
 
         verify(listItemService).update(listItemId, updateRequest, mockPrincipal);
+    }
+
+    @Test
+    public void ListItemController_Delete_ReturnNoContent() throws Exception {
+        // given
+        Integer listItemId = 1;
+        Principal mockPrincipal = mock(Principal.class);
+        doNothing().when(listItemService).delete(listItemId, mockPrincipal);
+
+        // when
+        ResultActions response = mockMvc.perform(delete("/list-items/{list-item-id}", listItemId)
+                .principal(mockPrincipal));
+
+        // then
+        response.andDo(print())
+                .andExpect(status().isNoContent());
+
+        verify(listItemService).delete(listItemId, mockPrincipal);
     }
 }

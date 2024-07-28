@@ -144,7 +144,7 @@ public class EntryControllerTest {
     }
 
     @Test
-    public void EntryController_Delete_ReturnOk() throws Exception {
+    public void EntryController_Delete_ReturnNoContent() throws Exception {
         // given
         Integer entryId = 1;
         Principal mockPrincipal = mock(Principal.class);
