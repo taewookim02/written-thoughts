@@ -1,5 +1,6 @@
 package com.written.app.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.written.app.config.JwtAuthenticationFilter;
 import com.written.app.dto.EntryDto;
@@ -163,5 +164,26 @@ public class EntryControllerTest {
         response.andDo(print())
                 .andExpect(status().isNoContent());
         verify(entryService).delete(eq(entryId), any(Principal.class));
+    }
+
+    @Test
+    public void EntryController_Update_ReturnEntry() throws Exception {
+        // given
+        Integer entryId = 1;
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("test@example.com");
+        when(entryService.update(entryId, entryDto, mockPrincipal)).thenReturn(entry);
+
+        // when
+        ResultActions response = mockMvc.perform(patch("/entry/{entry-id}", entryId)
+                .principal(mockPrincipal)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(entryDto)));
+
+        // then
+        response.andDo(print())
+                .andExpect(jsonPath("$.title").value(entry.getTitle()))
+                .andExpect(jsonPath("$.content").value(entry.getContent()))
+                .andExpect(jsonPath("$.id").value(entry.getId()));
     }
 }
