@@ -23,23 +23,29 @@ public class JwtServiceTest {
 
     private String secretKey = "secretKeySecretKeySecretKeySecretKeySecretKeySecretKeySecretKeySecretKeySecretKey";
 
+    private UserDetails userDetails;
+    private String username;
+
     @BeforeEach
     public void setUp() {
         // @Value in jwt
         ReflectionTestUtils.setField(jwtService, "secretKey", secretKey);
         ReflectionTestUtils.setField(jwtService, "jwtExpiration", 86400000L);
         ReflectionTestUtils.setField(jwtService, "refreshExpiration", 604800000L);
-    }
 
-    @Test
-    public void JwtService_ExtractUsername_ReturnUsername() {
-        // given
-        String username = "test@example.com";
-        UserDetails userDetails = User.builder()
+        username = "test@example.com";
+        userDetails = User.builder()
                 .email(username)
                 .password("password")
                 .tokens(new ArrayList<>())
                 .build();
+    }
+
+
+
+    @Test
+    public void JwtService_ExtractUsername_ReturnUsername() {
+        // given
         String token = jwtService.generateToken(userDetails);
 
 
@@ -48,6 +54,18 @@ public class JwtServiceTest {
 
         // then
         assertThat(extractedUsername).isEqualTo(username);
+    }
+
+    @Test
+    public void JwtService_GenerateToken_ReturnToken() {
+        // given
+
+        // when
+        String token = jwtService.generateToken(userDetails);
+
+        // then
+        assertThat(token).isNotBlank();
+        assertThat(jwtService.extractUsername(token)).isEqualTo(username);
     }
 
 
