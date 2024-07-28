@@ -49,7 +49,7 @@ public class ListController {
     }
 
     @DeleteMapping("/lists/{list-id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(
             @PathVariable("list-id") Integer listId,
             Principal connectedUser

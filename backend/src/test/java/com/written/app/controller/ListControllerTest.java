@@ -28,8 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -127,6 +126,7 @@ public class ListControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(listDto.id()))
                 .andExpect(jsonPath("$.title").value(listDto.title()));
+        verify(listService).create(listDto, mockPrincipal);
     }
 
     @Test
@@ -148,6 +148,25 @@ public class ListControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value(listDto.title()))
                 .andExpect(jsonPath("$.id").value(listDto.id()));
+        verify(listService).update(eq(listId), any(ListDto.class), eq(mockPrincipal));
+    }
+
+    @Test
+    public void ListController_Delete_ReturnNoContent() throws Exception {
+        // given
+        Integer listId = 1;
+        Principal mockPrincipal = mock(Principal.class);
+        doNothing().when(listService).delete(listId, mockPrincipal);
+
+        // when
+        ResultActions response = mockMvc.perform(delete("/lists/{list-id}", listId)
+                .principal(mockPrincipal));
+
+        // then
+        response.andDo(print())
+                .andExpect(status().isNoContent());
+        verify(listService).delete(listId, mockPrincipal);
+
     }
 
 }
