@@ -25,6 +25,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(
@@ -70,6 +71,27 @@ public class LabelControllerTest {
                 .andExpect(jsonPath("$[1].name").value("Label 02"));
 
         verify(labelService).findAllByUser(mockPrincipal);
+    }
+
+    @Test
+    public void LabelController_Create_ReturnLabelDto() throws Exception {
+        // given
+        Principal mockPrincipal = mock(Principal.class);
+        LabelDto inputDto = new LabelDto(null, "Label to input", 1);
+        LabelDto savedDto = new LabelDto(1, "Label to input", 1);
+        when(labelService.create(inputDto, mockPrincipal)).thenReturn(savedDto);
+
+        // when
+        ResultActions response = mockMvc.perform(post("/labels")
+                .principal(mockPrincipal)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(inputDto)));
+
+        // then
+        response.andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value(savedDto.name()))
+                .andExpect(jsonPath("$.id").value(savedDto.id()));
+        verify(labelService).create(inputDto, mockPrincipal);
     }
 
 
