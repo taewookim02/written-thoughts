@@ -1,15 +1,11 @@
 package com.written.app.controller;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.written.app.config.JwtAuthenticationFilter;
-import com.written.app.dto.*;
-import com.written.app.model.Entry;
-import com.written.app.model.Role;
-import com.written.app.model.User;
+import com.written.app.dto.ChangeNickRequestDto;
+import com.written.app.dto.ChangePasswordRequestDto;
 import com.written.app.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
