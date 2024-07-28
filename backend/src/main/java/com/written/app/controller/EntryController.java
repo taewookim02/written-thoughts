@@ -51,7 +51,7 @@ public class EntryController {
     }
 
     @DeleteMapping("/entry/{entry-id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(
             @PathVariable("entry-id") Integer entryId,
             Principal connectedUser

@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
@@ -31,10 +32,8 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -141,13 +140,28 @@ public class EntryControllerTest {
 
         // then
         response.andDo(print())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.content").value(entry.getContent()))
                 .andExpect(jsonPath("$.id").value(entry.getId()))
                 .andExpect(jsonPath("$.title").value(entry.getTitle()));
     }
 
     @Test
-    public void EntryController_Delete_ReturnOk() {
+    public void EntryController_Delete_ReturnOk() throws Exception {
+        // given
+        Integer entryId = 1;
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("test@example.com");
 
+        doNothing().when(entryService).delete(eq(entryId), any(Principal.class));
+
+        // when
+        ResultActions response = mockMvc.perform(delete("/entry/{entry-id}", entryId)
+                .principal(mockPrincipal));
+
+        // then
+        response.andDo(print())
+                .andExpect(status().isNoContent());
+        verify(entryService).delete(eq(entryId), any(Principal.class));
     }
 }
