@@ -3,6 +3,7 @@ package com.written.app.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.written.app.config.JwtAuthenticationFilter;
 import com.written.app.dto.EntryDto;
+import com.written.app.dto.ListDto;
 import com.written.app.model.Entry;
 import com.written.app.model.Role;
 import com.written.app.model.User;
@@ -25,11 +26,14 @@ import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(
         controllers = ListController.class,
@@ -49,6 +53,8 @@ public class ListControllerTest {
     private Entry entry;
     private User user;
     private EntryDto entryDto;
+    private ListDto listDto;
+    private com.written.app.model.List list;
 
     @BeforeEach
     public void setUp() {
@@ -65,7 +71,14 @@ public class ListControllerTest {
                 .user(user)
                 .build();
 
+        list = com.written.app.model.List.builder()
+                .title("List01")
+                .id(1)
+                .user(user)
+                .build();
+
         entryDto = new EntryDto("Entry01", "Content01", null, false);
+        listDto = new ListDto(1, 1, "List01");
     }
 
     @Test
@@ -88,12 +101,34 @@ public class ListControllerTest {
 
         // then
         response.andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(lists.get(0).getId()))
                 .andExpect(jsonPath("$[0].title").value(lists.get(0).getTitle()))
                 .andExpect(jsonPath("$[1].title").value(lists.get(1).getTitle()))
         ;
-
     }
 
+
+    @Test
+    public void ListController_Create_ReturnListDto() throws Exception {
+        // given
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("test@example.com");
+        when(listService.create(listDto, mockPrincipal)).thenReturn(listDto);
+
+        // when
+        ResultActions response = mockMvc.perform(post("/lists")
+                .principal(mockPrincipal)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(listDto)))
+                ;
+
+        // then
+        response.andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(listDto.id()))
+                .andExpect(jsonPath("$.title").value(listDto.title()));
+
+    }
 
 }

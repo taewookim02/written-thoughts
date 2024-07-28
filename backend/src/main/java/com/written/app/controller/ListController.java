@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.List;
@@ -28,9 +29,12 @@ public class ListController {
     }
 
     @PostMapping("/lists")
-    public ListDto create(@RequestBody ListDto dto,
+    public ResponseEntity<ListDto> create(@RequestBody ListDto dto,
                           Principal connectedUser) {
-        return listService.create(dto, connectedUser);
+        ListDto listDto = listService.create(dto, connectedUser);
+        return ResponseEntity
+                .created(URI.create("/lists/" + listDto.id()))
+                .body(listDto);
     }
 
     @PatchMapping("/lists/{list-id}")
