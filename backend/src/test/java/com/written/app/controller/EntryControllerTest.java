@@ -1,6 +1,5 @@
 package com.written.app.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.written.app.config.JwtAuthenticationFilter;
 import com.written.app.dto.EntryDto;
@@ -23,10 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;

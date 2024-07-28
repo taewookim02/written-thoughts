@@ -3,6 +3,7 @@ package com.written.app.controller;
 import com.written.app.dto.ListDto;
 import com.written.app.service.ListService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
@@ -19,10 +20,11 @@ public class ListController {
     }
 
     @GetMapping("/lists")
-    public List<com.written.app.model.List> findAllByUser(
+    public ResponseEntity<List<com.written.app.model.List>> findAllByUser(
         Principal connectedUser
     ) {
-        return listService.findAllByUser(connectedUser);
+        List<com.written.app.model.List> lists = listService.findAllByUser(connectedUser);
+        return ResponseEntity.ok(lists);
     }
 
     @PostMapping("/lists")
