@@ -1,5 +1,6 @@
 package com.written.app.service;
 
+import com.written.app.dto.AuthenticationRequest;
 import com.written.app.dto.AuthenticationResponse;
 import com.written.app.dto.RegisterRequest;
 import com.written.app.model.Role;
@@ -13,9 +14,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -72,6 +75,33 @@ public class AuthenticationServiceTest {
         assertThat(capturedUser.getPassword()).isEqualTo("encodedPassword");
         assertThat(capturedUser.getRole()).isEqualTo(Role.USER);
 
+        verify(jwtService).generateToken(savedUser);
+        verify(jwtService).generateRefreshToken(savedUser);
+        verify(tokenRepository).save(any());
+    }
+
+    @Test
+    public void AuthenticationService_Authenticate_ReturnAuthResponse() {
+        // given
+        AuthenticationRequest request = new AuthenticationRequest("test@example.com", "password");
+        User savedUser = User.builder()
+                .id(1)
+                .email(request.getEmail())
+                .password("encodedPassword")
+                .build();
+        when(userRepository.findByEmail(request.getEmail())).thenReturn(Optional.of(savedUser));
+        when(jwtService.generateToken(savedUser)).thenReturn("jwtToken");
+        when(jwtService.generateRefreshToken(savedUser)).thenReturn("refreshToken");
+
+        // when
+        AuthenticationResponse response = authenticationService.authenticate(request);
+
+        // then
+        assertThat(response).isNotNull();
+        assertThat(response.getAccessToken()).isEqualTo("jwtToken");
+        assertThat(response.getRefreshToken()).isEqualTo("refreshToken");
+
+        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(jwtService).generateToken(savedUser);
         verify(jwtService).generateRefreshToken(savedUser);
         verify(tokenRepository).save(any());
