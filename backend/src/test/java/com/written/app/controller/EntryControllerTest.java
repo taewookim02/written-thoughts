@@ -2,6 +2,7 @@ package com.written.app.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.written.app.config.JwtAuthenticationFilter;
+import com.written.app.dto.EntryDto;
 import com.written.app.model.Entry;
 import com.written.app.model.Role;
 import com.written.app.model.User;
@@ -33,6 +34,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -55,6 +57,7 @@ public class EntryControllerTest {
 
     private Entry entry;
     private User user;
+    private EntryDto entryDto;
 
     @BeforeEach
     public void setUp() {
@@ -70,6 +73,8 @@ public class EntryControllerTest {
                 .content("Content01")
                 .user(user)
                 .build();
+
+        entryDto = new EntryDto("Entry01", "Content01", null, false);
     }
 
 
@@ -111,7 +116,6 @@ public class EntryControllerTest {
                 .principal(mockPrincipal)
                 .contentType(MediaType.APPLICATION_JSON));
 
-
         // then
         response.andDo(print())
                 .andExpect(status().isOk())
@@ -119,7 +123,26 @@ public class EntryControllerTest {
                 .andExpect(jsonPath("$[0].id").value(entries.get(0).getId()))
                 .andExpect(jsonPath("$[0].content").value(entries.get(0).getContent()))
                 .andExpect(jsonPath("$[1].content").value(entries.get(1).getContent()));
+    }
 
+    @Test
+    public void EntryController_Create_ReturnEntry() throws Exception {
+        // given
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("test@example.com");
 
+        when(entryService.create(entryDto, mockPrincipal)).thenReturn(entry);
+
+        // when
+        ResultActions response = mockMvc.perform(post("/entry")
+                .principal(mockPrincipal)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(entryDto)));
+
+        // then
+        response.andDo(print())
+                .andExpect(jsonPath("$.content").value(entry.getContent()))
+                .andExpect(jsonPath("$.id").value(entry.getId()))
+                .andExpect(jsonPath("$.title").value(entry.getTitle()));
     }
 }
