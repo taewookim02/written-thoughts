@@ -30,7 +30,7 @@ public class EntryController {
             Principal connectedUser
     ) throws AccessDeniedException {
         Entry entry = entryService.findById(entryId, connectedUser);
-        return ResponseEntity.ok(entry);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(entry);
     }
 
     @GetMapping("/entry/user")
