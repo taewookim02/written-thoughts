@@ -27,8 +27,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -101,6 +101,31 @@ public class ListItemControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(listItemDto.id()))
                 .andExpect(jsonPath("$.content").value(listItemDto.content()));
+        verify(listItemService).create(listItemInputDto, mockPrincipal);
+    }
 
+    @Test
+    public void ListItemService_Update_ReturnListItemDto() throws Exception {
+        // given
+        Integer listItemId = 1;
+        Integer listId = 1;
+        Principal mockPrincipal = mock(Principal.class);
+        ListItemDto updateRequest = new ListItemDto(null, "Updated Content", listId);
+        ListItemDto updatedListItem = new ListItemDto(listItemId, "Updated Content", listId);
+        when(listItemService.update(listItemId, updateRequest, mockPrincipal)).thenReturn(updatedListItem);
+
+        // when
+        ResultActions response = mockMvc.perform(patch("/list-items/{list-item-id}", listItemId)
+                .principal(mockPrincipal)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updateRequest)));
+
+        // then
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(listItemDto.id()))
+                .andExpect(jsonPath("$.content").value(updatedListItem.content()));
+
+        verify(listItemService).update(listItemId, updateRequest, mockPrincipal);
     }
 }

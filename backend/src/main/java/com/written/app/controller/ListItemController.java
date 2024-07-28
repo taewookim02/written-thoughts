@@ -29,12 +29,13 @@ public class ListItemController {
 
     // FIXME: duplicate list-item-id?
     @PatchMapping("/list-items/{list-item-id}")
-    public ListItemDto update(
+    public ResponseEntity<ListItemDto> update(
             @PathVariable("list-item-id") Integer listItemId,
             @RequestBody ListItemDto dto,
             Principal connectedUser
     ) throws AccessDeniedException {
-        return listItemService.update(listItemId, dto, connectedUser);
+        ListItemDto updateDto = listItemService.update(listItemId, dto, connectedUser);
+        return ResponseEntity.ok(updateDto);
     }
 
     @DeleteMapping("/list-items/{list-item-id}")
