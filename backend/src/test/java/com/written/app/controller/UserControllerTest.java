@@ -1,12 +1,10 @@
 package com.written.app.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.written.app.config.JwtAuthenticationFilter;
-import com.written.app.dto.ChangePasswordRequestDto;
-import com.written.app.dto.EntryDto;
-import com.written.app.dto.ListDto;
-import com.written.app.dto.ListItemDto;
+import com.written.app.dto.*;
 import com.written.app.model.Entry;
 import com.written.app.model.Role;
 import com.written.app.model.User;
@@ -48,40 +46,6 @@ public class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private Entry entry;
-    private User user;
-    private EntryDto entryDto;
-    private ListDto listDto;
-    private com.written.app.model.List list;
-    private ListItemDto listItemDto;
-    private ListItemDto listItemInputDto;
-
-    @BeforeEach
-    public void setUp() {
-        user = User.builder()
-                .email("test@example.com")
-                .password("password")
-                .role(Role.USER)
-                .build();
-
-        entry = Entry.builder()
-                .id(1)
-                .title("Entry01")
-                .content("Content01")
-                .user(user)
-                .build();
-
-        list = com.written.app.model.List.builder()
-                .title("List01")
-                .id(1)
-                .user(user)
-                .build();
-
-        entryDto = new EntryDto("Entry01", "Content01", null, false);
-        listDto = new ListDto(1, 1, "List01");
-        listItemInputDto = new ListItemDto(null, "List item 01", 1);
-        listItemDto = new ListItemDto(1, "List item 01", 1);
-    }
 
     @Test
     public void UserController_Delete_ReturnNoContent() throws Exception {
@@ -119,6 +83,24 @@ public class UserControllerTest {
         response.andExpect(status().isOk())
                 .andExpect(content().string(""));
         verify(userService).changePassword(inputDto, mockPrincipal);
+    }
+
+    @Test
+    public void UserController_ChangeNick_ReturnOk() throws Exception {
+        // given
+        Principal mockPrincipal = mock(Principal.class);
+        ChangeNickRequestDto inputDto = new ChangeNickRequestDto("new Nick");
+        doNothing().when(userService).changeNick(inputDto, mockPrincipal);
+
+        // when
+        ResultActions response = mockMvc.perform(patch("/users/nick")
+                .principal(mockPrincipal)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(inputDto)));
+
+        // then
+        response.andExpect(status().isOk());
+        verify(userService).changeNick(inputDto, mockPrincipal);
     }
 
 
