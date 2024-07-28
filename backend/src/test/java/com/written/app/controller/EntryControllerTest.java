@@ -24,9 +24,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -87,6 +91,35 @@ public class EntryControllerTest {
                 .andExpect(jsonPath("$.title").value(entry.getTitle()))
                 .andExpect(jsonPath("$.content").value(entry.getContent()))
         ;
+    }
+
+    @Test
+    public void EntryController_FindAllByUser_ReturnEntryList() throws Exception {
+        // given
+        List<Entry> entries = Arrays.asList(
+                Entry.builder().id(1).title("Entry01").content("Content01").user(user).build(),
+                Entry.builder().id(2).title("Entry02").content("Content02").user(user).build()
+        );
+
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("test@example.com");
+
+        when(entryService.findAllByUser(any(Principal.class))).thenReturn(entries);
+
+        // when
+        ResultActions response = mockMvc.perform(get("/entry/user")
+                .principal(mockPrincipal)
+                .contentType(MediaType.APPLICATION_JSON));
+
+
+        // then
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").value(entries.get(0).getId()))
+                .andExpect(jsonPath("$[0].content").value(entries.get(0).getContent()))
+                .andExpect(jsonPath("$[1].content").value(entries.get(1).getContent()));
+
 
     }
 }
