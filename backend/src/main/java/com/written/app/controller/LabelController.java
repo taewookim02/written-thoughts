@@ -33,7 +33,7 @@ public class LabelController {
     }
 
     @DeleteMapping("/labels/{label-id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("label-id") Integer id,
                        Principal connectedUser) throws AccessDeniedException {
         labelService.delete(id, connectedUser);

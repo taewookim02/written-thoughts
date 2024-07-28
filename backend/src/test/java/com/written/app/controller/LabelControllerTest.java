@@ -18,14 +18,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(
@@ -92,6 +92,22 @@ public class LabelControllerTest {
                 .andExpect(jsonPath("$.name").value(savedDto.name()))
                 .andExpect(jsonPath("$.id").value(savedDto.id()));
         verify(labelService).create(inputDto, mockPrincipal);
+    }
+
+    @Test
+    public void LabelController_Delete_ReturnNoContent() throws Exception {
+        // given
+        Integer labelId = 1;
+        Principal mockPrincipal = mock(Principal.class);
+        doNothing().when(labelService).delete(labelId, mockPrincipal);
+
+        // when
+        ResultActions response = mockMvc.perform(delete("/labels/{label-id}", labelId)
+                .principal(mockPrincipal));
+
+        // then
+        response.andExpect(status().isNoContent());
+        verify(labelService).delete(labelId, mockPrincipal);
     }
 
 
