@@ -1,7 +1,11 @@
 package com.written.app.service;
 
 import com.written.app.model.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +14,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.security.Key;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -104,4 +112,15 @@ public class JwtServiceTest {
         assertThat(refreshToken).isNotBlank();
         assertThat(jwtService.extractUsername(refreshToken)).isEqualTo(username);
     }
+
+
+    // TODO: add extractClaim
+    /*@Test
+    public void JwtService_ExtractClaim_() {
+        // given
+    }*/
+
+    
+
+
 }
