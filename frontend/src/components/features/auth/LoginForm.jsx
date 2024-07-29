@@ -1,14 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import InputField from "../../common/InputField";
 import { StyledForm } from "../../common/StyledForm";
 import { StyledSubmitButton } from "../../common/StyledSubmitButton";
 
-const handleLogin = (e) => {
-  e.preventDefault();
-  console.log("hello");
-};
-
 const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      email,
+      password,
+    };
+
+    const url = "http://127.0.0.1:8080/api/v1/auth/authenticate";
+    const response = await fetch(url, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json();
+    console.log(data);
+    // TODO: handle successful login
+  };
+
   return (
     <StyledForm onSubmit={handleLogin}>
       <h1>Login</h1>
@@ -17,12 +37,14 @@ const LoginForm = () => {
         name="email"
         placeholder="Email"
         required={true}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <InputField
         type="password"
         name="password"
         placeholder="Password"
         required={true}
+        onChange={(e) => setPassword(e.target.value)}
       />
       <StyledSubmitButton type="submit">Login</StyledSubmitButton>
     </StyledForm>
