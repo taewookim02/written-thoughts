@@ -2,12 +2,12 @@ import React, { useState, useContext } from "react";
 import InputField from "../../common/InputField";
 import { StyledForm } from "../../common/StyledForm";
 import { StyledSubmitButton } from "../../common/StyledSubmitButton";
-import AuthContext from "../../../context/AuthProvider";
+import useAuth from "../../../hooks/useAuth";
 import axios from "../../../api/axios";
 
 const LOGIN_URL = "/api/v1/auth/authenticate";
 const LoginForm = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
