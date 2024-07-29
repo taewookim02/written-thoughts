@@ -1,13 +1,9 @@
-import Navbar from "../components/Navbar";
-import LoginForm from "../components/form/LoginForm";
-import MainContainer from "../components/MainContainer";
+import LoginForm from "../components/features/auth/LoginForm";
+
 const Login = () => {
   return (
     <>
-      <Navbar isSimple={true}></Navbar>
-      <MainContainer>
-        <LoginForm />
-      </MainContainer>
+      <LoginForm />
     </>
   );
 };
