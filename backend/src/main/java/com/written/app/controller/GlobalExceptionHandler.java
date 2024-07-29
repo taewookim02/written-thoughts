@@ -1,6 +1,7 @@
 package com.written.app.controller;
 
 import com.written.app.dto.ApiErrorResponse;
+import com.written.app.exception.PasswordMismatchException;
 import com.written.app.exception.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ApiErrorResponse> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        ApiErrorResponse errorResponse = new ApiErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(PasswordMismatchException.class)
+    public ResponseEntity<ApiErrorResponse> handlePasswordMismatchException(PasswordMismatchException ex) {
         ApiErrorResponse errorResponse = new ApiErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }

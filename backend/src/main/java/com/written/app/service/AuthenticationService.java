@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.written.app.dto.AuthenticationRequest;
 import com.written.app.dto.AuthenticationResponse;
 import com.written.app.dto.RegisterRequest;
+import com.written.app.exception.PasswordMismatchException;
 import com.written.app.exception.UserAlreadyExistsException;
 import com.written.app.model.Role;
 import com.written.app.model.Token;
@@ -35,19 +36,17 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        // TODO: Check if user exists or not
+        // Check if user exists or not
+        // FIXME: redundant?
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            // throw exception
-            // what exception to throw?
             throw new UserAlreadyExistsException("User with email " + request.getEmail() + " already exists");
         }
 
 
-        // TODO: Check if password, confirmPassword matches
+        // Check if password, confirmPassword matches
         System.out.println("request = " + request);
         if (!request.getPassword().equals(request.getConfirmPassword())) {
-            // throw exception
-            // what exception to throw?
+            throw new PasswordMismatchException("Password and confirm password do not match");
         }
 
 
