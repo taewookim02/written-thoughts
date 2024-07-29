@@ -7,7 +7,7 @@ const SidebarContainer = styled.nav`
   flex-direction: column;
   padding: 8px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 24px;
   border-right: 1px solid black;
 `;
@@ -22,14 +22,18 @@ const NavContainer = styled.div`
 const Sidebar = () => {
   return (
     <SidebarContainer>
-      {/* logo */}
+      <div>
+        <Link to="/">Logo</Link>
+      </div>
       <NavContainer>
         <Link to="/entries">Entries</Link>
         <Link to="/entries/public">Public</Link>
         <Link to="/labels">Label</Link>
         <Link to="/lists">List</Link>
       </NavContainer>
-      {/* profile */}
+      <div>
+        <Link to="/profile">Profile</Link>
+      </div>
     </SidebarContainer>
   );
 };

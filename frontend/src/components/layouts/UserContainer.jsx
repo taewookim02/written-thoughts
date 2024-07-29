@@ -10,7 +10,7 @@ const GridContainer = styled.div`
   min-height: 100vh;
 `;
 
-const Container = () => {
+const UserContainer = () => {
   return (
     <GridContainer>
       <Sidebar />
@@ -21,4 +21,4 @@ const Container = () => {
   );
 };
 
-export default Container;
+export default UserContainer;

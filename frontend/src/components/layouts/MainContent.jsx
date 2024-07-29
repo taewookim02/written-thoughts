@@ -9,4 +9,4 @@ const MainContent = ({ children }) => {
   return <MainContentContainer>{children}</MainContentContainer>;
 };
 
-export default MainContent;
+export default MainContent; // Used in UserContainer.jsx
