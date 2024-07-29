@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import InputField from "../../common/InputField";
 import { StyledForm } from "../../common/StyledForm";
 import { StyledSubmitButton } from "../../common/StyledSubmitButton";
+import AuthContext from "../../../context/AuthProvider";
+import axios from "../../../api/axios";
 
+const LOGIN_URL = "/api/v1/auth/authenticate";
 const LoginForm = () => {
+  const { setAuth } = useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,17 +20,30 @@ const LoginForm = () => {
       password,
     };
 
-    const url = "http://127.0.0.1:8080/api/v1/auth/authenticate";
-    const response = await fetch(url, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-    const data = await response.json();
-    console.log(data);
+    try {
+      const response = await axios.post(LOGIN_URL, JSON.stringify(payload), {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+
+      const accessToken = response?.data?.access_token;
+      const refreshToken = response?.data?.refresh_token;
+      // FIXME: refreshToken somewhere else
+      setAuth({ accessToken, refreshToken });
+      console.log(response);
+    } catch (err) {
+      alert(err);
+      if (!err?.response) {
+        alert("No server response");
+      } else if (!err.response?.status === 403) {
+        alert("403!");
+      } else if (err.response?.status === 401) {
+        alert("Unauthorized!");
+      } else {
+        alert("Login failed");
+      }
+    }
+
     // TODO: handle successful login
     // TODO: add data.access_token and data.refresh_token somewhere
     // TODO: handle exceptions
