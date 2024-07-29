@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.written.app.dto.AuthenticationRequest;
 import com.written.app.dto.AuthenticationResponse;
 import com.written.app.dto.RegisterRequest;
+import com.written.app.exception.UserAlreadyExistsException;
 import com.written.app.model.Role;
 import com.written.app.model.Token;
 import com.written.app.model.TokenType;
@@ -35,6 +36,19 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         // TODO: Check if user exists or not
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            // throw exception
+            // what exception to throw?
+            throw new UserAlreadyExistsException("User with email " + request.getEmail() + " already exists");
+        }
+
+
+        // TODO: Check if password, confirmPassword matches
+        System.out.println("request = " + request);
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            // throw exception
+            // what exception to throw?
+        }
 
 
         var user = User.builder()
