@@ -27,6 +27,8 @@ const LoginForm = () => {
     const data = await response.json();
     console.log(data);
     // TODO: handle successful login
+    // TODO: add data.access_token and data.refresh_token somewhere
+    // TODO: handle exceptions
   };
 
   return (

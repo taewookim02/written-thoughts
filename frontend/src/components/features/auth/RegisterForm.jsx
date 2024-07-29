@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { StyledForm } from "../../common/StyledForm";
 import InputField from "../../common/InputField";
 import { StyledSubmitButton } from "../../common/StyledSubmitButton";
+import axios from "../../../api/axios";
 
+const REGISTER_URL = "/api/v1/auth/register";
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,23 +16,30 @@ const RegisterForm = () => {
       alert("Password and confirm password do not match");
       return;
     }
-    const url = "http://127.0.0.1:8080/api/v1/auth/register";
     const payload = {
       email,
       password,
       confirmPassword,
     };
-    const response = await fetch(url, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-    const data = await response.json();
-    // TODO: add data.access_token and data.refresh_token somewhere
-    // TODO: handle status 409 (UserAlreadyExists)
+    try {
+      const response = await axios.post(REGISTER_URL, JSON.stringify(payload), {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      console.log(response.data);
+      console.log(response.access_token);
+      console.log(response);
+      // TODO: add data.access_token and data.refresh_token somewhere
+      // TODO: handle status 409 (UserAlreadyExists)
+    } catch (err) {
+      if (!err?.response) {
+        console.log("No server response");
+      } else if (err.response?.status === 409) {
+        alert("Username taken");
+      } else {
+        alert("Registration Failed");
+      }
+    }
   };
 
   return (
