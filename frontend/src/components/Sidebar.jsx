@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const SidebarContainer = styled.nav`
@@ -23,10 +24,10 @@ const Sidebar = () => {
     <SidebarContainer>
       {/* logo */}
       <NavContainer>
-        <p>Entries</p>
-        <p>Public</p>
-        <p>Label</p>
-        <p>List</p>
+        <Link to="/entries">Entries</Link>
+        <Link to="/entries/public">Public</Link>
+        <Link to="/labels">Label</Link>
+        <Link to="/lists">List</Link>
       </NavContainer>
       {/* profile */}
     </SidebarContainer>

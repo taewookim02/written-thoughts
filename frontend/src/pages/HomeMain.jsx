@@ -6,7 +6,7 @@ const MyH1 = styled.h1`
   background-color: red;
 `;
 
-const Home = () => {
+const HomeMain = () => {
   return (
     <>
       <MyH1>Hello world</MyH1>
@@ -14,4 +14,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeMain;

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Sidebar from "./Sidebar";
 import MainContent from "./MainContent";
+import { Outlet } from "react-router-dom";
 
 const GridContainer = styled.div`
   display: grid;
@@ -9,11 +10,13 @@ const GridContainer = styled.div`
   min-height: 100vh;
 `;
 
-const Container = ({ children }) => {
+const Container = () => {
   return (
     <GridContainer>
       <Sidebar />
-      <MainContent>{children}</MainContent>
+      <MainContent>
+        <Outlet />
+      </MainContent>
     </GridContainer>
   );
 };
