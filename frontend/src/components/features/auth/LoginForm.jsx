@@ -6,7 +6,7 @@ import useAuth from "../../../hooks/useAuth";
 import axios from "../../../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-const LOGIN_URL = "/api/v1/auth/authenticate";
+const LOGIN_URL = "/auth/authenticate";
 const LoginForm = () => {
   const { setAuth } = useAuth();
 

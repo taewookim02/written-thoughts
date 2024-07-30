@@ -4,7 +4,7 @@ import InputField from "../../common/InputField";
 import { StyledSubmitButton } from "../../common/StyledSubmitButton";
 import axios from "../../../api/axios";
 
-const REGISTER_URL = "/api/v1/auth/register";
+const REGISTER_URL = "/auth/register";
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
