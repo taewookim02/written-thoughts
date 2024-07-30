@@ -79,8 +79,8 @@ public class AuthenticationService {
 
 
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request
-    ) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request,
+                                               HttpServletResponse response) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -97,13 +97,11 @@ public class AuthenticationService {
 
         // revoke all the tokens of a user first
         revokeAllUserTokens(user);
-
-        // then save
         saveUserToken(user, jwtToken);
+        addRefreshTokenCookie(response, refreshToken);
 
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
-//                .refreshToken(refreshToken)
                 .build();
     }
 

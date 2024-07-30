@@ -96,8 +96,10 @@ public class AuthenticationServiceTest {
         when(jwtService.generateToken(savedUser)).thenReturn("jwtToken");
         when(jwtService.generateRefreshToken(savedUser)).thenReturn("refreshToken");
 
+        HttpServletResponse servletResponse = mock(HttpServletResponse.class);
+
         // when
-        AuthenticationResponse response = authenticationService.authenticate(request);
+        AuthenticationResponse response = authenticationService.authenticate(request, servletResponse);
 
         // then
         assertThat(response).isNotNull();
