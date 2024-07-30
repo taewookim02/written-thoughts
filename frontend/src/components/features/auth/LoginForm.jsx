@@ -1,13 +1,18 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import InputField from "../../common/InputField";
 import { StyledForm } from "../../common/StyledForm";
 import { StyledSubmitButton } from "../../common/StyledSubmitButton";
 import useAuth from "../../../hooks/useAuth";
 import axios from "../../../api/axios";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const LOGIN_URL = "/api/v1/auth/authenticate";
 const LoginForm = () => {
   const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +35,13 @@ const LoginForm = () => {
       const refreshToken = response?.data?.refresh_token;
       // FIXME: refreshToken somewhere else
       setAuth({ accessToken, refreshToken });
-      console.log(response);
+
+      // reset states
+      setEmail("");
+      setPassword("");
+
+      // navigate
+      navigate(from, { replace: true });
     } catch (err) {
       alert(err);
       if (!err?.response) {
