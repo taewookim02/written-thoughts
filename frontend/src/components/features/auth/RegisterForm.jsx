@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { StyledForm } from "../../common/StyledForm";
 import InputField from "../../common/InputField";
 import { StyledSubmitButton } from "../../common/StyledSubmitButton";
