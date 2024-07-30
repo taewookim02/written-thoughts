@@ -1,5 +1,8 @@
 package com.written.app.config;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,10 +55,22 @@ public class SecurityConfig {
                     logoutConfig.logoutUrl("/auth/logout");
                     logoutConfig.addLogoutHandler(logoutHandler);
                     logoutConfig.logoutSuccessHandler((request, response, authentication) -> {
+                        clearRefreshTokenCookie(response);
+                        response.setStatus(HttpServletResponse.SC_OK);
+                        response.getWriter().write("Logged out succesfully");
                     });
                 });
 
 
         return http.build();
+    }
+
+    private void clearRefreshTokenCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("refresh_token", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0);
+        cookie.setSecure(true);
+        response.addCookie(cookie);
     }
 }
