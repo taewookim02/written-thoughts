@@ -27,7 +27,6 @@ const RegisterForm = () => {
         withCredentials: true,
       });
       console.log(response.data);
-      console.log(response.access_token);
       console.log(response);
       // TODO: add data.access_token and data.refresh_token somewhere
       // TODO: handle status 409 (UserAlreadyExists)

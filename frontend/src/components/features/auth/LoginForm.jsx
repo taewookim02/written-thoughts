@@ -31,10 +31,10 @@ const LoginForm = () => {
         withCredentials: true,
       });
 
-      const accessToken = response?.data?.access_token;
-      const refreshToken = response?.data?.refresh_token;
+      const accessToken = response?.data?.accessToken;
+      // const refreshToken = response?.data?.refresh_token;
       // FIXME: refreshToken somewhere else
-      setAuth({ accessToken, refreshToken });
+      setAuth({ accessToken });
 
       // reset states
       setEmail("");
