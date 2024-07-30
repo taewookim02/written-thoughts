@@ -13,6 +13,7 @@ import com.written.app.model.TokenType;
 import com.written.app.model.User;
 import com.written.app.repository.TokenRepository;
 import com.written.app.repository.UserRepository;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request, HttpServletResponse response) {
         // Check if user exists or not
         // FIXME: redundant?
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -64,11 +65,15 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(savedUser);
         var refreshToken = jwtService.generateRefreshToken(savedUser);
 
+
+        // save access token in db
         saveUserToken(savedUser, jwtToken);
+        // set refreshToken in response via cookie
+        addRefreshTokenCookie(response, refreshToken);
 
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
-                .refreshToken(refreshToken)
+//                .refreshToken(refreshToken) // adding refreshToken in the http only cookie
                 .build();
     }
 
@@ -98,7 +103,7 @@ public class AuthenticationService {
 
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
-                .refreshToken(refreshToken)
+//                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -125,6 +130,20 @@ public class AuthenticationService {
                 .revoked(false)
                 .build();
         tokenRepository.save(token);
+    }
+
+    private void addRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
+        Cookie cookie = new Cookie("refresh_token", refreshToken);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(7 * 24 * 60 * 60);
+        response.addCookie(cookie);
+        System.out.println("Cookie added: " + cookie.getName() +
+                ", Value: " + cookie.getValue() +
+                ", HttpOnly: " + cookie.isHttpOnly() +
+                ", Secure: " + cookie.getSecure() +
+                ", MaxAge: " + cookie.getMaxAge());
     }
 
     public void refreshToken(HttpServletRequest request,
@@ -154,9 +173,10 @@ public class AuthenticationService {
                revokeAllUserTokens(userDetails);
                saveUserToken(userDetails, accessToken);
 
+               // TODO: implement httpOnlyCookie
                var authResponse = AuthenticationResponse.builder()
                        .accessToken(accessToken)
-                       .refreshToken(refreshToken)
+//                       .refreshToken(refreshToken)
                        .build();
 
                // write value in response

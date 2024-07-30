@@ -51,10 +51,12 @@ public class AuthenticationControllerTest {
 
         AuthenticationResponse authResponse = AuthenticationResponse.builder()
                 .accessToken("jwtToken")
-                .refreshToken("refreshToken")
+//                .refreshToken("refreshToken")
                 .build();
 
-        when(authenticationService.register(inputRequest)).thenReturn(authResponse);
+        HttpServletResponse servletResponse = mock(HttpServletResponse.class);
+
+        when(authenticationService.register(inputRequest, servletResponse)).thenReturn(authResponse);
 
 
         // when
@@ -66,7 +68,7 @@ public class AuthenticationControllerTest {
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.access_token").value("jwtToken"))
                 .andExpect(jsonPath("$.refresh_token").value("refreshToken"));
-        verify(authenticationService).register(inputRequest);
+        verify(authenticationService).register(inputRequest, servletResponse);
     }
 
 
@@ -80,7 +82,7 @@ public class AuthenticationControllerTest {
 
         AuthenticationResponse authResponse = AuthenticationResponse.builder()
                 .accessToken("jwtToken")
-                .refreshToken("refreshToken")
+//                .refreshToken("refreshToken")
                 .build();
         when(authenticationService.authenticate(inputRequest)).thenReturn(authResponse);
 
@@ -102,7 +104,7 @@ public class AuthenticationControllerTest {
         String refreshToken = "validRefreshToken";
         AuthenticationResponse authResponse = AuthenticationResponse.builder()
                 .accessToken("newAccessToken")
-                .refreshToken("newRefreshToken")
+//                .refreshToken("refreshToken")
                 .build();
 
         // mock the behavior of `AuthenticationService.refreshToken(req, res)`

@@ -76,4 +76,15 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+
+    // if i just create a @Getmapping("/valid") here and send Status.ok(),
+    // won't spring security do the validity checking with its filters?
+    // i don't necessarily have to code the service or anything as the filters and stuff are set up already.
+    @GetMapping("/users/valid-token")
+    public ResponseEntity<String> validateToken() {
+        // if this point is reached, means the token is valid
+        // Spring Security filters have already validated it
+        return ResponseEntity.ok("Token is valid");
+    }
+
 }
