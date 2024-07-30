@@ -78,7 +78,6 @@ public class AuthenticationService {
     }
 
 
-
     public AuthenticationResponse authenticate(AuthenticationRequest request,
                                                HttpServletResponse response) {
         authenticationManager.authenticate(
@@ -144,42 +143,49 @@ public class AuthenticationService {
                 ", MaxAge: " + cookie.getMaxAge());
     }
 
-    public void refreshToken(HttpServletRequest request,
-                             HttpServletResponse response) throws IOException {
-
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        final String refreshToken;
-        final String userEmail;
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return;
+    private String extractRefreshTokenFromCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("refresh_token".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
         }
-        refreshToken = authHeader.substring(7); // exclude Bearer
+        return null;
+    }
 
-        userEmail = jwtService.extractUsername(refreshToken);
+    public AuthenticationResponse refreshToken(HttpServletRequest request,
+                                               HttpServletResponse response) throws IOException {
+
+        final String refreshToken = extractRefreshTokenFromCookie(request);
+        if (refreshToken == null) {
+            return null;
+        }
+
+        final String userEmail = jwtService.extractUsername(refreshToken);
+
         if (userEmail != null) {
             var userDetails = this.userRepository.findByEmail(userEmail)
                     .orElseThrow();
 
-            // check if token valid in db
-            /*var isTokenValid = tokenRepository.findByToken(refreshToken)
-                    .map(token -> !token.isExpired() && !token.isRevoked())
-                    .orElse(false);*/
 
             if (jwtService.isTokenValid(refreshToken, userDetails)) {
-               var accessToken = jwtService.generateToken(userDetails);
-               // revoke other tokens and save new token
-               revokeAllUserTokens(userDetails);
-               saveUserToken(userDetails, accessToken);
+                var accessToken = jwtService.generateToken(userDetails);
 
-               // TODO: implement httpOnlyCookie
+                // revoke other tokens and save new token
+                revokeAllUserTokens(userDetails);
+                saveUserToken(userDetails, accessToken);
+
+
                var authResponse = AuthenticationResponse.builder()
-                       .accessToken(accessToken)
-//                       .refreshToken(refreshToken)
-                       .build();
+                        .accessToken(accessToken)
+                        .build();
 
-               // write value in response
-               new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+
+               return authResponse;
             }
         }
+        return null;
     }
 }
