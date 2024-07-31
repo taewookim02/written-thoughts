@@ -7,7 +7,7 @@ const Home = () => {
 
   const signOut = async () => {
     await logout();
-    navigate("/404");
+    navigate("/");
   };
   return (
     <>

@@ -5,12 +5,13 @@ import useAuth from "./useAuth";
 
 // to attach interceptors to axiosPrivate
 const useAxiosPrivate = () => {
-  const refresh = useRefreshToken();
+  const refresh = useRefreshToken(); // useRefreshToken sets new accessToken to auth
   const { auth } = useAuth();
 
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
+        // if the request headers doesn't have Authorization
         if (!config.headers["Authorization"]) {
           // first attempt
           config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
@@ -28,10 +29,15 @@ const useAxiosPrivate = () => {
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           // sent restricts infinite calls
           prevRequest.sent = true;
-          const newAccessToken = await refresh(); // this is undefined
-          console.log("useAxiosPrivate: " + newAccessToken);
-          prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-          return axiosPrivate(prevRequest);
+          try {
+            const newAccessToken = await refresh(); // this is undefined
+            console.log("useAxiosPrivate: " + newAccessToken);
+            prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+            return axiosPrivate(prevRequest);
+          } catch (err) {
+            console.error("useAxiosPrivate refresh token error: ", err);
+            return Promise.reject(err);
+          }
         }
         return Promise.reject(error);
       }

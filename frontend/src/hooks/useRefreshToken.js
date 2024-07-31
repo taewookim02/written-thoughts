@@ -1,6 +1,7 @@
 import axios from "../api/axios";
 import useAuth from "./useAuth";
 
+// useRefreshToken sets the accessToke in auth state, using refreshTokens via withCredentials to /auth/refresh-token.
 const useRefreshToken = () => {
   const { setAuth } = useAuth();
 
@@ -10,9 +11,8 @@ const useRefreshToken = () => {
         withCredentials: true,
       });
       setAuth((prev) => {
-        console.log(JSON.stringify(prev));
-        console.log(response.data.accessToken);
-        console.log(response);
+        console.log(JSON.stringify(prev)); // debug log
+        console.log(response.data.accessToken); // debug log
         return { ...prev, accessToken: response.data.accessToken };
       });
       return response.data.accessToken;

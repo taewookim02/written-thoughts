@@ -23,9 +23,9 @@ const Entry = () => {
       } catch (error) {
         console.error(error);
 
-        if (error.code !== "ERR_CANCELED") {
-          navigate("/login", { state: { from: location }, replace: true });
-        }
+        // if (error.code !== "ERR_CANCELED") {
+        //   navigate("/login", { state: { from: location }, replace: true });
+        // }
       }
     };
     getEntries();
@@ -39,7 +39,6 @@ const Entry = () => {
 
   return (
     <>
-      {/* TODO: add useAxiosPrivate, navigate, location */}
       <h1>Entry</h1>
       <ul>
         {entries?.length > 0 ? (
