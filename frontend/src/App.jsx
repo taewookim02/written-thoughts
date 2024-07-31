@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Entry from "./pages/Entry";
 import Error from "./pages/Error";
 import RequireAuth from "./components/features/auth/RequireAuth";
+import PersistLogin from "./components/features/auth/PersistLogin";
 
 const App = () => {
   return (
@@ -19,9 +20,11 @@ const App = () => {
       </Route>
 
       {/* private routes */}
-      <Route element={<RequireAuth />}>
-        <Route element={<UserContainer />}>
-          <Route path="/entries" element={<Entry />} />
+      <Route element={<PersistLogin />}>
+        <Route element={<RequireAuth />}>
+          <Route element={<UserContainer />}>
+            <Route path="/entries" element={<Entry />} />
+          </Route>
         </Route>
       </Route>
 

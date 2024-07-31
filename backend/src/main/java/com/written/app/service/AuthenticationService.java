@@ -20,8 +20,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -132,15 +134,10 @@ public class AuthenticationService {
     private void addRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
         Cookie cookie = new Cookie("refresh_token", refreshToken);
         cookie.setHttpOnly(true);
-//        cookie.setSecure(true);
+        cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setMaxAge(7 * 24 * 60 * 60);
         response.addCookie(cookie);
-        System.out.println("Cookie added: " + cookie.getName() +
-                ", Value: " + cookie.getValue() +
-                ", HttpOnly: " + cookie.isHttpOnly() +
-//                ", Secure: " + cookie.getSecure() +
-                ", MaxAge: " + cookie.getMaxAge());
     }
 
     private String extractRefreshTokenFromCookie(HttpServletRequest request) {
@@ -168,7 +165,7 @@ public class AuthenticationService {
 
         if (userEmail != null) {
             var userDetails = this.userRepository.findByEmail(userEmail)
-                    .orElseThrow();
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
 
             if (jwtService.isTokenValid(refreshToken, userDetails)) {
