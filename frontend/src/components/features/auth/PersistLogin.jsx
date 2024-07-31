@@ -15,7 +15,7 @@ const PersistLogin = () => {
       } catch (err) {
         console.error(err);
       } finally {
-        isMounted && setIsLoading(false);
+        setIsLoading(false);
       }
     };
 
