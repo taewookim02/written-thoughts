@@ -132,14 +132,14 @@ public class AuthenticationService {
     private void addRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
         Cookie cookie = new Cookie("refresh_token", refreshToken);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+//        cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setMaxAge(7 * 24 * 60 * 60);
         response.addCookie(cookie);
         System.out.println("Cookie added: " + cookie.getName() +
                 ", Value: " + cookie.getValue() +
                 ", HttpOnly: " + cookie.isHttpOnly() +
-                ", Secure: " + cookie.getSecure() +
+//                ", Secure: " + cookie.getSecure() +
                 ", MaxAge: " + cookie.getMaxAge());
     }
 
@@ -162,6 +162,7 @@ public class AuthenticationService {
         if (refreshToken == null) {
             return null;
         }
+        System.out.println("refreshToken = " + refreshToken);
 
         final String userEmail = jwtService.extractUsername(refreshToken);
 

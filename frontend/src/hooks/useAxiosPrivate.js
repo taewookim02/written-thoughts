@@ -28,7 +28,8 @@ const useAxiosPrivate = () => {
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           // sent restricts infinite calls
           prevRequest.sent = true;
-          const newAccessToken = await refresh();
+          const newAccessToken = await refresh(); // this is undefined
+          console.log("useAxiosPrivate: " + newAccessToken);
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return axiosPrivate(prevRequest);
         }

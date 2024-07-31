@@ -70,7 +70,7 @@ public class SecurityConfig {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(0);
-        cookie.setSecure(true);
+//        cookie.setSecure(true);
         response.addCookie(cookie);
     }
 }
