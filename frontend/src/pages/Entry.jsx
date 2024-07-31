@@ -22,9 +22,8 @@ const Entry = () => {
         }
       } catch (error) {
         console.error(error);
-
+        // navigate("/login", { state: { from: location }, replace: true });
         // if (error.code !== "ERR_CANCELED") {
-        //   navigate("/login", { state: { from: location }, replace: true });
         // }
       }
     };

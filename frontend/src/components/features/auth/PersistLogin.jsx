@@ -17,7 +17,7 @@ const PersistLogin = () => {
       } catch (err) {
         console.error(err);
       } finally {
-        isMounted && setIsLoading(false);
+        if (isMounted) setIsLoading(false);
       }
     };
 
@@ -28,12 +28,7 @@ const PersistLogin = () => {
       setIsLoading(false);
     }
     return () => (isMounted = false);
-  }, []);
-
-  useEffect(() => {
-    console.log(`isLoading: ${isLoading}`);
-    console.log(`auth: ${JSON.stringify(auth?.accessToken)}`);
-  }, [isLoading]);
+  }, [auth, persist, refresh]); // TODO: ensure these dependencies are appropriate
 
   return (
     <>{!persist ? <Outlet /> : isLoading ? <p>Loading..</p> : <Outlet />}</>
