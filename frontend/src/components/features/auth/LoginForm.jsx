@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useEffect } from "react";
 import InputField from "../../common/InputField";
 import { StyledForm } from "../../common/StyledForm";
 import { StyledSubmitButton } from "../../common/StyledSubmitButton";
@@ -8,7 +8,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const LOGIN_URL = "/auth/authenticate";
 const LoginForm = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,8 +32,6 @@ const LoginForm = () => {
       });
 
       const accessToken = response?.data?.accessToken;
-      // const refreshToken = response?.data?.refresh_token;
-      // FIXME: refreshToken somewhere else
       setAuth({ accessToken });
 
       // reset states
@@ -54,11 +52,15 @@ const LoginForm = () => {
         alert("Login failed");
       }
     }
-
-    // TODO: handle successful login
-    // TODO: add data.access_token and data.refresh_token somewhere
-    // TODO: handle exceptions
   };
+
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
 
   return (
     <StyledForm onSubmit={handleLogin}>
@@ -78,6 +80,15 @@ const LoginForm = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <StyledSubmitButton type="submit">Login</StyledSubmitButton>
+      <div className="persistCheck">
+        <input
+          type="checkbox"
+          id="persist"
+          onChange={togglePersist}
+          checked={persist}
+        />
+        <label htmlFor="persist">Trust this device</label>
+      </div>
     </StyledForm>
   );
 };
