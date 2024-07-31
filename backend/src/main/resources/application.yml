@@ -26,8 +26,10 @@ application:
     jwt:
       secret-key: ${JWT_SECRET_KEY}
       expiration: 86400000 # 1 day
+#      expiration: 10000 # 10 sec
       refresh-token:
         expiration: 604800000 # 7 days
+#        expiration: 15000 # 15 sec
 
 springdoc:
   swagger-ui:

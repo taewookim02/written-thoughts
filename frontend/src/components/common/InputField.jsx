@@ -9,8 +9,16 @@ const StyledInput = styled.input`
   font-size: 16px;
 `;
 
-const InputField = ({ type, name, placeholder }) => {
-  return <StyledInput type={type} name={name} placeholder={placeholder} />;
+const InputField = ({ type, name, placeholder, required, onChange }) => {
+  return (
+    <StyledInput
+      type={type}
+      name={name}
+      placeholder={placeholder}
+      required={required}
+      onChange={onChange}
+    />
+  );
 };
 
 export default InputField;

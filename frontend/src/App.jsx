@@ -6,24 +6,31 @@ import GuestContainer from "./components/layouts/GuestContainer";
 import Register from "./pages/Register";
 import Entry from "./pages/Entry";
 import Error from "./pages/Error";
+import RequireAuth from "./components/features/auth/RequireAuth";
+import PersistLogin from "./components/features/auth/PersistLogin";
 
 const App = () => {
   return (
-    // <Container>
     <Routes>
-      {/* The pages that the guests can see */}
+      {/* public routes */}
       <Route element={<GuestContainer />}>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/*" element={<Error />} />
       </Route>
-      {/* The pages that the users can see */}
-      <Route element={<UserContainer />}>
-        <Route path="/entries" element={<Entry />} />
+
+      {/* private routes */}
+      <Route element={<PersistLogin />}>
+        <Route element={<RequireAuth />}>
+          <Route element={<UserContainer />}>
+            <Route path="/entries" element={<Entry />} />
+          </Route>
+        </Route>
       </Route>
+
+      {/* Catch all */}
+      <Route path="*" element={<Error />} />
     </Routes>
-    // </Container>
   );
 };
 

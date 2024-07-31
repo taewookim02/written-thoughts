@@ -5,6 +5,7 @@ import com.written.app.dto.AuthenticationResponse;
 import com.written.app.dto.RegisterRequest;
 import com.written.app.service.AuthenticationService;
 import com.written.app.service.JwtService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,25 +25,29 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+            @RequestBody RegisterRequest request,
+            HttpServletResponse response
     ) {
-        return ResponseEntity.ok(service.register(request));
+        return ResponseEntity.ok(service.register(request, response));
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
+            @RequestBody AuthenticationRequest request,
+            HttpServletResponse response
     ) {
-        return ResponseEntity.ok(service.authenticate(request));
+        return ResponseEntity.ok(service.authenticate(request, response));
     }
 
-    @PostMapping("/refresh-token")
-    public void refreshToken(
+    @GetMapping("/refresh-token")
+    public ResponseEntity<AuthenticationResponse> refreshToken(
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        service.refreshToken(request, response);
+        return ResponseEntity.ok(service.refreshToken(request, response));
     }
+
+
 
 
 

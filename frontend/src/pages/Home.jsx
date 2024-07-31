@@ -1,7 +1,14 @@
-import React from "react";
 import styled from "styled-components";
-
+import useLogout from "../hooks/useLogout";
+import { useNavigate, Link } from "react-router-dom";
 const Home = () => {
+  const logout = useLogout();
+  const navigate = useNavigate();
+
+  const signOut = async () => {
+    await logout();
+    navigate("/");
+  };
   return (
     <>
       {/* hero section */}
@@ -9,7 +16,10 @@ const Home = () => {
       {/* features */}
       {/* cta */}
       {/* footer */}
-      <h1>Home</h1>
+      <div>
+        <h1>Home</h1>
+        <button onClick={signOut}>Sign out</button>
+      </div>
     </>
   );
 };

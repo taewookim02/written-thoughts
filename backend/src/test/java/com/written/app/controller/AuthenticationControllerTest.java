@@ -51,10 +51,12 @@ public class AuthenticationControllerTest {
 
         AuthenticationResponse authResponse = AuthenticationResponse.builder()
                 .accessToken("jwtToken")
-                .refreshToken("refreshToken")
+//                .refreshToken("refreshToken")
                 .build();
 
-        when(authenticationService.register(inputRequest)).thenReturn(authResponse);
+        HttpServletResponse servletResponse = mock(HttpServletResponse.class);
+
+        when(authenticationService.register(inputRequest, servletResponse)).thenReturn(authResponse);
 
 
         // when
@@ -66,12 +68,12 @@ public class AuthenticationControllerTest {
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.access_token").value("jwtToken"))
                 .andExpect(jsonPath("$.refresh_token").value("refreshToken"));
-        verify(authenticationService).register(inputRequest);
+        verify(authenticationService).register(inputRequest, servletResponse);
     }
 
 
     @Test
-    public void AuthenticationController_Authenticate_ReturAuthResponse() throws Exception {
+    public void AuthenticationController_Authenticate_ReturnAuthResponse() throws Exception {
         // given
         AuthenticationRequest inputRequest = AuthenticationRequest.builder()
                 .email("test@example.com")
@@ -80,20 +82,21 @@ public class AuthenticationControllerTest {
 
         AuthenticationResponse authResponse = AuthenticationResponse.builder()
                 .accessToken("jwtToken")
-                .refreshToken("refreshToken")
                 .build();
-        when(authenticationService.authenticate(inputRequest)).thenReturn(authResponse);
+
+        when(authenticationService.authenticate(any(AuthenticationRequest.class), any(HttpServletResponse.class))).thenReturn(authResponse);
 
         // when
         ResultActions response = mockMvc.perform(post("/auth/authenticate")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(inputRequest)));
 
+        System.out.println("response = " + response);
         // then
         response.andExpect(status().isOk())
-                .andExpect(jsonPath("$.access_token").value("jwtToken"))
-                .andExpect(jsonPath("$.refresh_token").value("refreshToken"));
-        verify(authenticationService).authenticate(inputRequest);
+                .andExpect(jsonPath("$.accessToken").value("jwtToken"));
+//                .andExpect(jsonPath("$.refresh_token").value("refreshToken"));
+        verify(authenticationService).authenticate(any(AuthenticationRequest.class), any(HttpServletResponse.class));
     }
 
     @Test
@@ -102,7 +105,7 @@ public class AuthenticationControllerTest {
         String refreshToken = "validRefreshToken";
         AuthenticationResponse authResponse = AuthenticationResponse.builder()
                 .accessToken("newAccessToken")
-                .refreshToken("newRefreshToken")
+//                .refreshToken("refreshToken")
                 .build();
 
         // mock the behavior of `AuthenticationService.refreshToken(req, res)`
